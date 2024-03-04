@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+
+<!-- 学生个人简历界面 FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.StudentIntroduceController -->
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.CourseController">
+   <center>
+      <Label text="课程" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

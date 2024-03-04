@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<!-- PDF查看对话框FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.base.PdfViewerController -->
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.PdfViewerController">
+    <center>
+        <Pagination fx:id="pagination" prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+    </center>
+</BorderPane>

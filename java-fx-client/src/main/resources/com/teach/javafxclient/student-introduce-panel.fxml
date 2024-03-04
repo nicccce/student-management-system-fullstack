@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<?import javafx.scene.control.TextArea?>
+
+<!-- 学生个人简历界面 FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.StudentIntroduceController -->
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/person-style-class.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentIntroduceController">
+    <content>
+        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <GridPane hgap="0" prefHeight="100.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <children>
+                    <Label text="学号" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label fx:id="num" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Label text="姓名" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Label fx:id="name" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                    <Label text="学院" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                    <Label fx:id="dept" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+                    <Button fx:id="photoButton" onAction="#onPhotoButtonClick" styleClass="border_black_1" GridPane.columnIndex="6" GridPane.rowIndex="0" GridPane.rowSpan="4" />
+                    <Label text="专业" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label fx:id="major" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label text="班级" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <Label fx:id="className" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                    <Label text="证件号码" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                    <Label fx:id="card" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                    <Label text="性别" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <Label fx:id="gender" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label text="出生日期" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <Label fx:id="birthday" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                    <Label text="邮箱" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                    <Label fx:id="email" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                    <Label text="电话" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <Label fx:id="phone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label text="地址" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Label fx:id="address" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.columnSpan="3"/>
+                </children>
+            </GridPane>
+            <HTMLEditor fx:id="introduceHtml" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="200.0" prefWidth="506.0" />
+            <TableView fx:id="scoreTable" prefHeight="170.0" prefWidth="200.0">
+                <columns>
+                    <TableColumn fx:id="courseNumColumn" prefWidth="75.0" text="课程号" />
+                    <TableColumn fx:id="courseNameColumn" prefWidth="75.0" text="课程名" />
+                    <TableColumn fx:id="creditColumn" prefWidth="75.0" text="学分" />
+                    <TableColumn fx:id="markColumn" prefWidth="75.0" text="成绩" />
+                    <TableColumn fx:id="rankingColumn" prefWidth="75.0" text="排名" />
+                </columns>
+            </TableView>
+            <HBox alignment="CENTER_LEFT" spacing="5.0" prefHeight="250.0" >
+                <children>
+                    <BarChart fx:id="barChart">
+                        <xAxis>
+                            <CategoryAxis label="日期" side="BOTTOM" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="金额" side="LEFT" />
+                        </yAxis>
+                    </BarChart>
+                    <PieChart fx:id="pieChart" />
+                </children>
+                <padding>
+                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                </padding>
+            </HBox>
+            <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
+                <Button onAction="#onIntroduceDownloadClick" text="PDF查看">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin></Button>
+                <Button onAction="#onSubmitButtonClick" prefHeight="23.0" prefWidth="64.0" text="提交">
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin></Button>
+            </FlowPane>
+        </VBox>
+    </content>
+</ScrollPane>

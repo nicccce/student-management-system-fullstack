@@ -1,0 +1,5 @@
+
+insert into user_type ( name) values( 'ROLE_ADMIN');
+insert into user_type ( name) values( 'ROLE_USER');
+insert into person (per_num, per_name,per_type) values( 'admin','admin','0');
+insert into user (user_name, password,person_id,user_type_id) values( 'admin','$2a$10$FV5lm..jdQWmV7hFguxKDeTrGyiWg1u6HYD2QiQc0tRROrNtSQVOy',1,1);

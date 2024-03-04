@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<!-- 菜单管理面板FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.base.MenuController -->
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.MenuController">
+   <top>
+       <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
+           <children>
+               <FlowPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                   <children>
+                       <Label text="菜单标题">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></Label>
+                       <TextField fx:id="titleTextField">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></TextField>
+                       <Button mnemonicParsing="false" onAction="#onAddButtonClick" text="添加">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></Button>
+                       <Button mnemonicParsing="false" onAction="#onEditButtonClick" text="编辑">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></Button>
+                       <Button mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></Button>
+                   </children>
+               </FlowPane>
+               <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+               <FlowPane alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                   <children>
+                       <Label text="角色">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></Label>
+                       <ComboBox fx:id="roleChoiceBox" prefWidth="150.0">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></ComboBox>
+                       <Button mnemonicParsing="false" onAction="#onQueryButtonClick" text="查询">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></Button>
+                   </children>
+               </FlowPane>
+           </children>
+           <padding>
+               <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+           </padding>
+       </HBox>
+   </top>
+   <center>
+       <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <items>
+               <TreeView fx:id="menuTreeView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" spacing="20.0">
+                   <padding>
+                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                   </padding>
+                   <GridPane>
+                       <columnConstraints>
+                           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="392.5" minWidth="10.0" prefWidth="84.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="729.5" minWidth="10.0" prefWidth="725.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                       <children>
+                           <Label text="菜单名称">
+                        <GridPane.margin>
+                           <Insets right="10.0" />
+                        </GridPane.margin></Label>
+                           <TextField fx:id="nodeNameField" GridPane.columnIndex="1" />
+                           <Label text="菜单标题" GridPane.rowIndex="1">
+                        <GridPane.margin>
+                           <Insets right="10.0" />
+                        </GridPane.margin></Label>
+                           <TextField fx:id="nodeTitleField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                       </children>
+                   </GridPane>
+                   <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
+                       <Button onAction="#onSubmitButtonClick" text="保存" />
+                   </FlowPane>
+               </VBox>
+           </items>
+       </SplitPane>
+   </center>
+</BorderPane>

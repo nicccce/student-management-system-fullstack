@@ -1,0 +1,123 @@
+CREATE TABLE user_type (
+	id	INTEGER,
+	name	varchar(50),
+	PRIMARY KEY(id)
+);
+CREATE TABLE dictionary (
+	id	INTEGER,
+	value	varchar(50),
+	label	varchar(50),
+	pid	integer,
+	PRIMARY KEY(id)
+);
+CREATE TABLE person (
+	person_id	INTEGER,
+	num	 varchar(50),
+	name	varchar(50),
+	type	varchar(2),
+	dept	varchar(50),
+	card	varchar(20),
+	gender	varchar(2),
+	birthday	varchar(20),
+	email	varchar(80),
+	phone	varchar(20),
+	address	varchar(100),
+	introduce	varchar(1000),
+	PRIMARY KEY(person_id)
+);
+CREATE TABLE user (
+	user_id	INTEGER,
+	password	varchar(200),
+	user_name	varchar(50),
+	person_id	integer,
+	user_type_id	integer,
+	last_login_time	timestamp,
+	login_count	integer,
+	PRIMARY KEY(user_id)
+);
+CREATE TABLE menu (
+	id	INTEGER,
+	name	varchar(50),
+	title	varchar(50),
+	pid	integer,
+	user_type_id	integer,
+	PRIMARY KEY(id)
+);
+CREATE TABLE student (
+	student_id	integer NOT NULL,
+	person_id	INTEGER,
+	major	varchar(50),
+	class_name	varchar(50),
+	PRIMARY KEY(student_id)
+);
+CREATE TABLE course (
+	course_id	integer NOT NULL,
+	num	varchar(20),
+	name	varchar(50),
+	credit	integer,
+	pre_course_id	INTEGER,
+	PRIMARY KEY(course_id)
+);
+CREATE TABLE score (
+	score_id	integer NOT NULL,
+	student_id	integer,
+	course_id	integer,
+	mark	integer,
+	ranking	INTEGER,
+	PRIMARY KEY(score_id)
+);
+CREATE TABLE fee (
+	fee_id	INTEGER,
+	student_id	integer,
+	day	varchar(20),
+	money	double,
+	PRIMARY KEY(fee_id)
+);
+insert into user_type(id,name) value(1,'ROLE_ADMIN');
+insert into user_type(id,name) value(2,'ROLE_STUDENT');
+insert into user_type(id,name) value(3,'ROLE_TEACHER');
+
+INSERT INTO dictionary (id, value, label) VALUES (1, 'XBM', '性别码');
+INSERT INTO dictionary (id, value, label, pid) VALUES (2, '1', '男', 1);
+INSERT INTO dictionary (id, value, label, pid) VALUES (3, '2', '女', 1);
+
+INSERT INTO menu (id,  title,  user_type_id) VALUES (1,  '人员管理', 1);
+INSERT INTO menu (id,  title,  user_type_id) VALUES (2,  '教务管理', 1);
+INSERT INTO menu (id, name, title, pid, user_type_id) VALUES (3, 'student-panel', '学生管理', 1, 1);
+INSERT INTO menu (id, name, title, pid, user_type_id) VALUES (4, 'course-panel', '课程管理', 2, 1);
+
+INSERT INTO person (person_id, num, name, type) VALUES (1, 'admin', '管理员', '0');
+INSERT INTO person (person_id, num, name, type, dept, card, gender, birthday, email, phone, address) VALUES (2, '2022030001', '杨平', '1', '软件学院', '1234', '1', '2001-11-01', '1@sdu.edu.cn', '11111112', '济南高新区舜华路软件学院');
+INSERT INTO person (person_id, num, name, type, dept, card, gender, birthday) VALUES (3, '2022030002', '张菊', '1', '软件学院', '111', '2', '2001-11-01');
+
+INSERT INTO user (user_id, user_name,password, person_id, user_type_id) VALUES (1, 'admin','$2a$10$FV5lm..jdQWmV7hFguxKDeTrGyiWg1u6HYD2QiQc0tRROrNtSQVOy', 1, 1);
+INSERT INTO user (user_id, user_name,password, person_id, user_type_id) VALUES (2, '2022030001','$2a$10$FV5lm..jdQWmV7hFguxKDeTrGyiWg1u6HYD2QiQc0tRROrNtSQVOy', 2, 2);
+INSERT INTO user (user_id, user_name,password, person_id, user_type_id) VALUES (3, '2022030002','$2a$10$FV5lm..jdQWmV7hFguxKDeTrGyiWg1u6HYD2QiQc0tRROrNtSQVOy', 3, 2);
+
+INSERT INTO student (student_id, person_id, major, class_name) VALUES (1, 2, '软件工程', '软1');
+INSERT INTO student (student_id, person_id, major, class_name) VALUES (2, 3, '软件工程', '软2');
+
+INSERT INTO course (course_id, num, name, credit) VALUES (1, '001', 'Java语言', 5);
+INSERT INTO course (course_id, num, name, credit) VALUES (2, '002', '数学', 6);
+INSERT INTO course (course_id, num, name, credit, pre_course_id) VALUES (3, '003', '软件工程', 4, 5);
+INSERT INTO course (course_id, num, name, credit, pre_course_id) VALUES (4, '004', '操作系统', 4, 5);
+INSERT INTO course (course_id, num, name, credit, pre_course_id) VALUES (5, '005', '数据结构', 4, 1);
+INSERT INTO course (course_id, num, name, credit) VALUES (6, '006', '网络系统', 4);
+INSERT INTO course (course_id, num, name, credit, pre_course_id) VALUES (7, '007', '数据库', 4, 5);
+
+INSERT INTO score (score_id, student_id, course_id, mark, ranking) VALUES (1, 1, 1, 11, 40);
+INSERT INTO score (score_id, student_id, course_id, mark, ranking) VALUES (2, 1, 2, 86, 2);
+INSERT INTO score (score_id, student_id, course_id, mark, ranking) VALUES (3, 1, 3, 92, 1);
+INSERT INTO score (score_id, student_id, course_id, mark, ranking) VALUES (4, 1, 4, 80, 10);
+INSERT INTO score (score_id, student_id, course_id, mark, ranking) VALUES (5, 1, 5, 77, 20);
+INSERT INTO score (score_id, student_id, course_id, mark, ranking) VALUES (6, 1, 6, 94, 3);
+
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (1, 1, '20220101', 10.0);
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (2, 1, '20220102', 13.0);
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (3, 1, '20220103', 15.0);
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (4, 1, '20220104', 20.0);
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (5, 1, '20220105', 8.0);
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (6, 1, '20220106', 12.0);
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (7, 1, '20220107', 11.0);
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (8, 1, '20220108', 16.0);
+INSERT INTO fee (fee_id, student_id, day, money) VALUES (9, 1, '20220109', 13.0);

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app">
+    <el-table
+            :header-cell-style="{ background: 'rgb(242,242,242)' }"
+            style="width: 95%"
+            size="mini"
+            :data="dataList"
+            border
+    >
+        <el-table-column
+                label="序号"
+                fixed="left"
+                width="50"
+                align="center"
+                color="black"
+        >
+            <template slot-scope="scope">
+                {{ scope.$index + 1 }}
+            </template>
+        </el-table-column>
+        <el-table-column label="学号" align="center" color="black">
+            <template slot-scope="scope">
+                {{ scope.row.num }}
+            </template>
+        </el-table-column>
+        <el-table-column label="姓名" align="center" color="black">
+            <template slot-scope="scope">
+                {{ scope.row.studentName }}
+            </template>
+        </el-table-column>
+        <el-table-column label="性别" align="center" color="black">
+            <template slot-scope="scope">
+                {{ scope.row.sex }}
+            </template>
+        </el-table-column>
+        <el-table-column label="年龄" align="center" color="black">
+            <template slot-scope="scope">
+                {{ scope.row.age }}
+            </template>
+        </el-table-column>
+        <el-table-column label="系别" align="center" color="black">
+            <template slot-scope="scope">
+                {{ scope.row.dept }}
+            </template>
+        </el-table-column>
+    </el-table>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script type="text/javascript">
+
+  let vm = new Vue({
+    el: '#app',
+    data () {
+      return {
+        dataList:[],
+      }
+    },
+    created() {
+        console.log(window.localStorage.accessToken);
+        axios({
+            headers: {
+                 'Authorization': 'Bearer ' + window.localStorage.accessToken
+            },
+            method: 'post',
+            url: '/api/teach/studentInit',
+            data: {
+            }
+        }).then(res => {
+            console.log(res.data.data.data);
+            this.dataList = res.data.data.data;
+            console.log(this.dataList);
+        })
+     },
+     methods: {
+        getInfo: function(){
+        },
+      }
+  })
+</script>
+</body>
+</html>

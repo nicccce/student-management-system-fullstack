@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<!-- 空间示例面板FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.base.ControlDemoController -->
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.ControlDemoController">
+   <children>
+      <Label layoutX="45.0" layoutY="21.0" text="文本输入" />
+      <TextField layoutX="104.0" layoutY="17.0" />
+      <Label layoutX="45.0" layoutY="57.0" text="密码" />
+      <PasswordField layoutX="104.0" layoutY="53.0" />
+      <Button layoutX="339.0" layoutY="399.0" mnemonicParsing="false" text="按钮" />
+      <Label layoutX="45.0" layoutY="98.0" text="选择列表" />
+      <ChoiceBox fx:id="choiceBox" layoutX="109.0" layoutY="94.0" prefWidth="150.0" />
+      <Label layoutX="45.0" layoutY="145.0" text="下拉列表" />
+      <ComboBox fx:id="comboBox" layoutX="109.0" layoutY="134.0" prefWidth="150.0" />
+      <Label layoutX="52.0" layoutY="226.0" text="多行文本" />
+      <TextArea layoutX="112.0" layoutY="226.0" prefHeight="79.0" prefWidth="170.0" />
+      <Label layoutX="45.0" layoutY="315.0" text="列表" />
+      <ListView fx:id="listView" layoutX="112.0" layoutY="315.0" prefHeight="156.0" prefWidth="170.0" />
+      <Hyperlink layoutX="335.0" layoutY="354.0" text="超链" />
+      <HBox layoutX="310.0" layoutY="21.0" prefHeight="23.0" prefWidth="161.0" spacing="10">
+         <RadioButton fx:id="maleRadio" mnemonicParsing="false" text="男" />
+         <RadioButton fx:id="femaleRadio" mnemonicParsing="false" text="女" />
+      </HBox>
+      <HBox layoutX="310.0" layoutY="57.0" prefHeight="23.0" prefWidth="161.0" spacing="10">
+         <CheckBox mnemonicParsing="false" text="多选一" />
+         <CheckBox mnemonicParsing="false" text="多选二" />
+      </HBox>
+   </children>
+</Pane>

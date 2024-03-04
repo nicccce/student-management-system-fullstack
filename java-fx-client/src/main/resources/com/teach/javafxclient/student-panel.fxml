@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<!--  学生管理 FXML 配置文件 对应的页面交互控制类 com.teach.javafxclient.controller.StudentController 如果是切换成本地开发模式 界面配置不变，将页面交互控制类 切换为 com.teach.javafxclient.controller.StudentControllerLocal-->
+<BorderPane  xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentController">
+   <top>
+       <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" >
+           <children>
+               <FlowPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                   <children>
+                       <Button mnemonicParsing="false" onAction="#onAddButtonClick" text="添加">
+                         <FlowPane.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                         </FlowPane.margin>
+                       </Button>
+                       <Button mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除">
+                         <FlowPane.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                         </FlowPane.margin>
+                       </Button>
+                   </children>
+               </FlowPane>
+               <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+               <FlowPane alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                   <children>
+                       <Label prefWidth="49.0" text="学号姓名">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></Label>
+                       <TextField fx:id="numNameTextField" prefWidth="100.0">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></TextField>
+                       <Button mnemonicParsing="false" onAction="#onQueryButtonClick" text="查询">
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin></Button>
+                   </children>
+               </FlowPane>
+           </children>
+           <padding>
+               <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+           </padding>
+       </HBox>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.6979797979797979" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <TableView fx:id="dataTableView" prefHeight="200.0" prefWidth="200.0">
+                <columns>
+                    <TableColumn fx:id="numColumn" prefWidth="85.0" text="学号" />
+                    <TableColumn fx:id="nameColumn" prefWidth="75.0" text="姓名" />
+                    <TableColumn fx:id="deptColumn" prefWidth="75.0" text="院系" />
+                    <TableColumn fx:id="majorColumn" prefWidth="75.0" text="专业" />
+                    <TableColumn fx:id="classNameColumn" prefWidth="75.0" text="班级" />
+                    <TableColumn fx:id="cardColumn" prefWidth="125.0" text="证件号码" />
+                    <TableColumn fx:id="genderColumn" prefWidth="55.0" text="性别" />
+                    <TableColumn fx:id="birthdayColumn" prefWidth="75.0" text="出生日期" />
+                    <TableColumn fx:id="emailColumn" prefWidth="125.0" text="邮箱" />
+                    <TableColumn fx:id="phoneColumn" prefWidth="95.0" text="电话" />
+                    <TableColumn fx:id="addressColumn" prefWidth="145.0" text="地址" />
+                </columns>
+            </TableView>
+            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="300.0" spacing="20.0">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+                <GridPane hgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="67.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="193.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="学号" GridPane.rowIndex="0" />
+                        <TextField fx:id="numField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="姓名" GridPane.rowIndex="1" />
+                        <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="院系" GridPane.rowIndex="2" />
+                        <TextField fx:id="deptField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="专业" GridPane.rowIndex="3" />
+                        <TextField fx:id="majorField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="班级" GridPane.rowIndex="4" />
+                        <TextField fx:id="classNameField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="证件号码" GridPane.rowIndex="5" />
+                        <TextField fx:id="cardField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="性别" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="genderComboBox" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="出生日期" GridPane.rowIndex="7" />
+                        <DatePicker fx:id="birthdayPick" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label text="邮箱" GridPane.rowIndex="8" />
+                        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label text="电话" GridPane.rowIndex="9" />
+                        <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label text="地址" GridPane.rowIndex="10" />
+                        <TextField fx:id="addressField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                    </children>
+                </GridPane>
+               <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
+                   <Button onAction="#onSaveButtonClick" text="保存" />
+               </FlowPane>
+            </VBox>
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>

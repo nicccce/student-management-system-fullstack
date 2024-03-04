@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <title>Title</title>
+    <style>
+        .topmenu {
+            width: 100%;
+            height: 50px;
+            background: #930E14;
+            list-style-type: none;
+        }
+        .topmenu .nav .nav-container .nav-list {
+            display: none;
+            list-style-type: none;
+        }
+        /*点击⼀级菜单的时候显⽰⼆级菜单*/
+        .topmenu .nav .nav-container:hover .nav-list {
+            display: list-item;
+            list-style-type: none;
+            margin-left: -30px;
+        }
+        /*点击时变⾊*/
+        .topmenu li:hover {
+            background: lightskyblue;
+            list-style-type: none;
+        }
+        /* ⼀级菜单栏.nav-container设置 */
+        .topmenu .nav .nav-container {
+            float: left;
+            /* ⼀级菜单设置左浮动，使其⽔平排列 */
+            background: #930E14;
+            /*给整个⼀级菜单设置背景⾊（⼆级菜单包括在⼀级菜单中）*/
+            text-align: center;
+            /* 对齐⽅式为居中 */
+            width: 155px;
+            /*设置宽度*/
+            border-right: solid 2px #fff;
+
+            list-style-type: none;
+            /*使⽤右边框分割*/
+        }
+        a {
+            line-height: 50px;
+            color: #fff;
+            list-style-type: none;
+        }
+            .content{
+  width:100%;
+  border-top: 1px solid #696969;
+  border-left: 1px solid #696969;
+  border-spacing: 0;/*去掉单元格间隙*/
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-family: serif;
+}
+.content tr {
+  font-family: serif;
+  width : 100% !important;
+  color: rgb(0,0,0) !important;
+  font-weight: bold !important;
+}
+.content td {
+  font-family: serif;
+  padding: 2px 2px;
+  border-bottom: 1px solid #696969;
+  border-right: 1px solid #696969;
+  text-align: center;
+  font-size: 14px;
+}
+    </style>
+</head>
+<body>
+<div class="topmenu">
+    <ul class="nav">
+        <li class="nav-container" style="margin-left: -30px;">
+            <a >学生管理</a>
+            <ul class="nav-list">
+                <li>
+                    <a href="http://localhost:9090/studentList.html">学生列表</a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-container">
+            <a href="http://localhost:9090/basePersonInfo.html">个人信息</a>
+        </li>
+    </ul>
+</div>
+
+<div id="app">
+    <table class="content">
+        <tr>
+            <td
+                    colspan="6"
+                    style="font-size: 24px; font-weight: bold; color: #304156"
+            >
+                个人信息表
+            </td>
+        </tr>
+       <tr height="30px">
+           <td colspan="1" width="200">姓名</td>
+           <td colspan="5"  style="font-size: 14px">
+               {{ form.studentName }}
+           </td>
+       </tr>
+        <tr  height="30px">
+            <td colspan="1" width="200">学号</td>
+            <td colspan="5"  style="font-size: 14px">
+                <el-input
+                        size="mini"
+                        v-model="form.num"
+                        placeholder="请输入学号"
+                        style="width: 90%"
+                />
+            </td>
+        </tr>
+        <tr  height="30px">
+            <td colspan="1" width="200">出生日期</td>
+            <td colspan="5"  style="font-size: 14px">
+                <el-input
+                        size="mini"
+                        v-model="form.birthday"
+                        placeholder="请输入出生日期"
+                        style="width: 90%"
+                />
+            </td>
+        </tr>
+        <tr  height="30px">
+            <td colspan="1" width="200">性别</td>
+            <td colspan="5"  style="font-size: 14px">
+                <el-select
+                        v-model="form.sex"
+                        placeholder="请选择"
+                        style="width: 90%"
+                        size="mini"
+                >
+                    <el-option
+                            v-for="item in sexList"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                    >
+                    </el-option>
+                </el-select>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+
+<script src="/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script type="text/javascript">
+
+  let vm = new Vue({
+    el: '#app',
+    data () {
+      return {
+      form:{
+        age: '',
+        birthday:'',
+        id:'',
+        sex:'',
+        name:'',
+        num:''
+        },
+        sexList:[
+        {
+         value:'1',
+         label:'男'
+        },
+          {
+         value:'0',
+         label:'女'
+        },
+        ]
+      }
+    },
+    created() {
+      var query = window.location.href;
+      var vars = query.split("?");
+      var str = vars[1];
+       if (str != "" && str != undefined) {
+        this.form.id = str.split("=")[1]
+      }else{
+         this.form.id = '1'
+      }
+
+     axios({
+            headers: {
+                 'Authorization': 'Bearer ' + window.localStorage.accessToken
+            },
+            method: 'post',
+            url: '/api/teach/studentEditInit',
+            data: {
+             data:{
+               id:this.form.id
+             }
+            }
+      }).then(res => {
+          this.form = res.data.data
+      })
+    },
+    methods: {
+    }
+  })
+  </script>
+</body>
+</html>

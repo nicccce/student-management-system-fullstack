@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+</head>
+<body>
+<div id="app">
+    姓名:<input v-model = "name" type="text"/><br/>
+    高等数学:<input v-model = "maths" type="text" size="15"/><br/>
+    大学物理:<input v-model = "physics" type="text" size="15"/><br/>
+    <button   @click="getInfo" >获取信息</button>
+    <button   @click="downloadPost" >下载个人简历</button>
+    <p><label >数据:</label> {{info}}</p>
+    <img v-bind:src="imgUrl" alt="山大logo" style="width: 160px; height: 160px" />
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+  let vm = new Vue({
+    el: '#app',
+    data () {
+      return {
+        name: 'li',
+        maths: '90',
+        physics: '80',
+        info: 'www',
+        imgUrl:''
+      }
+    },
+    methods: {
+
+        getInfo: function(){
+
+            axios({
+                method: 'post',
+                url: '/api/html/getInfoImage',
+                data: {
+                    name: this.name,
+                    maths:this.maths,
+                    physics:this.physics
+                }
+            }).then(res => {
+                console.log(res);
+                this.info = res.data.info;
+                this.imgUrl=res.data.imgUrl;
+            })
+          },
+        downloadPost: function() {
+            const requestOptions = {
+                method: 'POST',
+            };
+            return fetch('/api/html/getHtmlPdf', requestOptions)
+              .then(async response => {
+                const blob = await response.blob()
+
+                // check for error response
+                if (!response.ok) {
+                  // get error message from body or default to response status
+                  const error = response.status;
+                  return Promise.reject(error)
+                }
+                    const link = document.createElement('a')
+                    link.href = URL.createObjectURL(blob)
+                    link.download = 'test.pdf'
+                    link.click()
+                    URL.revokeObjectURL(link.href)
+              })
+              .catch(error => {
+                console.error('There was an error!', error);
+              });
+            }
+      }
+  })
+</script>
+</body>
+</html>

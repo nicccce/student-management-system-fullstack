@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <div id="app">
+        用户名:<input v-model = "username" type="text" size="15"/><br/>
+        密码:<input v-model = "password" type="text" size="15"/><br/>
+        <button   @click="login" >登录</button>
+    </div>
+<script src="/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+  let vm = new Vue({
+    el: '#app',
+    data () {
+      return {
+        username: 'admin',
+        password: '123456',
+      }
+    },
+    methods: {
+
+        login: function(){
+
+            axios({
+                method: 'post',
+                url: '/api/auth/login',
+                data: {
+                    username: this.username,
+                    password:this.password,
+                }
+            }).then(res => {
+                window.localStorage.accessToken=res.data.accessToken
+                window.location.href = "/mainFrame.html"
+            }).catch(error => {
+                console.log(error);
+                alert("登录错误！");
+              });
+          },
+      }
+  })
+</script>
+</body>
+</html>

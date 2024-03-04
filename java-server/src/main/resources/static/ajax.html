@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单的使用实例</title>
+    <script>
+	function createXmlHttpRequest(xmlrequest)
+	{
+		if(window.XMLHttpRequest)
+		{
+			xmlrequest = new XMLHttpRequest();
+		}
+		else if(window.ActiveXObject)
+		{
+			try{
+				xmlrequest = new ActiveXObject("Msxml4.XMLHTTP");
+			}catch(e){
+				try{
+					xmlrequest = new ActiveXObject("Msxml3.XMLHTTP");
+				}catch(e){
+					try{
+						xmlrequest = new ActiveXObject("Msxml2.XMLHTTP");
+					}catch(e){
+						try{
+							xmlrequest = new ActiveXObject("Microsoft.XMLHTTP");
+						}catch(e){}
+					}
+				}
+			}
+		}
+
+		return xmlrequest;
+	}
+	var getXmlRequest = createXmlHttpRequest(getXmlRequest);
+	function getAchievement()
+	{
+		var value =  document.getElementById("name").value;
+		var uri= "/api/html/getAjaxData";
+		getXmlRequest.open("POST",uri,true);
+		getXmlRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		getXmlRequest.onreadystatechange=showResponse;
+		getXmlRequest.send("name="+value);
+	}
+	function showResponse(){
+		if(getXmlRequest.readyState==4)
+		{
+			if(getXmlRequest.status==200)
+			{
+			    var str = getXmlRequest.responseText;
+                var strs=str.split(",");
+                document.getElementById("maths").value=strs[0];
+                document.getElementById("physics").value=strs[1];
+			}
+		}
+	}
+</script>
+</head>
+<body>
+<form name="form1"   >
+    <h3>输入课程成绩</h3>
+    姓名:<input id = "name" type="text"/><br/>
+    高等数学:<input id = "maths" type="text" size="15"/><br/>
+    大学物理:<input id = "physics" type="text" size="15"/><br/>
+    <input type="button" value="成绩提交" onclick="getAchievement()" />
+    <input type="reset" value="成绩重置"/>
+</form>
+</body>
+</html>

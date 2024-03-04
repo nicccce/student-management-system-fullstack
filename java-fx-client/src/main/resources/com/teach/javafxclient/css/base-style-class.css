@@ -1,0 +1,28 @@
+.border_black_1 {
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-border-insets: 0;
+    -fx-border-style: solid line-join bevel line-cap square;
+}
+.gridPane {
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-border-insets: 0;
+    -fx-border-style: solid line-join bevel line-cap square;
+}
+
+.hbox {
+    -fx-border-color: blue;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-border-insets: 5px;
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+    -fx-background-color: lightgray;
+    -fx-background-insets: 5px;
+}
+.button {
+    -fx-text-fill: blue;
+}

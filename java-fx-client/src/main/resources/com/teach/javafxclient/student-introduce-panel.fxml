@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.HTMLEditor?>
-
-<?import javafx.scene.control.TextArea?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.web.*?>
 
 <!-- 学生个人简历界面 FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.StudentIntroduceController -->
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/person-style-class.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentIntroduceController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/person-style-class.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentIntroduceController">
     <content>
         <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0">
             <padding>
@@ -58,7 +45,7 @@
                     <Label fx:id="className" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                     <Label text="证件号码" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                     <Label fx:id="card" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                    <Label text="性别" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <Label text="性别" textFill="#302a2a" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                     <Label fx:id="gender" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Label text="出生日期" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     <Label fx:id="birthday" GridPane.columnIndex="3" GridPane.rowIndex="2" />
@@ -67,7 +54,7 @@
                     <Label text="电话" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                     <Label fx:id="phone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Label text="地址" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                    <Label fx:id="address" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.columnSpan="3"/>
+                    <Label fx:id="address" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                 </children>
             </GridPane>
             <HTMLEditor fx:id="introduceHtml" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="200.0" prefWidth="506.0" />
@@ -80,7 +67,7 @@
                     <TableColumn fx:id="rankingColumn" prefWidth="75.0" text="排名" />
                 </columns>
             </TableView>
-            <HBox alignment="CENTER_LEFT" spacing="5.0" prefHeight="250.0" >
+            <HBox alignment="CENTER_LEFT" prefHeight="250.0" spacing="5.0">
                 <children>
                     <BarChart fx:id="barChart">
                         <xAxis>
@@ -106,6 +93,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin></Button>
             </FlowPane>
+         <Arc fill="DODGERBLUE" length="270.0" radiusX="100.0" radiusY="100.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
         </VBox>
     </content>
 </ScrollPane>

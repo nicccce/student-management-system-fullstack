@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <!-- 用户登录对话框FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.base.LoginController -->
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.teach.javafxclient.controller.base.LoginController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

@@ -11,8 +11,9 @@ College of Software, Shandong University freshman java course project 山东大�
 
 ## SHI!
 
-**This source code is simply shi！！！**
-**shit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
+**This source code is simply shi！！！**-------Nick
+
+**shit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**-------AYangDai
 
 ***shit is delicious***--------Alice
 

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <!-- 菜单管理面板FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.base.MenuController -->
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.MenuController">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.MenuController">
    <top>
        <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
            <children>

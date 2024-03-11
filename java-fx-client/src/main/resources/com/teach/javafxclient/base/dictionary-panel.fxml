@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <!-- 数据字典维护面板FXML配置文件 com.teach.javafxclient.controller.base.DictionaryController -->
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.DictionaryController">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.DictionaryController">
     <top>
         <FlowPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>

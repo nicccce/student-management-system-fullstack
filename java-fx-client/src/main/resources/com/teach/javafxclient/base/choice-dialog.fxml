@@ -7,7 +7,7 @@
 <?import javafx.scene.text.TextFlow?>
 
 <!-- 消息确认对话框FXML配置文件 对应页面交互控制类 om.teach.javafxclient.controller.base.ChoiceController -->
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.ChoiceController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.ChoiceController">
    <center>
       <TextFlow fx:id="textFLow" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
    </center>

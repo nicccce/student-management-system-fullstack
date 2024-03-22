@@ -9,7 +9,7 @@ College of Software, Shandong University freshman java course project 山东大�
 
 
 
-## SHI!
+## SHI!！
 
 **This source code is simply shi！！！**-------Nick
 

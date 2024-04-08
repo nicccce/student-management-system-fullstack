@@ -9,9 +9,9 @@ server:
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/java_course_design?useUnicode=true&characterEncoding=utf-8&useSSL=true&jdbcCompliantTruncation=false
-        username: root
-        password: 123456
+        url: jdbc:mysql://mysql.sqlpub.com:3306/edumanage?useUnicode=true&characterEncoding=utf-8&useSSL=true&jdbcCompliantTruncation=false
+        username: dbmanager
+        password: yH70sT6P6J2CiyHY
     http:
         encoding:
             charset: UTF-8

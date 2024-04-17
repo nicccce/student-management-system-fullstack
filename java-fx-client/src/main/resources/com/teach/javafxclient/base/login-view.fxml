@@ -1,49 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<!-- 用户登录对话框FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.base.LoginController -->
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.teach.javafxclient.controller.base.LoginController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-    <HBox>
-        <ImageView fx:id="imageView" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../picture/logo.jpg" />
-         </image></ImageView>
-       <GridPane>
-         <columnConstraints>
-           <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="59.5" />
-           <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.5" minWidth="10.0" prefWidth="140.5" />
-         </columnConstraints>
-         <rowConstraints>
-           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-          <children>
-             <Label text="用户名">
-               <GridPane.margin>
-                  <Insets right="5.0" />
-               </GridPane.margin></Label>
-             <TextField fx:id="usernameField" GridPane.columnIndex="1" />
-             <Label text="密码" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets right="5.0" />
-               </GridPane.margin></Label>
-             <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-          </children>
-       </GridPane>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474" prefWidth="1000" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.LoginController">
+    <ImageView fitHeight="474" fitWidth="1000" opacity="0.75" pickOnBounds="true" preserveRatio="true" style="-fx-border-radius: 30px; -fx-background-color: rgba(255, 255, 255, 0);">
+        <Image url="@../picture/login-background.png" />
+    </ImageView>
+    <AnchorPane layoutX="617.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="342.0" style="                 -fx-background-color: rgba(255, 255, 255, 0.7);                 -fx-background-radius: 20px;                 -fx-background-blur: Gaussian;">
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="23.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../picture/user.png" />
+        </ImageView>
+        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="23.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../picture/lock.png" />
+        </ImageView>
+        <PasswordField fx:id="passwordField" layoutX="140.0" layoutY="168.0" prefHeight="28.0" prefWidth="175.0" promptText="请输入你的密码" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #953d3d; -fx-text-fill: black;" />
+        <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="103.0" layoutY="251.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="38.0" prefWidth="138.0" style="                 -fx-opacity: 0.7;                 -fx-background-color: #7d0100;                 -fx-text-fill: white;                 -fx-background-radius: 20px;                 -fx-border-radius: 10px;                 -fx-padding: 5px 12px;" stylesheets="@../css/button.css" text="登录" textAlignment="CENTER" textFill="#d7d7d7">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+        <Label alignment="CENTER" contentDisplay="TOP" layoutX="81.0" layoutY="14.0" prefHeight="98.0" prefWidth="181.0" text="登 录" textAlignment="CENTER" textFill="#953d3d">
+            <font>
+                <Font name="Microsoft YaHei Light" size="55.0" />
+            </font>
+        </Label>
+        <TextField fx:id="usernameField" layoutX="140.0" layoutY="120.0" prefHeight="28.0" prefWidth="175.0" promptText="管理员/学生/教师账号" style="                    -fx-background-color: transparent;                    -fx-border-width: 0 0 2 0;                    -fx-border-color: #953d3d;                    -fx-text-fill: black;" />
+        <Label layoutX="56.0" layoutY="122.0" text="用户名：" textFill="#953d3d">
+            <font>
+                <Font name="Algerian" size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="58.0" layoutY="170.0" text="密   码：" textFill="#953d3d">
+            <font>
+                <Font name="Algerian" size="20.0" />
+            </font>
+        </Label>
+        <Hyperlink alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="138.0" layoutY="303.0" onAction="#linkButtonClick" text="登录失败？" visited="true" />
+    </AnchorPane>
+    <HBox layoutX="905.0" spacing="5" style="-fx-font-size: 24px;-fx-font-weight: bold;-fx-background-color: rgba(167, 24, 31, 0.8);-fx-padding: 0 5px;-fx-background-radius: 30px;">
+        <Button onAction="#minimizeButtonClick" style="-fx-font-size: 24px;-fx-font-weight: bold;-fx-padding: 0 5px;-fx-background-color: transparent;-fx-background-insets: 0;         -fx-background-radius: 0;         -fx-border-width: 0;         -fx-text-fill: white;" text="-" />
+        <Button onAction="#closeButtonClick" style="-fx-font-size: 24px;-fx-font-weight: bold;-fx-padding: 0 5px;-fx-background-color: transparent;         -fx-background-insets: 0;         -fx-background-radius: 0;         -fx-border-width: 0;         -fx-text-fill: white;" text="×" />
     </HBox>
-    <Button onAction="#onLoginButtonClick" text="登录" />
-</VBox>
+</AnchorPane>

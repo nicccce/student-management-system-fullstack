@@ -107,7 +107,8 @@ public class LoginController {
      * 当前仅为示例，显示一个包含错误信息的对话框。
      *
      * @throws IOException 如果在对话框显示过程中发生I/O错误，则抛出此异常
-     */      @FXML
+     */
+    @FXML
     protected void linkButtonClick() throws IOException {
         MessageDialog.showDialog("你的钢门比较松弛");//TODO: edit it!!!!
         return;

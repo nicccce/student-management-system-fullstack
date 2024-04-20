@@ -10,6 +10,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
@@ -143,13 +144,16 @@ public class MainFrameController {
 
     /**
      * 点击菜单栏中的“退出”菜单，执行onLogoutMenuClick方法 加载登录页面，切换回登录界面
-     * @param event
+     *
      */
     protected void onLogoutMenuClick(ActionEvent event){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("login-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("base/login-view.fxml"));
         try {
-            Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-            MainApplication.resetStage("Login", scene);
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root, 1000, 474);
+            MainApplication.setLoginUI(fxmlLoader, root, scene);
+            MainApplication.resetStage("登录", scene);
+            MainApplication.resetSize(1000, 474);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

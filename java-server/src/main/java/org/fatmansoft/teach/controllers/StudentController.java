@@ -82,7 +82,7 @@ public class StudentController {
     };
     /**
      *  获取 student 表的新的Id StringBoot 对SqLite 主键自增支持不好  插入记录是需要设置主键ID，编写方法获取新的 student_id
-     * @return
+     * @return id
      */
     public synchronized Integer getNewStudentId(){
         Integer  id = studentRepository.getMaxId();  // 查询最大的id

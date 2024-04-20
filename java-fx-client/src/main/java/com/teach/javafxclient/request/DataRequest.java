@@ -6,17 +6,17 @@ import java.util.*;
  * Map data 保存前端请求参数的Map集合
  */
 public class DataRequest {
-    private Map data;
+    private Map<String, Object> data;
 
     public DataRequest() {
-        data = new HashMap();
+        data = new HashMap<>();
     }
 
-    public Map getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 
-    public void setData(Map data) {
+    public void setData(Map<String, Object> data) {
         this.data = data;
     }
 
@@ -55,6 +55,7 @@ public class DataRequest {
         else
             return new ArrayList();
     }
+
     public Map getMap(String key){
         Object obj = data.get(key);
         if(obj == null)
@@ -113,5 +114,9 @@ public class DataRequest {
     }
     public void put(String key, Object obj){
         data.put(key,obj);
+    }
+
+    public boolean isEmpty() {
+        return data.isEmpty();
     }
 }

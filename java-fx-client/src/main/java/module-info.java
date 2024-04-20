@@ -8,6 +8,7 @@ module com.teach.javafxclient {
     requires com.google.gson;
     requires java.net.http;
     requires spring.security.crypto;
+    requires log4j;
 
 
     opens com.teach.javafxclient to javafx.fxml;

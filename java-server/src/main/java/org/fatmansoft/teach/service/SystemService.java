@@ -1,7 +1,7 @@
 package org.fatmansoft.teach.service;
 
-import org.fatmansoft.teach.models.DictionaryInfo;
-import org.fatmansoft.teach.payload.response.OptionItem;
+import org.fatmansoft.teach.data.po.DictionaryInfo;
+import org.fatmansoft.teach.data.vo.OptionItem;
 import org.fatmansoft.teach.repository.DictionaryInfoRepository;
 import org.fatmansoft.teach.util.ComDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;

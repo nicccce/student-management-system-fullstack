@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.*?>
+
+<VBox fx:id="vBox" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.BigBananaController">
+    <StackPane alignment="CENTER">
+         <MediaView fx:id="youAreTreated" fitHeight="1900" fitWidth="2533">
+             <mediaPlayer>
+                 <MediaPlayer autoPlay="true" >
+                     <media>
+                         <Media source="@./vedio/558841581-1-208.mp4" />
+                     </media>
+                 </MediaPlayer>
+             </mediaPlayer>
+         </MediaView>
+    </StackPane>
+
+</VBox>

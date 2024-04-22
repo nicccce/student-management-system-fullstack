@@ -73,11 +73,11 @@ public class BaseController {
             id = id + 1;
         return id;
     }
+
     /**
      *  获取dictionary表的新的Id StringBoot 对SqLite 主键自增支持不好  插入记录是需要设置主键ID，编写方法获取新的id
      * @return
      */
-
     public synchronized Integer getNewDictionaryId() {
         Integer id = dictionaryInfoRepository.getMaxId();  // 查询最大的id
         if (id == null)
@@ -93,7 +93,6 @@ public class BaseController {
      * 返回前端存储菜单数据的 MapList
      * @return
      */
-
     @PostMapping("/getMenuList")
     public DataResponse getMenuList(@Valid @RequestBody DataRequest dataRequest) {
         Integer userTypeId = dataRequest.getInteger("userTypeId");
@@ -138,7 +137,6 @@ public class BaseController {
      * 返回前端存储角色信息的OptionItem的List
      * @return
      */
-
     @PostMapping("/getRoleOptionItemList")
     @PreAuthorize("hasRole('ADMIN')")
     public OptionItemList getRoleOptionItemList(@Valid @RequestBody DataRequest dataRequest) {
@@ -150,13 +148,13 @@ public class BaseController {
         }
         return new OptionItemList(0, itemList);
     }
+
     /**
      *  获取某个用户类型 userTypeId 菜单树 信息
      *  前台请求参数 无
      * 返回前端某个用户类型 userTypeId 菜单树对象MyTreeNode（这个是一个递归的树节点对象）
      * @return
      */
-
     @PostMapping("/getMenuTreeNode")
     @PreAuthorize("hasRole('ADMIN')")
     public MyTreeNode getMenuTreeNode(@Valid @RequestBody DataRequest dataRequest) {
@@ -165,13 +163,13 @@ public class BaseController {
             userTypeId = 1;
         return baseService.getMenuTreeNode(userTypeId);
     }
+
     /**
      *  添加新一个菜单
      *  前台请求参数 userTypeId 菜单所属的用户类型 pid 菜单所属的父菜单的pid title 菜单的标题
      * 返回前端先创建的菜单的对象 MyTreeNode
      * @return
      */
-
     @PostMapping("/newMenuTreeNode")
     @PreAuthorize("hasRole('ADMIN')")
     public MyTreeNode newMenuTreeNode(@Valid @RequestBody DataRequest dataRequest) {
@@ -188,6 +186,7 @@ public class BaseController {
         node.setChildList(new ArrayList());
         return node;
     }
+
     /**
      *  删除菜单
      *  前台请求参数 id 要删除的菜单的主键 menu_id
@@ -203,13 +202,13 @@ public class BaseController {
             menuInfoRepository.delete(op.get());
         return CommonMethod.getReturnMessageOK();
     }
+
     /**
      *  保存菜单信息
      *  前台请求参数 id 要修改菜单的主键 menu_id  name 菜单名字  title 菜单标题
      * 返回前端 操作正常
      * @return
      */
-
     @PostMapping("/saveMenuTreeNode")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse saveMenuTreeNode(@Valid @RequestBody DataRequest dataRequest) {
@@ -237,13 +236,13 @@ public class BaseController {
     public MyTreeNode getDictionaryTreeNode(@Valid @RequestBody DataRequest dataRequest) {
         return baseService.getDictionaryTreeNode();
     }
+
     /**
      *  添加新一个地点
      *  前台请求参数   pid 字典所属的父字典的pid  label 菜单的标题
      * 返回前端先创建字典的对象 MyTreeNode
      * @return
      */
-
     @PostMapping("/newDictionaryTreeNode")
     @PreAuthorize("hasRole('ADMIN')")
     public MyTreeNode newDictionaryTreeNode(@Valid @RequestBody DataRequest dataRequest) {
@@ -274,13 +273,13 @@ public class BaseController {
             dictionaryInfoRepository.delete(op.get());
         return CommonMethod.getReturnMessageOK();
     }
+
     /**
      *  保存字典信息
      *  前台请求参数 id 要修改菜单的主键 id  value 地点值  label 字典名
      * 返回前端 操作正常
      * @return
      */
-
     @PostMapping("/saveDictionaryTreeNode")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse saveDictionaryTreeNode(@Valid @RequestBody DataRequest dataRequest) {
@@ -303,7 +302,6 @@ public class BaseController {
      * 返回前端存储数据字典信息的OptionItem的List
      * @return
      */
-
     @PostMapping("/getDictionaryOptionItemList")
     public OptionItemList getDictionaryOptionItemList(@Valid @RequestBody DataRequest dataRequest) {
         String code = dataRequest.getString("code");

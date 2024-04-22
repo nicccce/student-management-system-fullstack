@@ -1,6 +1,6 @@
 package org.fatmansoft.teach.repository;
 
-import org.fatmansoft.teach.models.MenuInfo;
+import org.fatmansoft.teach.data.po.MenuInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

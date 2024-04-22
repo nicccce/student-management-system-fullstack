@@ -1,6 +1,6 @@
 package org.fatmansoft.teach.security.services;
 
-import org.fatmansoft.teach.models.User;
+import org.fatmansoft.teach.data.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

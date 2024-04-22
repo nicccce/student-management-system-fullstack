@@ -1,10 +1,9 @@
 package org.fatmansoft.teach.repository;
 
-import org.fatmansoft.teach.models.Person;
+import org.fatmansoft.teach.data.po.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Optional;
 /**
  * Person 数据操作接口，主要实现Person数据的查询操作

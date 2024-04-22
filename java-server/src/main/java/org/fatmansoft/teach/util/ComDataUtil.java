@@ -1,6 +1,6 @@
 package org.fatmansoft.teach.util;
 
-import org.fatmansoft.teach.payload.response.OptionItem;
+import org.fatmansoft.teach.data.vo.OptionItem;
 
 import java.util.HashMap;
 import java.util.List;

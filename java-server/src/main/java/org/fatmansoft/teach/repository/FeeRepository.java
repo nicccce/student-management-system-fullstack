@@ -1,6 +1,6 @@
 package org.fatmansoft.teach.repository;
 
-import org.fatmansoft.teach.models.Fee;
+import org.fatmansoft.teach.data.po.Fee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

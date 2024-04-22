@@ -17,7 +17,7 @@
             <Image url="@../picture/lock.png" />
         </ImageView>
         <PasswordField fx:id="passwordField" layoutX="140.0" layoutY="168.0" prefHeight="28.0" prefWidth="175.0" promptText="请输入你的密码" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #953d3d; -fx-text-fill: black;" />
-        <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="103.0" layoutY="251.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="38.0" prefWidth="138.0" style="                 -fx-opacity: 0.7;                 -fx-background-color: #7d0100;                 -fx-text-fill: white;                 -fx-background-radius: 20px;                 -fx-border-radius: 10px;                 -fx-padding: 5px 12px;" stylesheets="@../css/button.css" text="登录" textAlignment="CENTER" textFill="#d7d7d7">
+        <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="103.0" layoutY="251.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="38.0" prefWidth="138.0" style="-fx-opacity: 0.7;-fx-background-color: #7d0100;-fx-text-fill: white;-fx-background-radius: 20px;-fx-border-radius: 10px;-fx-padding: 5px 12px;" stylesheets="@../css/button.css" text="登录" textAlignment="CENTER" textFill="#d7d7d7">
             <font>
                 <Font size="15.0" />
             </font>

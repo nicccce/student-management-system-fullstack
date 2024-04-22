@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -16,6 +17,9 @@ import java.io.IOException;
  * 该类与FXML文件base/login-view.fxml相关联，用于控制登录界面的各个组件。
  */
 public class LoginController {
+    @FXML
+    public Button loginButton;
+
     /**
      * 用户名输入框的引用，对应FXML文件中的fx:id="usernameField"。
      */
@@ -90,6 +94,7 @@ public class LoginController {
         String msg = HttpRequestUtil.login(loginRequest);
         if (msg != null) {
             MessageDialog.showDialog(msg);
+            loginButton.setText("大香蕉");
             return;
         }
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("base/main-frame.fxml"));
@@ -107,7 +112,8 @@ public class LoginController {
      * 当前仅为示例，显示一个包含错误信息的对话框。
      *
      * @throws IOException 如果在对话框显示过程中发生I/O错误，则抛出此异常
-     */      @FXML
+     */
+    @FXML
     protected void linkButtonClick() throws IOException {
         MessageDialog.showDialog("你的钢门比较松弛");//TODO: edit it!!!!
         return;

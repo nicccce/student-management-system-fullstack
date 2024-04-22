@@ -132,7 +132,7 @@ public class MainFrameController {
                 for (j = 0; j < sList.size(); j++) {
                     Map ms = sList.get(j);
                     item = new MenuItem();
-                    item.setText( (String)ms.get("title"));
+                    item.setText((String)ms.get("title"));
                     item.setOnAction(e -> changeContent((String) ms.get("name"), (String)ms.get("title")));
                     menu.getItems().add(item);
                 }

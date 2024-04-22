@@ -1,6 +1,6 @@
 package org.fatmansoft.teach.repository;
 
-import org.fatmansoft.teach.models.Course;
+import org.fatmansoft.teach.data.po.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 /**

@@ -1,26 +1,18 @@
 package org.fatmansoft.teach.controllers;
 
-import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.fatmansoft.teach.models.EUserType;
-import org.fatmansoft.teach.models.User;
-import org.fatmansoft.teach.models.UserType;
-import org.fatmansoft.teach.payload.request.DataRequest;
-import org.fatmansoft.teach.payload.response.DataResponse;
+import org.fatmansoft.teach.data.po.EUserType;
+import org.fatmansoft.teach.data.po.User;
+import org.fatmansoft.teach.data.po.UserType;
 import org.fatmansoft.teach.repository.UserTypeRepository;
-import org.fatmansoft.teach.util.CommonMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,14 +25,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.fatmansoft.teach.payload.request.LoginRequest;
-import org.fatmansoft.teach.payload.request.SignupRequest;
-import org.fatmansoft.teach.payload.response.JwtResponse;
-import org.fatmansoft.teach.payload.response.MessageResponse;
+import org.fatmansoft.teach.data.dto.LoginRequest;
+import org.fatmansoft.teach.data.dto.SignupRequest;
+import org.fatmansoft.teach.data.vo.JwtResponse;
+import org.fatmansoft.teach.data.vo.MessageResponse;
 import org.fatmansoft.teach.repository.UserRepository;
 import org.fatmansoft.teach.security.jwt.JwtUtils;
 import org.fatmansoft.teach.security.services.UserDetailsImpl;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  *  AuthController 实现 登录和注册Web服务

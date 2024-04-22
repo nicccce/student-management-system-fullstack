@@ -1,7 +1,7 @@
 package org.fatmansoft.teach.repository;
 
-import org.fatmansoft.teach.models.EUserType;
-import org.fatmansoft.teach.models.UserType;
+import org.fatmansoft.teach.data.po.EUserType;
+import org.fatmansoft.teach.data.po.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package org.fatmansoft.teach.repository;
 
-import org.fatmansoft.teach.models.DictionaryInfo;
+import org.fatmansoft.teach.data.po.DictionaryInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,11 +1,14 @@
 package org.fatmansoft.teach.controllers;
 
-import org.fatmansoft.teach.models.*;
-import org.fatmansoft.teach.payload.request.DataRequest;
-import org.fatmansoft.teach.payload.response.DataResponse;
-import org.fatmansoft.teach.payload.response.MyTreeNode;
-import org.fatmansoft.teach.payload.response.OptionItem;
-import org.fatmansoft.teach.payload.response.OptionItemList;
+import org.fatmansoft.teach.data.po.DictionaryInfo;
+import org.fatmansoft.teach.data.po.MenuInfo;
+import org.fatmansoft.teach.data.po.User;
+import org.fatmansoft.teach.data.po.UserType;
+import org.fatmansoft.teach.data.dto.DataRequest;
+import org.fatmansoft.teach.data.vo.DataResponse;
+import org.fatmansoft.teach.data.vo.MyTreeNode;
+import org.fatmansoft.teach.data.vo.OptionItem;
+import org.fatmansoft.teach.data.vo.OptionItemList;
 import org.fatmansoft.teach.repository.DictionaryInfoRepository;
 import org.fatmansoft.teach.repository.MenuInfoRepository;
 import org.fatmansoft.teach.repository.UserRepository;

@@ -3,11 +3,11 @@ package org.fatmansoft.teach.controllers;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
-import org.fatmansoft.teach.models.*;
-import org.fatmansoft.teach.payload.request.DataRequest;
-import org.fatmansoft.teach.payload.response.DataResponse;
-import org.fatmansoft.teach.payload.response.OptionItem;
-import org.fatmansoft.teach.payload.response.OptionItemList;
+import org.fatmansoft.teach.data.po.*;
+import org.fatmansoft.teach.data.dto.DataRequest;
+import org.fatmansoft.teach.data.vo.DataResponse;
+import org.fatmansoft.teach.data.vo.OptionItem;
+import org.fatmansoft.teach.data.vo.OptionItemList;
 import org.fatmansoft.teach.repository.*;
 import org.fatmansoft.teach.service.BaseService;
 import org.fatmansoft.teach.util.ComDataUtil;
@@ -396,7 +396,6 @@ public class StudentController {
      * @param dataRequest 从前端获取 studentId 查询学生信息的主键 student_id
      * @return  根据studentId从数据库中查出相关数据，存在Map对象里，并返回前端
      */
-
     @PostMapping("/getStudentIntroduceData")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
     public DataResponse getStudentIntroduceData(@Valid @RequestBody DataRequest dataRequest) {

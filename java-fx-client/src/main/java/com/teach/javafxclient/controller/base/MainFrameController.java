@@ -85,8 +85,66 @@ public class MainFrameController {
             item = new MenuItem();
             item.setText("组件示例");
             item.setOnAction(e->changeContent("base/control-demo-panel","组件示例"));
+            item = new MenuItem();
+            item.setText("按钮组件");
+            item.setOnAction(e -> changeContent("componentDemo/Buttons", "按钮组件"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("复选框组件");
+            item.setOnAction(e -> changeContent("componentDemo/ChecksRadiosToggles", "复选框组件"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("下拉框组件");
+            item.setOnAction(e -> changeContent("componentDemo/ComboBoxes", "下拉框组件"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("字体资源");
+            item.setOnAction(e -> changeContent("componentDemo/FontResources", "字体资源"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("列表视图");
+            item.setOnAction(e -> changeContent("componentDemo/ListViews", "列表视图"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("选择器");
+            item.setOnAction(e -> changeContent("componentDemo/Pickers", "选择器"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("进度");
+            item.setOnAction(e -> changeContent("componentDemo/Progress", "进度"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("滚动窗格");
+            item.setOnAction(e -> changeContent("componentDemo/ScrollPanes", "滚动窗格"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("滑块");
+            item.setOnAction(e -> changeContent("componentDemo/Sliders", "滑块"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("步进器");
+            item.setOnAction(e -> changeContent("componentDemo/Stepper", "步进器"));
             menu.getItems().add(item);
             menuBar.getMenus().add(menu);
+
+            item = new MenuItem();
+            item.setText("表格视图");
+            item.setOnAction(e -> changeContent("componentDemo/TableViews", "表格视图"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("文本字段");
+            item.setOnAction(e -> changeContent("componentDemo/TextFields", "文本字段"));
+            menu.getItems().add(item);
         }
         menu = new Menu("编辑");
         item = new MenuItem();

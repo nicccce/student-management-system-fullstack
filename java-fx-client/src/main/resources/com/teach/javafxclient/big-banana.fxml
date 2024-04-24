@@ -3,8 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.media.*?>
 
-<VBox fx:id="vBox" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.BigBananaController">
-    <StackPane alignment="CENTER">
+<AnchorPane  fx:id="anchorPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.BigBananaController">
          <MediaView fx:id="youAreTreated" fitHeight="1900" fitWidth="2533">
              <mediaPlayer>
                  <MediaPlayer autoPlay="true" >
@@ -14,6 +13,5 @@
                  </MediaPlayer>
              </mediaPlayer>
          </MediaView>
-    </StackPane>
 
-</VBox>
+</AnchorPane>

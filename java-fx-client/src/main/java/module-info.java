@@ -10,6 +10,8 @@ module com.teach.javafxclient {
     requires spring.security.crypto;
     requires log4j;
     requires javafx.media;
+    requires MaterialFX;
+    requires fr.brouillard.oss.cssfx;
 
 
     opens com.teach.javafxclient to javafx.fxml;
@@ -24,4 +26,6 @@ module com.teach.javafxclient {
     opens com.teach.javafxclient.controller.base to com.google.gson, javafx.fxml;
     opens com.teach.javafxclient.controller to com.google.gson, javafx.fxml;
     opens com.teach.javafxclient.controller.admin to com.google.gson, javafx.fxml;
+    opens com.teach.javafxclient.controller.demo.controllers to com.google.gson, javafx.fxml;
+    opens com.teach.javafxclient.controller.demo to com.google.gson, javafx.fxml;
 }

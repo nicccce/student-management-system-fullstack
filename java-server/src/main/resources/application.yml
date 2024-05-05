@@ -24,6 +24,8 @@ spring:
         generate-ddl: true
         hibernate:
             ddl-auto: update
+        #上线后删除该配置
+        show-sql: true
     servlet:
         multipart:
             max-file-size: 50MB

@@ -140,7 +140,7 @@ public class StudentController {
     }
 
     /**
-     *  getStudentMapList 根据输入参数查询得到学生数据的 Map List集合 参数为空 查出说有学生， 参数不为空，查出人员编号或人员名称 包含输入字符串的学生
+     *  getStudentMapList 根据输入参数查询得到学生数据的 Map List集合 参数为空 查出所有学生， 参数不为空，查出人员编号或人员名称 包含输入字符串的学生
      * @param numName 输入参数
      * @return  Map List 集合
      */
@@ -158,7 +158,7 @@ public class StudentController {
     /**
      *  getStudentList 学生管理 点击查询按钮请求
      *  前台请求参数 numName 学号或名称的 查询串
-     * 返回前端 存储学生信息的 MapList 框架会自动将Map转换程用于前后台传输数据的Json对象，Map的嵌套结构和Json的嵌套结构类似
+     * 返回前端 存储学生信息的 MapList 框架会自动将Map转换成用于前后台传输数据的Json对象，Map的嵌套结构和Json的嵌套结构类似
      * @return
      */
     @PostMapping("/getStudentItemOptionList")

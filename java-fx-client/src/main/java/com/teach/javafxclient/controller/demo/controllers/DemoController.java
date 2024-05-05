@@ -118,14 +118,8 @@ public class DemoController implements Initializable {
 		Image image = new Image(MFXDemoResourcesLoader.load("logo_alt.png"), 64, 64, true, true);
 		ImageView logo = new ImageView(image);
 		Circle clip = new Circle(30);
-		clip.centerXProperty().bind(Bindings.createDoubleBinding(
-				() -> logo.getLayoutBounds().getCenterX(),
-				logo.layoutBoundsProperty()
-		));
-		clip.centerXProperty().bind(Bindings.createDoubleBinding(
-				() -> logo.getLayoutBounds().getCenterY(),
-				logo.layoutBoundsProperty()
-		));
+		clip.centerXProperty().bind(logo.layoutBoundsProperty().map(Bounds::getCenterX));
+		clip.centerYProperty().bind(logo.layoutBoundsProperty().map(Bounds::getCenterY));
 		logo.setClip(clip);
 		logoContainer.getChildren().add(logo);
 	}

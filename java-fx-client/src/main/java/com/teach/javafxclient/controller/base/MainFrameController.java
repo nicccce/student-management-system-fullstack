@@ -5,6 +5,7 @@ import com.teach.javafxclient.MainApplication;
 import com.teach.javafxclient.request.DataRequest;
 import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
+import fr.brouillard.oss.cssfx.CSSFX;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -44,6 +45,7 @@ public class MainFrameController {
      */
     @FXML
     public void initialize() {
+        CSSFX.start();
         Menu menu;
         MenuItem item;
         String role = AppStore.getJwt().getRoles();
@@ -86,6 +88,7 @@ public class MainFrameController {
             item.setText("组件示例");
             item.setOnAction(e->changeContent("base/control-demo-panel","组件示例"));
             item = new MenuItem();
+
             item.setText("按钮组件");
             item.setOnAction(e -> changeContent("componentDemo/Buttons", "按钮组件"));
             menu.getItems().add(item);
@@ -145,6 +148,7 @@ public class MainFrameController {
             item.setText("文本字段");
             item.setOnAction(e -> changeContent("componentDemo/TextFields", "文本字段"));
             menu.getItems().add(item);
+
         }
         menu = new Menu("编辑");
         item = new MenuItem();

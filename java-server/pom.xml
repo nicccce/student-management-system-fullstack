@@ -122,6 +122,12 @@
             <version>4.13</version>
             <scope>test</scope>
         </dependency>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
 
     </dependencies>
     <!-- 统一管理SpringData版本-->

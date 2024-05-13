@@ -128,7 +128,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
     </dependencies>
     <!-- 统一管理SpringData版本-->
     <dependencyManagement>

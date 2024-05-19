@@ -11,6 +11,8 @@ import org.fatmansoft.teach.security.services.UserDetailsImpl;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -247,6 +249,16 @@ public class CommonMethod {
             return (Date)obj;
         String str = obj.toString();
         return DateTimeTool.formatDateTime(str,"yyyy-MM-dd HH:mm:ss");
+    }
+    public static LocalDateTime getLocalDateTime(Map<String, Object> data, String key) {
+        Object obj = data.get(key);
+        if (obj == null)
+            return null;
+        if (obj instanceof LocalDateTime)
+            return (LocalDateTime) obj;
+        String str = obj.toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(str, formatter);
     }
 
     /**

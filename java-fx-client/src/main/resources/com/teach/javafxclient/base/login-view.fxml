@@ -10,7 +10,7 @@
     <ImageView fitHeight="474" fitWidth="1000" opacity="0.75" pickOnBounds="true" preserveRatio="true" style="-fx-border-radius: 30px; -fx-background-color: rgba(255, 255, 255, 0);">
         <Image url="@../picture/login-background.png" />
     </ImageView>
-    <ImageView fitHeight="185.0" fitWidth="159.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="201.0" fitWidth="208.0" layoutX="39.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../picture/logo.png" />
     </ImageView>
     <AnchorPane layoutX="617.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="342.0" style="                 -fx-background-color: rgba(255, 255, 255, 0.7);                 -fx-background-radius: 20px;                 -fx-background-blur: Gaussian;">

@@ -11,11 +11,13 @@ module com.teach.javafxclient {
     requires log4j;
     requires javafx.media;
     requires MaterialFX;
+    requires VirtualizedFX;
     requires fr.brouillard.oss.cssfx;
+    requires commons.beanutils;
 
 
     opens com.teach.javafxclient to javafx.fxml;
-    opens com.teach.javafxclient.model to javafx.base;
+    opens com.teach.javafxclient.model to javafx.base, commons.beanutils;
     exports com.teach.javafxclient;
     exports com.teach.javafxclient.controller;
     exports com.teach.javafxclient.controller.base;
@@ -32,5 +34,4 @@ module com.teach.javafxclient {
     opens com.teach.javafxclient.controller.admin to com.google.gson, javafx.fxml;
     opens com.teach.javafxclient.controller.demo.controllers to com.google.gson, javafx.fxml;
     opens com.teach.javafxclient.controller.demo to com.google.gson, javafx.fxml;
-    opens com.teach.javafxclient.controller.demo.model to com.google.gson, javafx.fxml;
 }

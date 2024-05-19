@@ -44,6 +44,8 @@ public class ChecksRadiosToggleController implements Initializable {
 	@FXML
 	private MFXRectangleToggleNode r3;
 
+
+
 	@FXML
 	private void changeColors(ActionEvent event) {
 		customToggle.setColors(ColorUtils.getRandomColor(), ColorUtils.getRandomColor());

@@ -206,7 +206,7 @@ public class StudentController extends ToolController {
 
     /**
      * 点击删除按钮 删除当前编辑的学生的数据
-      */
+     */
     @FXML
     protected void onDeleteButtonClick() {
         Map form = dataTableView.getSelectionModel().getSelectedItem();
@@ -247,7 +247,7 @@ public class StudentController extends ToolController {
         form.put("className",classNameField.getText());
         form.put("card",cardField.getText());
         if(genderComboBox.getSelectionModel() != null && genderComboBox.getSelectionModel().getSelectedItem() != null)
-           form.put("gender",genderComboBox.getSelectionModel().getSelectedItem().getValue());
+            form.put("gender",genderComboBox.getSelectionModel().getSelectedItem().getValue());
         form.put("birthday",birthdayPick.getEditor().getText());
         form.put("email",emailField.getText());
         form.put("phone",phoneField.getText());

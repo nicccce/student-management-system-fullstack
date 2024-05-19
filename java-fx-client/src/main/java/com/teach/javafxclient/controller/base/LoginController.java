@@ -8,7 +8,7 @@ import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
 import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
 import io.github.palexdev.materialfx.enums.ScrimPriority;
-import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
+import io.github.palexdev.materialfx.font.MFXFontIcon;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -131,7 +131,12 @@ public class LoginController {
         LoginRequest loginRequest = new LoginRequest(username, password);
         String msg = HttpRequestUtil.login(loginRequest);
         if (msg != null) {
-            MessageDialog.showDialog(msg);
+            MFXFontIcon errorIcon = new MFXFontIcon("mfx-exclamation-circle-filled", 18);
+            dialogContent.setHeaderIcon(errorIcon);
+            dialogContent.setHeaderText("登录失败！");
+            convertDialogTo("mfx-error-dialog");
+            dialogContent.setContentText("\n"+msg);
+            dialog.showDialog();
             loginButton.setText("大香蕉");
             return;
         }
@@ -166,9 +171,10 @@ public class LoginController {
      */
     @FXML
     protected void linkButtonClick() throws IOException {
-        MFXFontIcon infoIcon = new MFXFontIcon("fas-circle-info", 18);
+        MFXFontIcon infoIcon = new MFXFontIcon("mfx-info-circle-filled", 18);
         dialogContent.setHeaderIcon(infoIcon);
-        dialogContent.setHeaderText("你的钢门比较松弛");//TODO: edit it!!!!
+        dialogContent.setHeaderText("登录失败？");
+        dialogContent.setContentText("\n你的肛门比较松弛");
         convertDialogTo("mfx-info-dialog");
         dialog.showDialog();
         return;

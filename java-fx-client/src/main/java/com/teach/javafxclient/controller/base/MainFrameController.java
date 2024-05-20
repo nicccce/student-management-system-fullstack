@@ -1,5 +1,6 @@
 package com.teach.javafxclient.controller.base;
 
+import atlantafx.base.theme.Styles;
 import com.teach.javafxclient.AppStore;
 import com.teach.javafxclient.MainApplication;
 import com.teach.javafxclient.request.DataRequest;
@@ -212,6 +213,8 @@ public class MainFrameController {
             menuBar.getMenus().add(menu);
         }
         contentTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+        contentTabPane.getStyleClass().add(Styles.TABS_CLASSIC);
+        contentTabPane.setMinWidth(450);
     }
 
     /**

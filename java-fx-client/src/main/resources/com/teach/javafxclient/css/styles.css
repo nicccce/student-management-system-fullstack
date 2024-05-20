@@ -1,0 +1,163 @@
+
+@import '../fonts/Fonts.css';
+@import 'MFXColors.css';
+
+@font-face {
+    -fx-font-family : 'Source Han Sans CN Regular';
+    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Normal.otf');
+}
+
+@font-face {
+    font-family: 'Source Han Sans CN Bold';
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Bold.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Source Han Sans CN ExtraBold';
+    font-weight: 800px;
+    font-style: normal;
+    font-display: swap;
+    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Heavy.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Source Han Sans CN Light';
+    font-weight: 300px;
+    font-style: normal;
+    font-display: swap;
+    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Light.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Source Han Sans CN Regular';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Regular.otf') format('truetype');
+}
+
+/**************************************************
+ * Text Fields
+**************************************************/
+.mfx-text-field {
+	-fx-min-width: 130;
+	-fx-font-family: 'Source Han Sans CN Regular';
+}
+
+.mfx-text-field .floating-text {
+	-fx-font-family: 'Source Han Sans CN Regular';
+}
+
+
+#customField {
+	-fx-border-color: -common-gradient;
+}
+
+#customField .floating-text {
+	-fx-text-fill: -mfx-red;
+}
+
+/**************************************************
+ * Password Fields
+**************************************************/
+#customPassword {
+	-fx-border-color: -secondary-gradient;
+}
+
+#customPassword:masked {
+	-fx-text-fill: -mfx-blue;
+}
+
+#customPassword .mfx-font-icon {
+	-mfx-color: -mfx-blue;
+}
+
+#customPassword .mfx-context-menu .mfx-menu-item:disabled .mfx-font-icon {
+	-mfx-color: #bcbcbc;
+}
+
+#customPassword .floating-text {
+	-fx-text-fill: -mfx-blue;
+}
+
+#validatedField {
+	-mfx-hide-character: '?';
+}
+
+#validatedField:invalid {
+	-fx-border-color: -mfx-red;
+}
+
+#validatedField:invalid .floating-text {
+	-fx-text-fill: -mfx-red;
+}
+
+#validatedField:invalid .mfx-font-icon {
+	-mfx-color: -mfx-red;
+}
+
+#validationLabel {
+	-fx-font-family: 'Source Han Sans CN Regular';
+	-fx-font-size: 11;
+}
+
+/**************************************************
+ * Button
+**************************************************/
+button {
+}
+
+.mfx-button {
+	-fx-text-fill: -mfx-text-he;
+}
+
+.mfx-button .mfx-ripple-generator {
+	-mfx-ripple-radius: 40;
+	-mfx-auto-clip: true;
+}
+
+.mfx-button .text {
+	-fx-font-smoothing-type: gray;
+	-fx-font-family: 'Source Han Sans CN Regular';
+}
+
+#custom {
+	-fx-background-color: -mfx-purple;
+	-fx-text-fill: white
+}
+
+.outline-button {
+	-fx-background-color: transparent;
+	-fx-border-color: -mfx-purple;
+	-fx-border-radius: 3;
+
+	-fx-text-fill: -mfx-purple;
+}
+
+.outline-button:hover,
+.outline-button:focused {
+	-fx-background-color: -mfx-purple;
+	-fx-text-fill: white;
+}
+
+
+.link-button {
+	-fx-background-color: transparent;
+	-fx-border-radius: 3;
+	-fx-text-fill: #0096FF;
+	-fx-underline: true;
+	-fx-cursor: hand;
+}
+
+.link-button:armed,
+.link-button:focused {
+	-fx-border-color: #006BFF;
+	-fx-text-fill: #006BFF;
+}
+
+.link-button .mfx-ripple-generator {
+	-mfx-ripple-color: #D9E9FF;
+}

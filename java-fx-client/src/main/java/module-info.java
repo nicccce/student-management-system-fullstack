@@ -14,6 +14,7 @@ module com.teach.javafxclient {
     requires VirtualizedFX;
     requires fr.brouillard.oss.cssfx;
     requires commons.beanutils;
+    requires atlantafx.base;
 
 
     opens com.teach.javafxclient to javafx.fxml;

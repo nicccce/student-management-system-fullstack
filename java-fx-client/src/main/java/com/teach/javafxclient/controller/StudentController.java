@@ -1,10 +1,12 @@
 package com.teach.javafxclient.controller;
 
+import atlantafx.base.controls.ToggleSwitch;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.ToolController;
 import com.teach.javafxclient.request.*;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.controller.base.MessageDialog;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -12,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.FileChooser;
+import atlantafx.base.theme.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -123,6 +126,12 @@ public class StudentController extends ToolController {
         list.addListener(this::onTableRowSelect);
         setTableViewData();
         genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
+        dataTableView.setColumnResizePolicy(
+                TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN
+        );
+
+        Styles.toggleStyleClass(dataTableView, Styles.BORDERED);
+        Styles.toggleStyleClass(dataTableView, Styles.STRIPED);
 
         genderComboBox.getItems().addAll(genderList);
         birthdayPick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));

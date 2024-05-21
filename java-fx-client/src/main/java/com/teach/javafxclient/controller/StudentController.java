@@ -1,5 +1,6 @@
 package com.teach.javafxclient.controller;
 
+import com.teach.javafxclient.MainApplication;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.ToolController;
 import com.teach.javafxclient.model.StudentTableEntity;
@@ -14,7 +15,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,11 +25,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import atlantafx.base.theme.*;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -289,7 +294,21 @@ public class StudentController extends ToolController {
      */
     @FXML
     protected void onAddButtonClick() {
-        clearPanel();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-student.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), -1, -1);
+            Stage addStage = new Stage();
+            addStage.setTitle("添加学生信息");
+            addStage.setScene(scene);
+            addStage.getIcons().add(MainApplication.icon);
+            addStage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void addStudent(){
+
     }
 
     /**
@@ -302,7 +321,7 @@ public class StudentController extends ToolController {
             dialogUtil.openError("删除失败", "当前未选择任何元素，无法删除！");
             return;
         }
-        dialogUtil.openWarning("警告", "将删除框选的 "+selectedItemList.size()+" 个学生的所有信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
+        dialogUtil.openWarning("警告", "将永久删除框选的 "+selectedItemList.size()+" 个学生的所有信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
         /*StudentTableEntity form = dataTableView.getSelectionModel().getSelectedItem();
         if(form == null) {
             MessageDialog.showDialog("没有选择，不能删除");
@@ -333,7 +352,7 @@ public class StudentController extends ToolController {
         }
         DataRequest req = new DataRequest();
         req.put("studentId", studentIdList);
-        DataResponse res = HttpRequestUtil.request("/api/student/studentDeleteAll",req);
+        DataResponse res = HttpRequestUtil.deleteRequest("/api/student/studentDeleteAll",req);
         if (res != null){
             if (res.getCode() == 0) {
                 dialogUtil.openGeneric("删除成功", "删除成功！");
@@ -341,6 +360,8 @@ public class StudentController extends ToolController {
             } else {
                 dialogUtil.openError("删除失败", res.getMsg());
             }
+        }else {
+            dialogUtil.openError("删除失败", "后台无响应，请稍后再尝试");
         }
     }
 

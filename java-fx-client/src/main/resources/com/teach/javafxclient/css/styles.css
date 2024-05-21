@@ -4,7 +4,12 @@
 
 @font-face {
     -fx-font-family : 'Source Han Sans CN Regular';
-    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Normal.otf');
+    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Regular.otf');
+}
+
+@font-face {
+    -fx-font-family : 'Source Han Sans CN Medium';
+    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Medium.otf');
 }
 
 @font-face {
@@ -165,4 +170,213 @@ button {
 .label {
   -fx-font-family: "Source Han Sans CN Bold";
 
+}
+
+
+/**************************************************
+ * Legacy Combos
+**************************************************/
+.mfx-legacy-combo-box {
+	-fx-min-width: 120;
+}
+
+/**************************************************
+ * New Combos
+**************************************************/
+.mfx-combo-box {
+	-fx-min-width: 150;
+}
+
+#customNCombo {
+	-fx-border-color: transparent;
+	-fx-border-radius: 0;
+	-fx-background-color: -mfx-purple;
+	-fx-background-radius: 30;
+	-fx-text-fill: white;
+
+	-fx-padding: 3 3 3 6;
+	-fx-background-insets: 0 0 0 -3;
+}
+
+#customNCombo .floating-text .text{
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+	-fx-font-family: 'Source Han Sans CN Regular';
+}
+
+#customNCombo .caret .mfx-font-icon {
+	-mfx-color: white;
+}
+
+#customNCombo .caret .mfx-ripple-generator {
+	-mfx-ripple-color: rgba(255, 255, 255, 0.5);
+}
+
+#customNCombo2 {
+	-fx-border-color: transparent transparent gray transparent;
+	-fx-border-radius: 0;
+	-fx-padding: 3 -3 0 3;
+}
+
+#customNCombo2:focus-within {
+	-fx-border-color: transparent transparent -common-gradient transparent;
+}
+
+#customNCombo2:focus-within .caret .mfx-font-icon {
+	-mfx-color: #ff5d53;
+}
+
+#customNCombo2 .virtual-flow {
+	-track-color: derive(#ff5d53, 90%);
+	-thumb-color: derive(#ff5d53, 50%);
+	-thumb-hover-color: derive(#ff5d53, 25%);
+}
+
+#customNCombo2 .virtual-flow .mfx-combo-box-cell:hover {
+	-fx-background-color: derive(#ff5d53, 90%);
+}
+
+/**************************************************
+ * Filter Combos
+**************************************************/
+#customFilter {
+	-fx-border-color: transparent;
+	-fx-border-radius: 0;
+	-fx-background-color: #007BF6;
+	-fx-text-fill: white;
+
+	-fx-padding: 4;
+	-fx-background-insets: 0;
+}
+
+#customFilter .text-field .text{
+	-fx-prompt-text-fill: white;
+	-fx-font-family: 'Source Han Sans CN Regular';
+}
+
+#customFilter .combo-popup .text-field .text{
+	-fx-prompt-text-fill: -mfx-text-me;
+	-fx-font-family: 'Source Han Sans CN Regular';
+}
+
+#customFilter .caret .mfx-font-icon {
+    -mfx-color: #FF794B;
+    -mfx-description: "fas-angle-down";
+    -mfx-size: 16;
+}
+
+#customFilter .caret .mfx-ripple-generator {
+	-mfx-ripple-color: rgba(255, 255, 255, 0.5);
+}
+
+/**************************************************
+ * Date Pickers
+**************************************************/
+#custDatePicker {
+	-fx-background-color: #007BF6;
+	-fx-border-color: transparent;
+	-fx-border-radius: 0;
+
+	-fx-font-family: "Source Han Sans CN Medium";
+	-fx-text-fill: white;
+}
+
+#custDatePicker .floating-text {
+	-fx-background-color: transparent;
+
+	-fx-font-family: "Source Han Sans CN Medium";
+	-fx-text-fill: white;
+}
+
+#custDatePicker .icon {
+	-mfx-color: white;
+}
+
+#custDatePicker .date-picker-popup .content {
+	-fx-background-color: #007BF6;
+	-fx-border-color: transparent;
+	-fx-border-radius: 0;
+}
+
+#custDatePicker .date-picker-popup .left-arrow:disabled,
+#custDatePicker .date-picker-popup .right-arrow:disabled {
+	-fx-opacity: 0.8;
+}
+
+#custDatePicker .date-picker-popup .left-arrow .mfx-font-icon,
+#custDatePicker .date-picker-popup .right-arrow .mfx-font-icon {
+	-mfx-color: white;
+}
+
+#custDatePicker .date-picker-popup .months-combo,
+#custDatePicker .date-picker-popup .years-combo {
+	-fx-border-color: transparent;
+	-fx-border-radius: 0;
+	-fx-background-color: white;
+	-fx-text-fill: -mfx-text-he;
+
+	-fx-padding: 4;
+	-fx-background-insets: 0;
+	-fx-font-family: "Source Han Sans CN Medium";
+}
+
+#custDatePicker .date-picker-popup .months-combo:focus-within,
+#custDatePicker .date-picker-popup .years-combo:focus-within {
+	-fx-text-fill: #007BF6;
+}
+
+#custDatePicker .date-picker-popup .months-combo:focus-within .caret .mfx-font-icon,
+#custDatePicker .date-picker-popup .years-combo:focus-within .caret .mfx-font-icon {
+	-mfx-color: #007BF6;
+}
+
+#custDatePicker .date-picker-popup .months-combo .virtual-flow,
+#custDatePicker .date-picker-popup .years-combo .virtual-flow {
+	-track-color: derive(#007BF6, 100%);
+	-thumb-color: derive(#007BF6, 70%);
+	-thumb-hover-color: derive(#007BF6, 45%);
+}
+
+#custDatePicker .date-picker-popup .months-combo .virtual-flow .mfx-combo-box-cell,
+#custDatePicker .date-picker-popup .years-combo .virtual-flow .mfx-combo-box-cell {
+	-fx-font-family: 'Source Han Sans CN Medium';
+}
+
+#custDatePicker .date-picker-popup .months-combo .virtual-flow .mfx-combo-box-cell:selected .label,
+#custDatePicker .date-picker-popup .years-combo .virtual-flow .mfx-combo-box-cell:selected .label {
+	-fx-text-fill: #007BF6;
+}
+
+#custDatePicker .date-picker-popup .months-combo .virtual-flow .mfx-combo-box-cell:hover,
+#custDatePicker .date-picker-popup .years-combo .virtual-flow .mfx-combo-box-cell:hover,
+#custDatePicker .date-picker-popup .months-combo .virtual-flow .mfx-combo-box-cell:selected,
+#custDatePicker .date-picker-popup .years-combo .virtual-flow .mfx-combo-box-cell:selected {
+	-fx-background-color: derive(#007BF6, 130%);
+}
+
+#custDatePicker .date-picker-popup .week-day {
+	-fx-font-family: 'Source Han Sans CN Bold';
+	-fx-text-fill: white;
+}
+
+#custDatePicker .date-picker-popup .mfx-date-cell {
+	-fx-font-family: 'Source Han Sans CN Medium';
+	-fx-text-fill: white;
+}
+
+#custDatePicker .date-picker-popup .mfx-date-cell:extra {
+	-fx-text-fill: rgba(255, 255, 255, 0.5);
+}
+
+#custDatePicker .date-picker-popup .mfx-date-cell:current {
+	-fx-background-color: transparent;
+	-fx-border-color: white;
+	-fx-border-width: 2;
+	-fx-font-family: 'Source Han Sans CN Medium';
+}
+
+#custDatePicker .date-picker-popup .mfx-date-cell:selected {
+	-fx-background-color: white;
+	-fx-font-family: 'Source Han Sans CN Bold';
+	-fx-text-fill: #007BF6;
 }

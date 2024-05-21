@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.media.*?>
 
-<AnchorPane  fx:id="anchorPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.BigBananaController">
+<AnchorPane  fx:id="anchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.BigBananaController">
          <MediaView fx:id="youAreTreated" fitHeight="1900" fitWidth="2533">
              <mediaPlayer>
                  <MediaPlayer autoPlay="true" >

@@ -414,4 +414,35 @@ public class HttpRequestUtil<T> {
         }
         return null;
     }
+
+    public static DataResponse deleteRequest(String url, DataRequest request) {
+        if (isLocal) {
+            int index = url.lastIndexOf('/');
+            String methodName = url.substring(index + 1, url.length());
+            try {
+                Method method = SQLiteJDBC.class.getMethod(methodName, DataRequest.class);
+                return (DataResponse) method.invoke(SQLiteJDBC.getInstance(), request);
+            } catch (Exception e) {
+                logger.error(e);
+            }
+        } else {
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .uri(URI.create(serverUrl + url))
+                    .method("DELETE", HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                    .headers("Content-Type", "application/json")
+                    .headers("Authorization", "Bearer " + AppStore.getJwt().getAccessToken())
+                    .build();
+            HttpClient client = HttpClient.newHttpClient();
+            try {
+                HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() == 200) {
+                    DataResponse dataResponse = gson.fromJson(response.body(), DataResponse.class);
+                    return dataResponse;
+                }
+            } catch (IOException | InterruptedException e) {
+                logger.error(e);
+            }
+        }
+        return null;
+    }
 }

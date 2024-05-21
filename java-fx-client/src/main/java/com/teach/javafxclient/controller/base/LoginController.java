@@ -1,16 +1,28 @@
 package com.teach.javafxclient.controller.base;
 
 import com.teach.javafxclient.MainApplication;
+import com.teach.javafxclient.controller.demo.model.Model;
 import com.teach.javafxclient.request.*;
+import com.teach.javafxclient.util.DialogUtil;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
+import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
+import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
+import io.github.palexdev.materialfx.enums.ScrimPriority;
+import io.github.palexdev.materialfx.font.MFXFontIcon;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 登录交互控制类，用于处理登录界面的交互逻辑。
@@ -19,6 +31,9 @@ import java.io.IOException;
 public class LoginController {
     @FXML
     public Button loginButton;
+
+    @FXML
+    public AnchorPane anchorPane;
 
     /**
      * 用户名输入框的引用，对应FXML文件中的fx:id="usernameField"。
@@ -52,6 +67,8 @@ public class LoginController {
      */
     private double offsetY;
 
+    private final DialogUtil dialogUtil = new DialogUtil();
+
     /**
      * 设置舞台(Stage)的引用。
      *
@@ -80,6 +97,7 @@ public class LoginController {
         usernameField.setText("admin");
         // usernameField.setText("2022030001"); // 注释掉的代码示例
         passwordField.setText("123456");
+
     }
 
     /**
@@ -93,7 +111,7 @@ public class LoginController {
         LoginRequest loginRequest = new LoginRequest(username, password);
         String msg = HttpRequestUtil.login(loginRequest);
         if (msg != null) {
-            MessageDialog.showDialog(msg);
+            dialogUtil.openError("登录失败！",msg);
             loginButton.setText("大香蕉");
             return;
         }
@@ -107,6 +125,9 @@ public class LoginController {
         }
     }
 
+
+
+
     /**
      * 链接按钮点击事件处理方法。
      * 当前仅为示例，显示一个包含错误信息的对话框。
@@ -115,7 +136,8 @@ public class LoginController {
      */
     @FXML
     protected void linkButtonClick() throws IOException {
-        MessageDialog.showDialog("你的钢门比较松弛");//TODO: edit it!!!!
+        MFXFontIcon infoIcon = new MFXFontIcon("mfx-info-circle-filled", 18);
+        dialogUtil .openInfo("登录失败？", "你的肛门比较松弛");
         return;
     }
 

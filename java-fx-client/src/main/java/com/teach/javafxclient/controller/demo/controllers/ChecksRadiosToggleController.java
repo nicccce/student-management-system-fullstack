@@ -20,8 +20,8 @@ package com.teach.javafxclient.controller.demo.controllers;
 
 import io.github.palexdev.materialfx.controls.MFXRectangleToggleNode;
 import io.github.palexdev.materialfx.controls.MFXToggleButton;
+import io.github.palexdev.materialfx.font.MFXFontIcon;
 import io.github.palexdev.materialfx.utils.ColorUtils;
-import io.github.palexdev.mfxresources.fonts.fontawesome.FontAwesomeSolid;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,13 +54,13 @@ public class ChecksRadiosToggleController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		r1.setLabelLeadingIcon(FontAwesomeSolid.random(Color.BLACK, 16));
-		r1.setLabelTrailingIcon(FontAwesomeSolid.random(Color.BLACK, 16));
+		r1.setLabelLeadingIcon(MFXFontIcon.getRandomIcon(16, Color.BLACK));
+		r1.setLabelTrailingIcon(MFXFontIcon.getRandomIcon(16, Color.BLACK));
 
-		r2.setLabelLeadingIcon(FontAwesomeSolid.random(Color.BLACK, 16));
-		r2.setLabelTrailingIcon(FontAwesomeSolid.random(Color.BLACK, 16));
+		r2.setLabelLeadingIcon(MFXFontIcon.getRandomIcon(16, Color.BLACK));
+		r2.setLabelTrailingIcon(MFXFontIcon.getRandomIcon(16, Color.BLACK));
 
-		r3.setLabelLeadingIcon(FontAwesomeSolid.random(Color.BLACK, 16));
-		r3.setLabelTrailingIcon(FontAwesomeSolid.random(Color.BLACK, 16));
+		r3.setLabelLeadingIcon(MFXFontIcon.getRandomIcon(16, Color.BLACK));
+		r3.setLabelTrailingIcon(MFXFontIcon.getRandomIcon(16, Color.BLACK));
 	}
 }

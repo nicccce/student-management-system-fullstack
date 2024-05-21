@@ -13,6 +13,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
+import atlantafx.base.theme.*;
 
 import java.io.IOException;
 
@@ -36,6 +37,8 @@ public class MainApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
+        Application.setUserAgentStylesheet(new NordLight().getUserAgentStylesheet());
+
         mainStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("base/login-view.fxml"));
         Parent root = fxmlLoader.load();

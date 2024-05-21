@@ -20,9 +20,6 @@ package com.teach.javafxclient.controller.demo;
 
 import fr.brouillard.oss.cssfx.CSSFX;
 import com.teach.javafxclient.controller.demo.controllers.DemoController;
-import io.github.palexdev.materialfx.theming.JavaFXThemes;
-import io.github.palexdev.materialfx.theming.MaterialFXStylesheets;
-import io.github.palexdev.materialfx.theming.UserAgentBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,26 +34,14 @@ public class Demo extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		CSSFX.start();
 
-		UserAgentBuilder.builder()
-			.themes(JavaFXThemes.MODENA)
-			.themes(MaterialFXStylesheets.forAssemble(true))
-			.setDeploy(true)
-			.setResolveAssets(true)
-			.build()
-			.setGlobal();
-
-
 		FXMLLoader loader = new FXMLLoader(MFXDemoResourcesLoader.loadURL("fxml/Demo.fxml"));
 		loader.setControllerFactory(c -> new DemoController(primaryStage));
 		Parent root = loader.load();
-
 		Scene scene = new Scene(root);
 		scene.setFill(Color.TRANSPARENT);
 		primaryStage.initStyle(StageStyle.TRANSPARENT);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("MaterialFX Demo");
 		primaryStage.show();
-
-		//ScenicView.show(scene);
 	}
 }

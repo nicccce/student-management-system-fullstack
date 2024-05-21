@@ -25,32 +25,28 @@ public class StudentService {
     private StudentRepository studentRepository;  //学生数据操作自动注入
     @Autowired
     private UserRepository userRepository;  //学生数据操作自动注入
-    public DataResponse studentDeleteAll( DataRequest dataRequest) {
-        List AllstudentId = dataRequest.getList("studentId");  //获取student_id值
-        Student s= null;
-        Optional<Student> op;
-        for (int i=0;i< AllstudentId.size();i++) {
-            if(AllstudentId != null) {
-                op= studentRepository.findById(AllstudentId.indexOf(i));   //查询获得实体对象
-                if(op.isPresent()) {
-                    s = op.get();
-                }
-            } else {
-                return CommonMethod.getReturnMessageError("无学生实体传入");
-            }
-            if(s != null) {
-                Optional<User> uOp = userRepository.findByPersonPersonId(s.getPerson().getPersonId()); //查询对应该学生的账户
-                if(uOp.isPresent()) {
-                    userRepository.delete(uOp.get()); //删除对应该学生的账户
+    public DataResponse studentDeleteAll(DataRequest dataRequest) {
+        List<Integer> allStudentIds = dataRequest.getList("studentId");  // 获取studentId值
+
+        if (allStudentIds == null || allStudentIds.isEmpty()) {
+            return CommonMethod.getReturnMessageError("无学生实体传入");
+        }
+
+        for (Integer studentId : allStudentIds) {
+            Optional<Student> op = studentRepository.findById(studentId);   // 查询获得实体对象
+            if (op.isPresent()) {
+                Student s = op.get();
+                Optional<User> uOp = userRepository.findByPersonPersonId(s.getPerson().getPersonId()); // 查询对应该学生的账户
+                if (uOp.isPresent()) {
+                    userRepository.delete(uOp.get()); // 删除对应该学生的账户
                 }
                 Person p = s.getPerson();
-                studentRepository.delete(s);    //首先数据库永久删除学生信息
-                personRepository.delete(p);   // 然后数据库永久删除学生信息
+                studentRepository.delete(s);    // 首先数据库永久删除学生信息
+                personRepository.delete(p);     // 然后数据库永久删除人员信息
             } else {
-                return CommonMethod.getReturnMessageError("学生Id传入错误");
+                return CommonMethod.getReturnMessageError("学生ID传入错误：" + studentId);
             }
         }
 
-        return CommonMethod.getReturnMessageOK();  //通知前端操作正常
-    }
-}
+        return CommonMethod.getReturnMessageOK();  // 通知前端操作正常
+    }}

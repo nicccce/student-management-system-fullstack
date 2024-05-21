@@ -10,16 +10,16 @@
 
 <BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentController">
     <top>
-        <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
+        <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="816.0" spacing="5.0">
             <children>
-                <FlowPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <FlowPane alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <MFXButton buttonType="RAISED" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onAddButtonClick" text="添加" GridPane.rowIndex="4">
+                        <MFXButton buttonType="RAISED" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onAction="#onAddButtonClick" text="添加" GridPane.rowIndex="4">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
                         </MFXButton>
-                        <MFXButton buttonType="RAISED" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除" GridPane.rowIndex="4">
+                        <MFXButton buttonType="RAISED" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除" GridPane.rowIndex="4">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
@@ -27,20 +27,22 @@
                     </children>
                 </FlowPane>
                 <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-                <FlowPane alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                <FlowPane alignment="CENTER_RIGHT" prefHeight="40" prefWidth="600.0" BorderPane.alignment="CENTER">
                     <children>
                         <Label prefWidth="49.0" text="学号姓名">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin></Label>
-                        <TextField fx:id="numNameTextField" prefWidth="100.0">
+                        <MFXTextField fx:id="numNameTextField" floatMode="BORDER" floatingText="学号姓名" maxHeight="30" prefHeight="0.0" prefWidth="221.0">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </FlowPane.margin></TextField>
-                        <Button mnemonicParsing="false" onAction="#onQueryButtonClick" text="查询">
+                            </FlowPane.margin>
+                        </MFXTextField>
+                        <MFXButton buttonType="RAISED" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onQueryButtonClick" text="查询">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </FlowPane.margin></Button>
+                            </FlowPane.margin>
+                        </MFXButton>
                     </children>
                 </FlowPane>
             </children>
@@ -95,9 +97,10 @@
                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="性别" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                                <ComboBox fx:id="genderComboBox" prefHeight="38.0" prefWidth="181.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                                 <Label alignment="CENTER" prefHeight="32.0" prefWidth="93.0" text="出生日期" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                        <font>
-                           <Font size="10.0" />
-                        </font></Label>
+                                    <font>
+                                       <Font size="10.0" />
+                                    </font>
+                                </Label>
 
                               <DatePicker fx:id="birthdayPick" prefHeight="66.0" prefWidth="201.0" promptText="出生日期" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   </children>
@@ -106,7 +109,7 @@
                         <MFXTextField fx:id="phoneField" floatMode="BORDER" floatingText="电话" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                         <MFXTextField fx:id="addressField" floatMode="BORDER" floatingText="地址" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                         <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
-                            <Button onAction="#onSaveButtonClick" text="保存" />
+                            <MFXButton buttonType="RAISED" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="保存" />
                         </FlowPane>
                 </VBox>
             </items>

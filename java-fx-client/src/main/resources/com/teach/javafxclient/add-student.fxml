@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.text.Font?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.teach.javafxclient.controller.admin.AddStudent"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="300.0" spacing="20.0">
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        </padding>
+        <MFXTextField fx:id="numField" floatMode="BORDER" floatingText="学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <MFXTextField fx:id="nameField" floatMode="BORDER" floatingText="姓名" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <MFXTextField fx:id="deptField" floatMode="BORDER" floatingText="院系" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <MFXTextField fx:id="majorField" floatMode="BORDER" floatingText="专业" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <MFXTextField fx:id="classNameField" floatMode="BORDER" floatingText="班级" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <MFXTextField fx:id="cardField" floatMode="BORDER" floatingText="证件号码" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <MFXComboBox  fx:id="genderComboBox" floatMode="BORDER" prefHeight="38.0" prefWidth="221.0"/>
+        <MFXDatePicker fx:id="birthdayPick" prefHeight="66.0" prefWidth="221.0" promptText="出生日期" />
+        <MFXTextField fx:id="emailField" floatMode="BORDER" floatingText="邮箱" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <MFXTextField fx:id="phoneField" floatMode="BORDER" floatingText="电话" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+        <MFXTextField fx:id="addressField" floatMode="BORDER" floatingText="地址" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+        <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
+            <MFXButton buttonType="RAISED" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="添加" />
+        </FlowPane>
+    </VBox>
+</AnchorPane>

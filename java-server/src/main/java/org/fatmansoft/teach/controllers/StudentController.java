@@ -10,6 +10,7 @@ import org.fatmansoft.teach.data.vo.OptionItem;
 import org.fatmansoft.teach.data.vo.OptionItemList;
 import org.fatmansoft.teach.repository.*;
 import org.fatmansoft.teach.service.BaseService;
+import org.fatmansoft.teach.service.StudentService;
 import org.fatmansoft.teach.util.ComDataUtil;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,8 @@ public class StudentController {
     private FeeRepository feeRepository;  //消费数据操作自动注入
     @Autowired
     private BaseService baseService;   //基本数据处理数据操作自动注入
+    @Autowired
+    private StudentService studentService; //注入学生服务
 
 
     /**
@@ -585,6 +588,18 @@ public class StudentController {
         content= CommonMethod.replaceNameValue(content,info); //将HTML中标记串${name}等替换成学生实际的信息
         return baseService.getPdfDataFromHtml(content); //生成学生简历PDF二进制数据
     }
+    /**
+     * studentDeleteAll 删除学生信息Web服务 Student页面的列表里点击删除按钮则可以删除已经存在的学生信息， 前端会将该记录的id 回传到后端，方法从参数获取id，查出相关记录，调用delete方法删除
+     * 这里注意删除顺序，应为user关联person,Student关联Person 所以要先删除Student,User，再删除Person
+     * @param dataRequest  前端studentId 药删除的学生的主键 student_id
+     * @return  正常操作
+     */
+    @DeleteMapping ("/studentDeleteAll")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse studentDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
+        return studentService.studentDeleteAll(dataRequest);
+    }
+
 
 
 }

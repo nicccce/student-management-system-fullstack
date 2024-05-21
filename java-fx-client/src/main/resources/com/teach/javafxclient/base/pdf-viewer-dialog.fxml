@@ -5,7 +5,7 @@
 
 <!-- PDF查看对话框FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.base.PdfViewerController -->
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.PdfViewerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.PdfViewerController">
    <bottom>
         <Pagination fx:id="pagination" prefHeight="80" prefWidth="600.0" BorderPane.alignment="CENTER" />
    </bottom>

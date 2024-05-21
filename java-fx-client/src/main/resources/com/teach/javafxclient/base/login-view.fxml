@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474" prefWidth="1000" stylesheets="@../css/LoginButtons.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.LoginController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474" prefWidth="1000" stylesheets="@../css/LoginButtons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.LoginController">
     <ImageView fitHeight="474" fitWidth="1000" opacity="0.75" pickOnBounds="true" preserveRatio="true" style="-fx-border-radius: 30px; -fx-background-color: rgba(255, 255, 255, 0);">
         <Image url="@../picture/login-background.png" />
     </ImageView>

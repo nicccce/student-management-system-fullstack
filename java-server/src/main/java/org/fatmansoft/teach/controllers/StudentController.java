@@ -597,6 +597,7 @@ public class StudentController {
     @DeleteMapping ("/studentDeleteAll")
     @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse studentDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
+        System.out.println(dataRequest.getData());
         return studentService.studentDeleteAll(dataRequest);
     }
 

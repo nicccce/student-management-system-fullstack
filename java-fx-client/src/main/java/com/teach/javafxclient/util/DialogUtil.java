@@ -47,8 +47,8 @@ public class DialogUtil {
 
             dialogContent.addActions(
                     Map.entry(new MFXButton("确认"), event -> {
-                        confirmFunction.run();
                         closeDialog();
+                        confirmFunction.run();
                     }),
                     Map.entry(new MFXButton("取消"), event -> {
                         closeDialog();

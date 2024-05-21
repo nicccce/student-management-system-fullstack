@@ -7,12 +7,12 @@ import java.util.Map;
  * Object data 返回数据对象
  * String msg 返回正确错误信息
  */
-public class DataResponse {
+public class DataResponse<T> {
     private Integer code;
-    private Object data;
+    private T data;
     private String msg;
 
-    public DataResponse(Integer code, Object data, String msg) {
+    public DataResponse(Integer code, T data, String msg) {
         this.code = code;
         this.data = data;
         this.msg = msg;
@@ -26,11 +26,11 @@ public class DataResponse {
         this.code = code;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 

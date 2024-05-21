@@ -3,6 +3,7 @@ package com.teach.javafxclient.controller.base;
 import com.teach.javafxclient.MainApplication;
 import com.teach.javafxclient.controller.demo.model.Model;
 import com.teach.javafxclient.request.*;
+import com.teach.javafxclient.util.DialogUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
@@ -66,6 +67,8 @@ public class LoginController {
      */
     private double offsetY;
 
+    private final DialogUtil dialogUtil = new DialogUtil();
+
     /**
      * 设置舞台(Stage)的引用。
      *
@@ -94,30 +97,7 @@ public class LoginController {
         usernameField.setText("admin");
         // usernameField.setText("2022030001"); // 注释掉的代码示例
         passwordField.setText("123456");
-        Platform.runLater(() -> {
-            this.dialogContent = MFXGenericDialogBuilder.build()
-                    .setContentText(Model.ipsum)
-                    .makeScrollable(true)
-                    .get();
-            this.dialog = MFXGenericDialogBuilder.build(dialogContent)
-                    .toStageDialogBuilder()
-                    .initOwner(stage)
-                    .initModality(Modality.APPLICATION_MODAL)
-                    .setDraggable(true)
-                    .setTitle("Dialogs Preview")
-                    .setOwnerNode(anchorPane)
-                    .setScrimPriority(ScrimPriority.WINDOW)
-                    .setScrimOwner(true)
-                    .get();
 
-            dialogContent.addActions(
-                    Map.entry(new MFXButton("Confirm"), event -> {
-                    }),
-                    Map.entry(new MFXButton("Cancel"), event -> dialog.close())
-            );
-
-            dialogContent.setMaxSize(400, 200);
-        });
     }
 
     /**
@@ -131,12 +111,7 @@ public class LoginController {
         LoginRequest loginRequest = new LoginRequest(username, password);
         String msg = HttpRequestUtil.login(loginRequest);
         if (msg != null) {
-            MFXFontIcon errorIcon = new MFXFontIcon("mfx-exclamation-circle-filled", 18);
-            dialogContent.setHeaderIcon(errorIcon);
-            dialogContent.setHeaderText("登录失败！");
-            convertDialogTo("mfx-error-dialog");
-            dialogContent.setContentText("\n"+msg);
-            dialog.showDialog();
+            dialogUtil.openError("登录失败！",msg);
             loginButton.setText("大香蕉");
             return;
         }
@@ -151,17 +126,7 @@ public class LoginController {
     }
 
 
-    private MFXGenericDialog dialogContent;
-    private MFXStageDialog dialog;
 
-    private void convertDialogTo(String styleClass) {
-        dialogContent.getStyleClass().removeIf(
-                s -> s.equals("mfx-info-dialog") || s.equals("mfx-warn-dialog") || s.equals("mfx-error-dialog")
-        );
-
-        if (styleClass != null)
-            dialogContent.getStyleClass().add(styleClass);
-    }
 
     /**
      * 链接按钮点击事件处理方法。
@@ -172,11 +137,7 @@ public class LoginController {
     @FXML
     protected void linkButtonClick() throws IOException {
         MFXFontIcon infoIcon = new MFXFontIcon("mfx-info-circle-filled", 18);
-        dialogContent.setHeaderIcon(infoIcon);
-        dialogContent.setHeaderText("登录失败？");
-        dialogContent.setContentText("\n你的肛门比较松弛");
-        convertDialogTo("mfx-info-dialog");
-        dialog.showDialog();
+        dialogUtil .openInfo("登录失败？", "你的肛门比较松弛");
         return;
     }
 

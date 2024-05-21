@@ -1,23 +1,33 @@
 package com.teach.javafxclient.controller;
 
-import atlantafx.base.controls.ToggleSwitch;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.ToolController;
+import com.teach.javafxclient.model.StudentTableEntity;
 import com.teach.javafxclient.request.*;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.controller.base.MessageDialog;
-import io.github.palexdev.materialfx.controls.MFXDatePicker;
+import com.teach.javafxclient.util.DialogUtil;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import atlantafx.base.theme.*;
+import javafx.util.Callback;
+import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,29 +39,31 @@ import java.util.Map;
  */
 public class StudentController extends ToolController {
     @FXML
-    private TableView<Map> dataTableView;  //学生信息表
+    private TableView<StudentTableEntity> dataTableView;  //学生信息表
     @FXML
-    private TableColumn<Map,String> numColumn;   //学生信息表 编号列
+    public TableColumn<StudentTableEntity,Boolean> checkColumn;
     @FXML
-    private TableColumn<Map,String> nameColumn; //学生信息表 名称列
+    private TableColumn<StudentTableEntity,String> numColumn;   //学生信息表 编号列
     @FXML
-    private TableColumn<Map,String> deptColumn;  //学生信息表 院系列
+    private TableColumn<StudentTableEntity,String> nameColumn; //学生信息表 名称列
     @FXML
-    private TableColumn<Map,String> majorColumn; //学生信息表 专业列
+    private TableColumn<StudentTableEntity,String> deptColumn;  //学生信息表 院系列
     @FXML
-    private TableColumn<Map,String> classNameColumn; //学生信息表 班级列
+    private TableColumn<StudentTableEntity,String> majorColumn; //学生信息表 专业列
     @FXML
-    private TableColumn<Map,String> cardColumn; //学生信息表 证件号码列
+    private TableColumn<StudentTableEntity,String> classNameColumn; //学生信息表 班级列
     @FXML
-    private TableColumn<Map,String> genderColumn; //学生信息表 性别列
+    private TableColumn<StudentTableEntity,String> cardColumn; //学生信息表 证件号码列
     @FXML
-    private TableColumn<Map,String> birthdayColumn; //学生信息表 出生日期列
+    private TableColumn<StudentTableEntity,String> genderColumn; //学生信息表 性别列
     @FXML
-    private TableColumn<Map,Integer> emailColumn; //学生信息表 邮箱列
+    private TableColumn<StudentTableEntity,String> birthdayColumn; //学生信息表 出生日期列
     @FXML
-    private TableColumn<Map,Integer> phoneColumn; //学生信息表 电话列
+    private TableColumn<StudentTableEntity,String> emailColumn; //学生信息表 邮箱列
     @FXML
-    private TableColumn<Map,Integer> addressColumn;//学生信息表 地址列
+    private TableColumn<StudentTableEntity,String> phoneColumn; //学生信息表 电话列
+    @FXML
+    private TableColumn<StudentTableEntity,String> addressColumn;//学生信息表 地址列
 
     @FXML
     private TextField numField; //学生信息  学号输入域
@@ -81,60 +93,127 @@ public class StudentController extends ToolController {
 
     private Integer studentId = null;  //当前编辑修改的学生的主键
 
-    private ArrayList<Map> studentList = new ArrayList();  // 学生信息列表数据
+    private ArrayList<StudentTableEntity> studentList = new ArrayList<StudentTableEntity>();  // 学生信息列表数据
     private List<OptionItem> genderList;   //性别选择列表数据
-    private ObservableList<Map> observableList= FXCollections.observableArrayList();  // TableView渲染列表
+    private ObservableList<StudentTableEntity> observableList = FXCollections.observableArrayList();  // TableView渲染列表
 
+    private List<StudentTableEntity> selectedItemList = null;
 
-    /**
-     * 将学生数据集合设置到面板上显示
-     */
-    private void setTableViewData() {
-        observableList.clear();
-        for (int j = 0; j < studentList.size(); j++) {
-            observableList.addAll(FXCollections.observableArrayList(studentList.get(j)));
-        }
-        dataTableView.setItems(observableList);
-    }
+    private HttpRequestUtil<StudentTableEntity> httpRequestUtil = new HttpRequestUtil<>(StudentTableEntity.class);
+
+    private final DialogUtil dialogUtil = new DialogUtil();
 
     /**
      * 页面加载对象创建完成初始化方法，页面中控件属性的设置，初始数据显示等初始操作都在这里完成，其他代码都事件处理方法里
      */
 
     @FXML
-    public void initialize() {
-        DataResponse res;
+    public void initialize() throws InvocationTargetException, IllegalAccessException {
+        DataResponse<ArrayList<StudentTableEntity>> res;
         DataRequest req =new DataRequest();
         req.put("numName","");
-        res = HttpRequestUtil.request("/api/student/getStudentList",req); //从后台获取所有学生信息列表集合
+        res = httpRequestUtil.requestArrayList("/api/student/getStudentList",req); //从后台获取所有学生信息列表集合
         if(res != null && res.getCode()== 0) {
-            studentList = (ArrayList<Map>)res.getData();
+            studentList = res.getData();
         }
-        numColumn.setCellValueFactory(new MapValueFactory("num"));  //设置列值工程属性
-        nameColumn.setCellValueFactory(new MapValueFactory<>("name"));
-        deptColumn.setCellValueFactory(new MapValueFactory<>("dept"));
-        majorColumn.setCellValueFactory(new MapValueFactory<>("major"));
-        classNameColumn.setCellValueFactory(new MapValueFactory<>("className"));
-        cardColumn.setCellValueFactory(new MapValueFactory<>("card"));
-        genderColumn.setCellValueFactory(new MapValueFactory<>("genderName"));
-        birthdayColumn.setCellValueFactory(new MapValueFactory<>("birthday"));
-        emailColumn.setCellValueFactory(new MapValueFactory<>("email"));
-        phoneColumn.setCellValueFactory(new MapValueFactory<>("phone"));
-        addressColumn.setCellValueFactory(new MapValueFactory<>("address"));
-        TableView.TableViewSelectionModel<Map> tsm = dataTableView.getSelectionModel();
+
+        setupTable();
+
+        genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
+        genderComboBox.getItems().addAll(genderList);
+        birthdayPick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));
+    }
+
+    /**
+     * 将学生数据集合设置到面板上显示
+     */
+    private void setTableViewData() {
+        observableList.clear();
+        observableList.addAll(FXCollections.<StudentTableEntity>observableArrayList(studentList));
+        dataTableView.setItems(observableList);
+    }
+
+
+    private void setupTable(){
+
+        var selectAll = new CheckBox();
+
+        checkColumn.setGraphic(selectAll);
+        checkColumn.setSortable(false);
+        checkColumn.setCellValueFactory(c -> c.getValue().selectProperty());
+/*        checkColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<StudentTableEntity, Boolean>, ObservableValue<Boolean>>() {
+            @Override
+            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<StudentTableEntity, Boolean> param) {
+                StudentTableEntity studentTableEntity = param.getValue();
+                Boolean value = studentTableEntity.getSelect();
+                SimpleBooleanProperty observableValue = new SimpleBooleanProperty(value);
+                return observableValue;
+            }
+        });*/
+        checkColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkColumn));
+        checkColumn.setEditable(true);
+
+        numColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("num"));  //设置列值工程属性
+        nameColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("name"));
+        deptColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("dept"));
+        majorColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("major"));
+        classNameColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("className"));
+        cardColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("card"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("genderName"));
+        birthdayColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("birthday"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("email"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("phone"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<StudentTableEntity,String>("address"));
+        dataTableView.getSelectionModel().selectFirst();
+        selectAll.setOnAction(evt -> {
+            dataTableView.getItems().forEach(
+                    item -> item.setSelect(selectAll.isSelected())
+            );
+            evt.consume();
+        });
+
+        dataTableView.getSelectionModel().selectFirst();
+
+        TableView.TableViewSelectionModel<StudentTableEntity> tsm = dataTableView.getSelectionModel();
         ObservableList<Integer> list = tsm.getSelectedIndices();
         list.addListener(this::onTableRowSelect);
         setTableViewData();
-        genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
+
+        dataTableView.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+                Node source = event.getPickResult().getIntersectedNode();
+                // 检查点击的节点是否在 TableView 的行上
+                if (isRowOrCell(source)) {
+                    // 处理点击行的事件
+                    StudentTableEntity form = dataTableView.getSelectionModel().getSelectedItem();
+                    if(form != null) {
+                        form.setSelect(!form.isSelect());
+                    }
+                }
+            }
+        });
+
         dataTableView.setColumnResizePolicy(
-                TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN
+                TableView.UNCONSTRAINED_RESIZE_POLICY
         );
 
         Styles.toggleStyleClass(dataTableView, Styles.BORDERED);
         Styles.toggleStyleClass(dataTableView, Styles.STRIPED);
 
-        genderComboBox.getItems().addAll(genderList);
-        birthdayPick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));
+
+
+
+    }
+
+    // 辅助方法：检查节点是否是有效行或单元格
+    private boolean isRowOrCell(Node node) {
+        if (node instanceof TableRow || node instanceof TableCell || node instanceof Text) {
+            return true;
+        }
+        if (node.getParent() != null) {
+            return isRowOrCell(node.getParent());
+        }
+        return false;
     }
 
     /**
@@ -156,31 +235,31 @@ public class StudentController extends ToolController {
     }
 
     protected void changeStudentInfo() {
-        Map form = dataTableView.getSelectionModel().getSelectedItem();
+        StudentTableEntity form = dataTableView.getSelectionModel().getSelectedItem();
         if(form == null) {
             clearPanel();
             return;
         }
-        studentId = CommonMethod.getInteger(form,"studentId");
+        studentId = form.getStudentId();
         DataRequest req = new DataRequest();
         req.put("studentId",studentId);
-        DataResponse res = HttpRequestUtil.request("/api/student/getStudentInfo",req);
+        DataResponse<StudentTableEntity> res = httpRequestUtil.requestObject("/api/student/getStudentInfo",req);
         if(res.getCode() != 0){
             MessageDialog.showDialog(res.getMsg());
             return;
         }
-        form = (Map)res.getData();
-        numField.setText(CommonMethod.getString(form, "num"));
-        nameField.setText(CommonMethod.getString(form, "name"));
-        deptField.setText(CommonMethod.getString(form, "dept"));
-        majorField.setText(CommonMethod.getString(form, "major"));
-        classNameField.setText(CommonMethod.getString(form, "className"));
-        cardField.setText(CommonMethod.getString(form, "card"));
-        genderComboBox.getSelectionModel().select(CommonMethod.getOptionItemIndexByValue(genderList, CommonMethod.getString(form, "gender")));
-        birthdayPick.getEditor().setText(CommonMethod.getString(form, "birthday"));
-        emailField.setText(CommonMethod.getString(form, "email"));
-        phoneField.setText(CommonMethod.getString(form, "phone"));
-        addressField.setText(CommonMethod.getString(form, "address"));
+        form = res.getData();
+        numField.setText(form.getNum());
+        nameField.setText(form.getName());
+        deptField.setText(form.getDept());
+        majorField.setText(form.getMajor());
+        classNameField.setText(form.getClassName());
+        cardField.setText(form.getCard());
+        genderComboBox.getSelectionModel().select(CommonMethod.getOptionItemIndexByValue(genderList, form.getGender()));
+        birthdayPick.getEditor().setText(form.getBirthday());
+        emailField.setText(form.getEmail());
+        phoneField.setText(form.getPhone());
+        addressField.setText(form.getAddress());
     }
     /**
      * 点击学生列表的某一行，根据studentId ,从后台查询学生的基本信息，切换学生的编辑信息
@@ -198,9 +277,9 @@ public class StudentController extends ToolController {
         String numName = numNameTextField.getText();
         DataRequest req = new DataRequest();
         req.put("numName",numName);
-        DataResponse res = HttpRequestUtil.request("/api/student/getStudentList",req);
+        DataResponse<ArrayList<StudentTableEntity>> res = httpRequestUtil.requestArrayList("/api/student/getStudentList",req);
         if(res != null && res.getCode()== 0) {
-            studentList = (ArrayList<Map>)res.getData();
+            studentList = res.getData();
             setTableViewData();
         }
     }
@@ -218,7 +297,13 @@ public class StudentController extends ToolController {
      */
     @FXML
     protected void onDeleteButtonClick() {
-        Map form = dataTableView.getSelectionModel().getSelectedItem();
+        getSelectedItem();
+        if (selectedItemList.isEmpty()){
+            dialogUtil.openError("删除失败", "当前未选择任何元素，无法删除！");
+            return;
+        }
+        dialogUtil.openWarning("警告", "将删除框选的 "+selectedItemList.size()+" 个学生的所有信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
+        /*StudentTableEntity form = dataTableView.getSelectionModel().getSelectedItem();
         if(form == null) {
             MessageDialog.showDialog("没有选择，不能删除");
             return;
@@ -227,7 +312,7 @@ public class StudentController extends ToolController {
         if(ret != MessageDialog.CHOICE_YES) {
             return;
         }
-        studentId = CommonMethod.getInteger(form,"studentId");
+        studentId = form.getStudentId();
         DataRequest req = new DataRequest();
         req.put("studentId", studentId);
         DataResponse res = HttpRequestUtil.request("/api/student/studentDelete",req);
@@ -237,15 +322,36 @@ public class StudentController extends ToolController {
         }
         else {
             MessageDialog.showDialog(res.getMsg());
+        }*/
+    }
+
+    public void deleteSelectedItems(){
+        ArrayList<Integer> studentIdList = new ArrayList<Integer>();
+        for (StudentTableEntity item:
+             selectedItemList) {
+            studentIdList.add(item.getStudentId());
+        }
+        DataRequest req = new DataRequest();
+        req.put("studentId", studentIdList);
+        DataResponse res = HttpRequestUtil.request("/api/student/studentDeleteAll",req);
+        if (res != null){
+            if (res.getCode() == 0) {
+                dialogUtil.openGeneric("删除成功", "删除成功！");
+                onQueryButtonClick();
+            } else {
+                dialogUtil.openError("删除失败", res.getMsg());
+            }
         }
     }
+
     /**
      * 点击保存按钮，保存当前编辑的学生信息，如果是新添加的学生，后台添加学生
      */
     @FXML
     protected void onSaveButtonClick() {
+        //弹窗错误
         if( numField.getText().equals("")) {
-            MessageDialog.showDialog("学号为空，不能修改");
+            dialogUtil.openError("修改失败", "学号为空，不能修改！");
             return;
         }
         Map form = new HashMap();
@@ -267,7 +373,9 @@ public class StudentController extends ToolController {
         DataResponse res = HttpRequestUtil.request("/api/student/studentEditSave",req);
         if(res.getCode() == 0) {
             studentId = CommonMethod.getIntegerFromObject(res.getData());
-            MessageDialog.showDialog("提交成功！");
+            dialogUtil.openGeneric("提交成功","提交成功！",null);
+            onQueryButtonClick();
+            // MessageDialog.showDialog("提交成功！");
         }
         else {
             MessageDialog.showDialog(res.getMsg());
@@ -313,6 +421,20 @@ public class StudentController extends ToolController {
             }
         }
 
+    }
+
+    private List<StudentTableEntity> getSelectedItem(){
+        List<StudentTableEntity> selectedItems = new ArrayList<StudentTableEntity>();
+        for (StudentTableEntity items :
+             observableList) {
+            if (items.isSelect()){
+                if (selectedItems != null) {
+                    selectedItems.add(items);
+                }
+            }
+        }
+        selectedItemList = selectedItems;
+        return  selectedItems;
     }
 
 }

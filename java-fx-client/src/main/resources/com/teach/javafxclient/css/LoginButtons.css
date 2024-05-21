@@ -20,6 +20,11 @@
 @import 'Common.css';
 @import 'MFXColors.css';
 
+@font-face {
+    -fx-font-family : 'Source Han Sans CN Regular';
+    src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Normal.otf');
+}
+
 .mfx-button {
 	-fx-text-fill: -mfx-text-he;
 }
@@ -28,11 +33,19 @@
 	-mfx-ripple-radius: 40;
 	-mfx-auto-clip: true;
 }
-
 .mfx-button .text {
 	-fx-font-smoothing-type: gray;
+	-fx-font-family: 'Source Han Sans CN Regular';
+	-fx-font-size: 15;
 }
 
+.button {
+  -fx-alignment: center;
+}
+
+.button .text {
+  -fx-alignment: center;
+}
 #custom {
 	-fx-background-color: #7d0100;
 	-fx-text-fill: white

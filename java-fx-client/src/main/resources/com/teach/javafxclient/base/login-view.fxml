@@ -21,7 +21,7 @@
             <Image url="@../picture/lock.png" />
         </ImageView>
         <PasswordField fx:id="passwordField" layoutX="140.0" layoutY="168.0" prefHeight="28.0" prefWidth="175.0" promptText="请输入你的密码" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #953d3d; -fx-text-fill: black;" />
-        <MFXButton id="custom" fx:id="loginButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="103.0" layoutY="251.0" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="38.0" prefWidth="138.0" text="登录" textAlignment="CENTER">
+        <MFXButton id="custom" fx:id="loginButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="103.0" layoutY="251.0" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="38.0" prefWidth="138.0" text="登录" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS">
             <font>
                 <Font size="15.0" />
             </font>
@@ -42,7 +42,7 @@
                 <Font name="Algerian" size="20.0" />
             </font>
         </Label>
-        <MFXButton alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="138.0" layoutY="303.0" minHeight="27.0" minWidth="70.0" onAction="#linkButtonClick" styleClass="link-button" text="登录失败？" />
+        <MFXButton alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="124.0" layoutY="303.0" minHeight="27.0" minWidth="70.0" onAction="#linkButtonClick" styleClass="link-button" text="登录失败？" />
     </AnchorPane>
     <HBox layoutX="905.0" spacing="5" style="-fx-font-size: 24px;-fx-font-weight: bold;-fx-background-color: rgba(167, 24, 31, 0.8);-fx-padding: 0 5px;-fx-background-radius: 30px;">
         <Button onAction="#minimizeButtonClick" style="-fx-font-size: 24px;-fx-font-weight: bold;-fx-padding: 0 5px;-fx-background-color: transparent;-fx-background-insets: 0;         -fx-background-radius: 0;         -fx-border-width: 0;         -fx-text-fill: white;" text="-" />

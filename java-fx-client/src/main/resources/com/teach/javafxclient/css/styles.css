@@ -161,3 +161,8 @@ button {
 .link-button .mfx-ripple-generator {
 	-mfx-ripple-color: #D9E9FF;
 }
+
+.label {
+  -fx-font-family: "Source Han Sans CN Bold";
+
+}

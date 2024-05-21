@@ -1,3 +1,7 @@
-2024-05-20 02:53:47  [ JavaFX Application Thread:0 ] - [ ERROR ]  java.net.ConnectException
-2024-05-20 16:55:34  [ JavaFX Application Thread:0 ] - [ ERROR ]  java.net.ConnectException
-2024-05-20 16:59:35  [ JavaFX Application Thread:0 ] - [ ERROR ]  java.net.ConnectException
+2024-05-21 09:44:57  [ JavaFX Application Thread:0 ] - [ ERROR ]  java.net.ConnectException
+2024-05-21 10:43:20  [ JavaFX Application Thread:0 ] - [ ERROR ]  java.net.ConnectException
+2024-05-21 10:43:27  [ JavaFX Application Thread:6841 ] - [ ERROR ]  java.net.ConnectException
+2024-05-21 10:43:28  [ JavaFX Application Thread:8234 ] - [ ERROR ]  java.net.ConnectException
+2024-05-21 10:43:29  [ JavaFX Application Thread:9242 ] - [ ERROR ]  java.net.ConnectException
+2024-05-21 12:59:16  [ JavaFX Application Thread:0 ] - [ ERROR ]  java.net.ConnectException
+2024-05-21 13:02:23  [ JavaFX Application Thread:1 ] - [ ERROR ]  java.net.ConnectException

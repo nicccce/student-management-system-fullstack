@@ -12,6 +12,7 @@ import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -36,14 +37,20 @@ public class AddStudent {
 
     private List<OptionItem> genderList;   //性别选择列表数据
 
+    Stage stage;
+
     @FXML
     public void initialize(){
         genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
         genderComboBox.getItems().addAll(genderList);
     }
 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     public void onAddButtonClick(ActionEvent actionEvent) {
-/*        //弹窗错误
+        //弹窗错误
         if( numField.getText().equals("")) {
             dialogUtil.openError("添加失败", "学号为空，不能添加！");
             return;
@@ -56,7 +63,7 @@ public class AddStudent {
         form.put("className",classNameField.getText());
         form.put("card",cardField.getText());
         if(genderComboBox.getSelectionModel() != null && genderComboBox.getSelectionModel().getSelectedItem() != null)
-            form.put("gender",genderComboBox.getValue());
+            form.put("gender",((OptionItem)(genderComboBox.getSelectionModel().getSelectedItem())).getValue());
 
         // 定义日期格式为 "yyyy-MM-dd"
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -65,17 +72,26 @@ public class AddStudent {
         form.put("phone",phoneField.getText());
         form.put("address",addressField.getText());
         DataRequest req = new DataRequest();
-        req.put("studentId", studentId);
-        req.put("form", form);
+        req.put("newStudent", form);
         DataResponse res = HttpRequestUtil.request("/api/student/studentEditSave",req);
-        if(res.getCode() == 0) {
-            studentId = CommonMethod.getIntegerFromObject(res.getData());
-            dialogUtil.openGeneric("提交成功","提交成功！",null);
-            onQueryButtonClick();
-            // MessageDialog.showDialog("提交成功！");
+        if (res != null) {
+            if (res.getCode() == 0) {
+                dialogUtil.openGeneric("添加成功", "添加成功!点击确认继续添加。", this::continueAdding);
+                if (isContinue) {
+                    isContinue = false;
+                } else {
+                    stage.close();
+                }
+            } else {
+                dialogUtil.openError("添加失败", res.getMsg());
+            }
+        }else {
+            dialogUtil.openError("添加失败", "服务器无响应，请稍后重试。");
         }
-        else {
-            MessageDialog.showDialog(res.getMsg());
-        }*/
+    }
+
+    boolean isContinue = false;
+    private void continueAdding(){
+        isContinue = true;
     }
 }

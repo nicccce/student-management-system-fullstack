@@ -307,10 +307,6 @@ public class StudentController extends ToolController {
         }
     }
 
-    private void addStudent(){
-
-    }
-
     /**
      * 点击删除按钮 删除当前编辑的学生的数据
      */
@@ -361,7 +357,7 @@ public class StudentController extends ToolController {
                 dialogUtil.openError("删除失败", res.getMsg());
             }
         }else {
-            dialogUtil.openError("删除失败", "后台无响应，请稍后再尝试");
+            dialogUtil.openError("删除失败", "后台无响应，请稍后再尝试。");
         }
     }
 

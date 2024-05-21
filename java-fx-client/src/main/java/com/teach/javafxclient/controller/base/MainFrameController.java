@@ -1,5 +1,6 @@
 package com.teach.javafxclient.controller.base;
 
+import atlantafx.base.theme.Styles;
 import com.teach.javafxclient.AppStore;
 import com.teach.javafxclient.MainApplication;
 import com.teach.javafxclient.request.DataRequest;
@@ -104,6 +105,11 @@ public class MainFrameController {
             menu.getItems().add(item);
 
             item = new MenuItem();
+            item.setText("对话框组件");
+            item.setOnAction(e -> changeContent("componentDemo/Dialogs", "下拉框组件"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
             item.setText("字体资源");
             item.setOnAction(e -> changeContent("componentDemo/FontResources", "字体资源"));
             menu.getItems().add(item);
@@ -114,12 +120,17 @@ public class MainFrameController {
             menu.getItems().add(item);
 
             item = new MenuItem();
-            item.setText("选择器");
+            item.setText("提示组件");
+            item.setOnAction(e -> changeContent("componentDemo/Notifications", "选择器"));
+            menu.getItems().add(item);
+
+            item = new MenuItem();
+            item.setText("选择器组件");
             item.setOnAction(e -> changeContent("componentDemo/Pickers", "选择器"));
             menu.getItems().add(item);
 
             item = new MenuItem();
-            item.setText("进度");
+            item.setText("进度组件");
             item.setOnAction(e -> changeContent("componentDemo/Progress", "进度"));
             menu.getItems().add(item);
 
@@ -129,12 +140,12 @@ public class MainFrameController {
             menu.getItems().add(item);
 
             item = new MenuItem();
-            item.setText("滑块");
+            item.setText("滑块组件");
             item.setOnAction(e -> changeContent("componentDemo/Sliders", "滑块"));
             menu.getItems().add(item);
 
             item = new MenuItem();
-            item.setText("步进器");
+            item.setText("步进器组件");
             item.setOnAction(e -> changeContent("componentDemo/Stepper", "步进器"));
             menu.getItems().add(item);
             menuBar.getMenus().add(menu);
@@ -202,6 +213,8 @@ public class MainFrameController {
             menuBar.getMenus().add(menu);
         }
         contentTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+        contentTabPane.getStyleClass().add(Styles.TABS_CLASSIC);
+        contentTabPane.setMinWidth(450);
     }
 
     /**

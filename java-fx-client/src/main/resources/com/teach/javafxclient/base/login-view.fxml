@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474" prefWidth="1000" stylesheets="@../css/LoginButtons.css"  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.LoginController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474" prefWidth="1000" stylesheets="@../css/LoginButtons.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.base.LoginController">
     <ImageView fitHeight="474" fitWidth="1000" opacity="0.75" pickOnBounds="true" preserveRatio="true" style="-fx-border-radius: 30px; -fx-background-color: rgba(255, 255, 255, 0);">
         <Image url="@../picture/login-background.png" />
+    </ImageView>
+    <ImageView fitHeight="201.0" fitWidth="208.0" layoutX="39.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../picture/logo.png" />
     </ImageView>
     <AnchorPane layoutX="617.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="342.0" style="                 -fx-background-color: rgba(255, 255, 255, 0.7);                 -fx-background-radius: 20px;                 -fx-background-blur: Gaussian;">
         <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="23.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
@@ -18,7 +21,7 @@
             <Image url="@../picture/lock.png" />
         </ImageView>
         <PasswordField fx:id="passwordField" layoutX="140.0" layoutY="168.0" prefHeight="28.0" prefWidth="175.0" promptText="请输入你的密码" style="-fx-background-color: transparent; -fx-border-width: 0 0 2 0; -fx-border-color: #953d3d; -fx-text-fill: black;" />
-        <MFXButton id="custom" buttonType="RAISED" minHeight="27.0" minWidth="70.0" fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="103.0" layoutY="251.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="38.0" prefWidth="138.0" text="登录" textAlignment="CENTER">
+        <MFXButton id="custom" fx:id="loginButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="103.0" layoutY="251.0" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="38.0" prefWidth="138.0" text="登录" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS">
             <font>
                 <Font size="15.0" />
             </font>
@@ -39,7 +42,7 @@
                 <Font name="Algerian" size="20.0" />
             </font>
         </Label>
-        <MFXButton minHeight="27.0" minWidth="70.0" styleClass="link-button" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="138.0" layoutY="303.0" onAction="#linkButtonClick" text="登录失败？"/>
+        <MFXButton alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="124.0" layoutY="303.0" minHeight="27.0" minWidth="70.0" onAction="#linkButtonClick" styleClass="link-button" text="登录失败？" />
     </AnchorPane>
     <HBox layoutX="905.0" spacing="5" style="-fx-font-size: 24px;-fx-font-weight: bold;-fx-background-color: rgba(167, 24, 31, 0.8);-fx-padding: 0 5px;-fx-background-radius: 30px;">
         <Button onAction="#minimizeButtonClick" style="-fx-font-size: 24px;-fx-font-weight: bold;-fx-padding: 0 5px;-fx-background-color: transparent;-fx-background-insets: 0;         -fx-background-radius: 0;         -fx-border-width: 0;         -fx-text-fill: white;" text="-" />

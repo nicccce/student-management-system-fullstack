@@ -81,7 +81,6 @@ public class AddStudent {
         studentEntity.setPhone(phoneField.getText());
         studentEntity.setAddress(addressField.getText());
 
-        Map form = studentEntity.toMap();
         /*Map form = new HashMap();
         form.put("num",numField.getText());
         form.put("name",nameField.getText());
@@ -99,7 +98,11 @@ public class AddStudent {
         form.put("phone",phoneField.getText());
         form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
+<<<<<<< Updated upstream
         req.put("newStudent", form);
+=======
+        req.put("newStudent", studentEntity);
+>>>>>>> Stashed changes
         DataResponse res = HttpRequestUtil.request("/api/student/studentInsert",req);
         if (res != null) {
             if (res.getCode() == 0) {

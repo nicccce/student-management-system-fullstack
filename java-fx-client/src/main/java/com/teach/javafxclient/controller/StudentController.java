@@ -381,7 +381,8 @@ public class StudentController extends ToolController {
         studentEntity.setPhone(phoneField.getText());
         studentEntity.setAddress(addressField.getText());
 
-        Map form = studentEntity.toMap();
+/*        Map form = studentEntity.toMap();
+        System.out.println(form);*/
 /*        Map form = new HashMap();
         form.put("num",numField.getText());
         form.put("name",nameField.getText());
@@ -397,8 +398,8 @@ public class StudentController extends ToolController {
         form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
         req.put("studentId", studentId);
-        req.put("form", form);
-        DataResponse res = HttpRequestUtil.request("/api/student/studentInsert",req);
+        req.putObject("form", studentEntity);
+        DataResponse res = HttpRequestUtil.request("/api/student/studentEditSave",req);
         if(res.getCode() == 0) {
             studentId = CommonMethod.getIntegerFromObject(res.getData());
             dialogUtil.openGeneric("提交成功","提交成功！",null);

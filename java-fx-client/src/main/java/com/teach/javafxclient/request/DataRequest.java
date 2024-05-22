@@ -1,6 +1,12 @@
 package com.teach.javafxclient.request;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializeFilter;
+import com.google.gson.reflect.TypeToken;
+import com.teach.javafxclient.controller.config.SimpleBooleanPropertyFilter;
+
 import java.util.*;
+
 /**
  * DataRequest 请求参数数据类
  * Map data 保存前端请求参数的Map集合
@@ -118,5 +124,16 @@ public class DataRequest {
 
     public boolean isEmpty() {
         return data.isEmpty();
+    }
+
+    /**
+     * 添加对象方法
+     */
+    public void putObject(String key, Object object){
+        SerializeFilter filter = new SimpleBooleanPropertyFilter();
+        String jsonString = JSON.toJSONString(object, filter);
+        TypeToken<HashMap<String, Object>> typeToken = new TypeToken<HashMap<String, Object>>() {};
+        HashMap<String, Object> map = JSON.parseObject(jsonString, typeToken.getType());
+        data.put(key, map);
     }
 }

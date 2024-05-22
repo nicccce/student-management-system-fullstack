@@ -1,6 +1,7 @@
 package com.teach.javafxclient.controller.admin;
 
 import com.teach.javafxclient.controller.base.MessageDialog;
+import com.teach.javafxclient.model.StudentEntity;
 import com.teach.javafxclient.request.DataRequest;
 import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +57,32 @@ public class AddStudent {
             dialogUtil.openError("添加失败", "学号为空，不能添加！");
             return;
         }
-        Map form = new HashMap();
+        StudentEntity studentEntity = new StudentEntity();
+        studentEntity.setNum(numField.getText());
+        studentEntity.setName(nameField.getText());
+        studentEntity.setDept(deptField.getText());
+        studentEntity.setMajor(majorField.getText());
+        studentEntity.setClassName(classNameField.getText());
+        studentEntity.setCard(cardField.getText());
+
+        if (genderComboBox.getSelectionModel() != null && genderComboBox.getSelectionModel().getSelectedItem() != null) {
+            OptionItem selectedGender = (OptionItem) genderComboBox.getSelectionModel().getSelectedItem();
+            studentEntity.setGender(selectedGender.getValue());
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthday = birthdayPick.getValue();
+        if (birthday != null) {
+            String formattedBirthday = birthday.format(formatter);
+            studentEntity.setBirthday(formattedBirthday);
+        }
+
+        studentEntity.setEmail(emailField.getText());
+        studentEntity.setPhone(phoneField.getText());
+        studentEntity.setAddress(addressField.getText());
+
+        Map form = studentEntity.toMap();
+        /*Map form = new HashMap();
         form.put("num",numField.getText());
         form.put("name",nameField.getText());
         form.put("dept",deptField.getText());
@@ -70,7 +97,7 @@ public class AddStudent {
         form.put("birthday",birthdayPick.getValue().format(formatter));
         form.put("email",emailField.getText());
         form.put("phone",phoneField.getText());
-        form.put("address",addressField.getText());
+        form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
         req.put("newStudent", form);
         DataResponse res = HttpRequestUtil.request("/api/student/studentEditSave",req);

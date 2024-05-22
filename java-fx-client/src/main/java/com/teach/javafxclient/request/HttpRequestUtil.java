@@ -1,11 +1,8 @@
 package com.teach.javafxclient.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import com.google.gson.reflect.TypeToken;
 import com.teach.javafxclient.AppStore;
 import com.google.gson.Gson;
-import com.teach.javafxclient.model.StudentTableEntity;
 import com.teach.javafxclient.util.CommonMethod;
 
 import java.io.IOException;
@@ -22,10 +19,7 @@ import java.util.List;
 import java.nio.file.Path;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
-import java.net.URLEncoder;
-import com.alibaba.fastjson.JSON;
 
 /**
  * HttpRequestUtil 后台请求实例程序，主要实践向后台发送请求的方法
@@ -199,7 +193,7 @@ public class HttpRequestUtil<T> {
                 HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
                 if (response.statusCode() == 200) {
                     /*DataResponse<T> dataResponse = JSON.parseObject(response.body(), new TypeReference<DataResponse<T>>() {});*/
-                    DataResponse<ArrayList<Map>> objectResponse = gson.fromJson(response.body(), DataResponse.class);
+                    DataResponse<Map> objectResponse = gson.fromJson(response.body(), DataResponse.class);
                     /*TypeToken<DataResponse<T>> typeToken = new TypeToken<DataResponse<T>>() {};
                     DataResponse<T> dataResponse = gson.fromJson(response.body(),typeToken.getType());*/
                     T data = null;

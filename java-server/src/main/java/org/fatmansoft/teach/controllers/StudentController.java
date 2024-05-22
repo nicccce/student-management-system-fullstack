@@ -245,6 +245,7 @@ public class StudentController {
     @PostMapping("/studentEditSave")
     @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse studentEditSave(@Valid @RequestBody DataRequest dataRequest) {
+        System.out.println(dataRequest.getData());
         Integer studentId = dataRequest.getInteger("studentId");
         Map form = dataRequest.getMap("form"); //参数获取Map对象
         String num = CommonMethod.getString(form,"num");  //Map 获取属性的值

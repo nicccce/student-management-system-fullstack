@@ -1,5 +1,7 @@
 package org.fatmansoft.teach.data.po;
 
+import org.fatmansoft.teach.data.dto.StudentRequest;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
@@ -60,5 +62,27 @@ public class Student {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public Student() {
+    }
+
+    public Student (StudentRequest studentRequest) {
+        person = new Person();
+        person.setName(studentRequest.getName());
+        person.setNum(studentRequest.getNum());
+        person.setDept(studentRequest.getDept());
+        person.setCard(studentRequest.getCard());
+        person.setGender(studentRequest.getGender());
+        person.setBirthday(studentRequest.getBirthday());
+        person.setEmail(studentRequest.getEmail());
+        person.setPhone(studentRequest.getPhone());
+        person.setAddress(studentRequest.getAddress());
+        person.setPersonId(studentRequest.getPersonId());
+        setMajor(studentRequest.getMajor());
+        setStudentId(studentRequest.getStudentId());
+        setClassName(studentRequest.getClassName());
+        person.setIntroduce(studentRequest.getIntroduce());
+
     }
 }

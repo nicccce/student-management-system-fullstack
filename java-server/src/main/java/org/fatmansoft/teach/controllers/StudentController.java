@@ -3,6 +3,8 @@ package org.fatmansoft.teach.controllers;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
+import org.fatmansoft.teach.data.dto.Request;
+import org.fatmansoft.teach.data.dto.StudentRequest;
 import org.fatmansoft.teach.data.po.*;
 import org.fatmansoft.teach.data.dto.DataRequest;
 import org.fatmansoft.teach.data.vo.DataResponse;
@@ -601,6 +603,10 @@ public class StudentController {
         return studentService.studentDeleteAll(dataRequest);
     }
 
-
+    @PostMapping ("/studentInsert")
+    @PreAuthorize(" hasRole('ADMIN')")
+    public DataResponse studentInsert (@Valid @RequestBody Request<Map<String, StudentRequest>> dataRequest) {
+        return studentService.studentInsert(dataRequest);
+    }
 
 }

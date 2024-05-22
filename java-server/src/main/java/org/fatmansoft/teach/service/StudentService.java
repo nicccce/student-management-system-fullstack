@@ -1,6 +1,9 @@
 package org.fatmansoft.teach.service;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.fatmansoft.teach.data.dto.DataRequest;
+import org.fatmansoft.teach.data.dto.Request;
+import org.fatmansoft.teach.data.dto.StudentRequest;
 import org.fatmansoft.teach.data.po.Person;
 import org.fatmansoft.teach.data.po.Student;
 import org.fatmansoft.teach.data.po.User;
@@ -14,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -49,4 +54,22 @@ public class StudentService {
         }
 
         return CommonMethod.getReturnMessageOK();  // 通知前端操作正常
-    }}
+    }
+    public DataResponse studentInsert(Request<Map<String, StudentRequest>> dataRequest) {
+        Request<Map<String,StudentRequest>> request = new Request<>(dataRequest.getData());
+        if (request == null) {
+            return CommonMethod.getReturnMessageError("无有效数据传入");
+        }
+//        try {
+            // 创建或更新学生实体
+            Student student = new Student(request.getData().get("newStudent"));
+            studentRepository.save(student);
+
+            return CommonMethod.getReturnMessageOK("学生信息保存成功");
+
+//        } catch (Exception e) {
+//            return CommonMethod.getReturnMessageError("数据处理异常：" + e.getMessage());
+//        }
+    }
+
+}

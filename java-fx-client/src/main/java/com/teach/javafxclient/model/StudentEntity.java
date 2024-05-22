@@ -1,28 +1,84 @@
 package com.teach.javafxclient.model;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
+import com.teach.javafxclient.request.DataResponse;
 import javafx.beans.property.SimpleBooleanProperty;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 学生数据表格类
  */
-public class StudentTableEntity {
+public class StudentEntity {
+
+    @Expose(serialize = false)//转json时忽略这个参数
     private SimpleBooleanProperty select = new SimpleBooleanProperty(false); // 是否选中
-    private String major; // 专业
-    private String className; // 班级
-    private Integer studentId; // 学生ID
-    private Integer personId; // 个人ID
+
+    @Expose(serialize = true)
     private String num; // 学号
+
+    @Expose(serialize = true)
     private String name; // 姓名
+
+    @Expose(serialize = true)
     private String dept; // 部门
+
+    @Expose(serialize = true)
+    private String major; // 专业
+
+    @Expose(serialize = true)
+    private String className; // 班级
+
+    @Expose(serialize = true)
+    private Integer studentId; // 学生ID
+
+    @Expose(serialize = true)
     private String card; // 卡号
+
+    @Expose(serialize = true)
     private String gender; // 性别
+
+    @Expose(serialize = true)
     private String genderName; // 性别名称
+
+    @Expose(serialize = true)
     private String birthday; // 生日
+
+    @Expose(serialize = true)
     private String email; // 邮箱
+
+    @Expose(serialize = true)
     private String phone; // 电话
+
+    @Expose(serialize = true)
     private String address; // 地址
+
+    @Expose(serialize = true)
     private String introduce; // 介绍
 
+    @Expose(serialize = true)
+    private Integer personId; // 个人ID
+
+
+
+
+    /**
+     * 将Student对象转换为Map
+     *
+     * @return 包含Student对象属性的Map
+     */
+    public HashMap<String, Object> toMap() {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String jsonString = gson.toJson(this);
+        TypeToken<HashMap<String, Object>> typeToken = new TypeToken<HashMap<String, Object>>() {};
+        HashMap<String, Object> map = gson.fromJson(jsonString, typeToken.getType());
+        return map;
+    }
 
     /**
      * 构造一个学生数据表格对象
@@ -43,7 +99,7 @@ public class StudentTableEntity {
      * @param address     地址
      * @param introduce   介绍
      */
-    public StudentTableEntity(String major, String className, Integer studentId, Integer personId, String num, String name, String dept, String card, String gender, String genderName, String birthday, String email, String phone, String address, String introduce) {
+    public StudentEntity(String major, String className, Integer studentId, Integer personId, String num, String name, String dept, String card, String gender, String genderName, String birthday, String email, String phone, String address, String introduce) {
         this.major = major != null ? major : "";
         this.className = className != null ? className : "";
         this.studentId = studentId != null ? studentId : 0;
@@ -60,10 +116,11 @@ public class StudentTableEntity {
         this.address = address != null ? address : "";
         this.introduce = introduce != null ? introduce : "";
     }
+
     /**
      * 默认构造方法
      */
-    public StudentTableEntity() {
+    public StudentEntity() {
     }
 
     public boolean isSelect() {

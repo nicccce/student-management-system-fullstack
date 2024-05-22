@@ -38,4 +38,5 @@ module com.teach.javafxclient {
     opens com.teach.javafxclient.controller.demo to com.google.gson, javafx.fxml, fastjson;
     opens com.teach.javafxclient.controller.demo.model to com.google.gson, javafx.fxml, fastjson;
     exports com.teach.javafxclient.model;
+    opens com.teach.javafxclient.base to com.google.gson;
 }

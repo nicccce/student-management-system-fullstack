@@ -35,7 +35,7 @@ public class AddStudent {
     public MFXTextField phoneField;
     public MFXTextField addressField;
 
-    DialogUtil dialogUtil;
+    DialogUtil dialogUtil = new DialogUtil();
 
     private List<OptionItem> genderList;   //性别选择列表数据
 
@@ -100,7 +100,7 @@ public class AddStudent {
         form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
         req.put("newStudent", form);
-        DataResponse res = HttpRequestUtil.request("/api/student/studentEditSave",req);
+        DataResponse res = HttpRequestUtil.request("/api/student/studentInsert",req);
         if (res != null) {
             if (res.getCode() == 0) {
                 dialogUtil.openGeneric("添加成功", "添加成功!点击确认继续添加。", this::continueAdding);

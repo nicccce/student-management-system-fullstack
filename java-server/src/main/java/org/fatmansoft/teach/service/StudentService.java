@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class StudentService {
@@ -72,4 +69,58 @@ public class StudentService {
 //        }
     }
 
+    /**
+     * 获取所有学生的部门列表，去重后返回。
+     *
+     * @return 学生的部门列表
+     */
+    public List<String> getStudentDeptList() {
+        List<Student> studentList = studentRepository.findAll();
+        Set<String> uniqueDepts = new HashSet<>();
+
+        for (Student student : studentList) {
+            String dept = student.getPerson().getDept();
+            uniqueDepts.add(dept);
+        }
+
+        List<String> deptList = new ArrayList<>(uniqueDepts);
+        return deptList;
+    }
+
+    /**
+     * 获取所有学生的专业列表，去重后返回。
+     *
+     * @return 学生的专业列表
+     */
+    public List<String> getStudentMajorList() {
+        List<Student> studentList = studentRepository.findAll();
+        Set<String> uniqueMajors = new HashSet<>();
+
+        for (Student student : studentList) {
+            String major = student.getMajor();
+            uniqueMajors.add(major);
+        }
+
+        List<String> majorList = new ArrayList<>(uniqueMajors);
+        return majorList;
+    }
+
+    /**
+     * 获取所有学生的班级列表，去重后返回。
+     *
+     * @return 学生的班级列表
+     */
+    public List<String> getStudentClassNameList() {
+        List<Student> studentList = studentRepository.findAll();
+        Set<String> uniqueClassNames = new HashSet<>();
+
+        for (Student student : studentList) {
+            String className = student.getClassName();
+            uniqueClassNames.add(className);
+        }
+
+        List<String> classNameList = new ArrayList<>(uniqueClassNames);
+        return classNameList;
+    }
 }
+

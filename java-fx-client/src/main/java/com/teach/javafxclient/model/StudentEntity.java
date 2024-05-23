@@ -52,20 +52,20 @@ public class StudentEntity {
     private Integer personId; // 个人ID
 
     public boolean isEmpty() {
-        return num == null || num.isEmpty()
-                && name == null || name.isEmpty()
-                && dept == null || dept.isEmpty()
-                && major == null || major.isEmpty()
-                && className == null || className.isEmpty()
-                && studentId == null
-                && card == null || card.isEmpty()
-                && gender == null || gender.isEmpty()
-                && genderName == null || genderName.isEmpty()
-                && birthday == null || birthday.isEmpty()
-                && email == null || email.isEmpty()
-                && phone == null || phone.isEmpty()
-                && address == null || address.isEmpty()
-                && introduce == null || introduce.isEmpty()
+        return (num == null || num.isEmpty())
+                && (name == null || name.isEmpty())
+                && (dept == null || dept.isEmpty())
+                && (major == null || major.isEmpty())
+                && (className == null || className.isEmpty())
+                && (studentId == null)
+                && (card == null || card.isEmpty())
+                && (gender == null || gender.isEmpty())
+                && (genderName == null || genderName.isEmpty())
+                && (birthday == null || birthday.isEmpty())
+                && (email == null || email.isEmpty())
+                && (phone == null || phone.isEmpty())
+                && (address == null || address.isEmpty())
+                && (introduce == null || introduce.isEmpty())
                 && personId == null;
     }
 

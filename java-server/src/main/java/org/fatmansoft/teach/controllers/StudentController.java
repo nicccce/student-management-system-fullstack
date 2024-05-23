@@ -591,6 +591,7 @@ public class StudentController {
         content= CommonMethod.replaceNameValue(content,info); //将HTML中标记串${name}等替换成学生实际的信息
         return baseService.getPdfDataFromHtml(content); //生成学生简历PDF二进制数据
     }
+
     /**
      * studentDeleteAll 删除学生信息Web服务 Student页面的列表里点击删除按钮则可以删除已经存在的学生信息， 前端会将该记录的id 回传到后端，方法从参数获取id，查出相关记录，调用delete方法删除
      * 这里注意删除顺序，应为user关联person,Student关联Person 所以要先删除Student,User，再删除Person
@@ -602,6 +603,7 @@ public class StudentController {
     public DataResponse studentDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
         return studentService.studentDeleteAll(dataRequest);
     }
+
     /**
      * studentInsert 增添学生信息Web服务 Student页面的列表里点击添加按钮则可以添加学生信息
      *
@@ -613,5 +615,42 @@ public class StudentController {
     public DataResponse studentInsert (@Valid @RequestBody Request<Map<String, StudentRequest>> dataRequest) {
         return studentService.studentInsert(dataRequest);
     }
+
+    /**
+     * 获取学生的部门列表。
+     *
+     * @return 包含学生部门的数据响应对象
+     */
+    @GetMapping("/dept")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse getStudentDeptList() {
+        List<String> deptList = studentService.getStudentDeptList();
+        return CommonMethod.getReturnData(deptList);
+    }
+
+    /**
+     * 获取学生的专业列表。
+     *
+     * @return 包含学生专业的数据响应对象
+     */
+    @GetMapping("/major")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse getStudentMajorList() {
+        List<String> majorList = studentService.getStudentMajorList();
+        return CommonMethod.getReturnData(majorList);
+    }
+
+    /**
+     * 获取学生的班级列表。
+     *
+     * @return 包含学生班级的数据响应对象
+     */
+    @GetMapping("/class")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse getStudentClassNameList() {
+        List<String> classNameList = studentService.getStudentClassNameList();
+        return CommonMethod.getReturnData(classNameList);
+    }
+
 
 }

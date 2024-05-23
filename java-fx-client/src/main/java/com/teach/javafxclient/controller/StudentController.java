@@ -2,6 +2,7 @@ package com.teach.javafxclient.controller;
 
 import com.teach.javafxclient.MainApplication;
 import com.teach.javafxclient.controller.admin.AddStudentController;
+import com.teach.javafxclient.controller.admin.FilterStudentController;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.ToolController;
 import com.teach.javafxclient.model.StudentEntity;
@@ -10,6 +11,8 @@ import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.controller.base.MessageDialog;
 import com.teach.javafxclient.util.DialogUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.font.FontResources;
+import io.github.palexdev.materialfx.font.MFXFontIcon;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -47,6 +50,8 @@ public class StudentController extends ToolController {
     public MFXButton changeFilterButton;
     public MFXButton resetFilterButton;
     public Label filterLabel;
+    public MFXButton addButton;
+    public MFXButton deleteButton;
     @FXML
     private TableView<StudentEntity> dataTableView;  //学生信息表
     @FXML
@@ -113,7 +118,7 @@ public class StudentController extends ToolController {
     private final DialogUtil dialogUtil = new DialogUtil();
 
     //存储筛选的条件
-    private StudentEntity filerCriteria = new StudentEntity();
+    private StudentEntity filterCriteria = new StudentEntity();
 
     /**
      * 页面加载对象创建完成初始化方法，页面中控件属性的设置，初始数据显示等初始操作都在这里完成，其他代码都事件处理方法里
@@ -134,6 +139,8 @@ public class StudentController extends ToolController {
         genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
         genderComboBox.getItems().addAll(genderList);
         birthdayPick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));
+
+        addButton.setFont(new MFXFontIcon("mfx-plus",12).getFont());
 
         resetFilter();
     }
@@ -289,8 +296,18 @@ public class StudentController extends ToolController {
     protected void onQueryButtonClick() {
         String numName = numNameTextField.getText();
         DataRequest req = new DataRequest();
-        req.put("numName",numName);
-        DataResponse<ArrayList<StudentEntity>> res = httpRequestUtil.requestArrayList("/api/student/getStudentList",req);
+        DataResponse<ArrayList<StudentEntity>> res;
+        if (!filterCriteria.isEmpty()){
+            req.put("numName",numName);
+            req.putObject("filterCriteria",filterCriteria);
+            res = httpRequestUtil.requestArrayList("/api/student/getStudentListByFilter",req);
+            hasFilter();
+        }else {
+            req.put("numName",numName);
+            res = httpRequestUtil.requestArrayList("/api/student/getStudentList",req);
+            resetFilter();
+        }
+
         if(res != null && res.getCode()== 0) {
             studentList = res.getData();
             setTableViewData();
@@ -463,7 +480,7 @@ public class StudentController extends ToolController {
         if (bytes != null) {
             try {
                 FileChooser fileDialog = new FileChooser();
-                fileDialog.setTitle("前选择保存的文件");
+                fileDialog.setTitle("请选择保存的文件");
                 fileDialog.setInitialDirectory(new File("C:/"));
                 fileDialog.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("XLSX 文件", "*.xlsx"));
@@ -494,6 +511,9 @@ public class StudentController extends ToolController {
         return  selectedItems;
     }
 
+    /**
+     * 重置筛选
+     */
     private void resetFilter() {
         addFilterButton.setVisible(true);
         addFilterButton.setManaged(true);
@@ -502,20 +522,54 @@ public class StudentController extends ToolController {
         resetFilterButton.setVisible(false);
         resetFilterButton.setManaged(false); // 隐藏按钮并且不占用空间
         filterLabel.setText("筛选：当前无筛选条件");
-        filerCriteria.empty();//清空筛选条件
+        filterCriteria.empty();//清空筛选条件
     }
 
-    private void setFilter(){
+    private void hasFilter(){
+        addFilterButton.setVisible(false);
+        addFilterButton.setManaged(false);
+        changeFilterButton.setManaged(true);
+        changeFilterButton.setVisible(true);
+        resetFilterButton.setVisible(true);
+        resetFilterButton.setManaged(true); // 隐藏按钮并且不占用空间
+        filterLabel.setText("筛选：当前已设置筛选条件");
+    }
 
+    /**
+     * 添加或修改筛选
+     */
+    private void setFilter(){
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("filter-student.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+            FilterStudentController controller = fxmlLoader.getController(); // 获取控制器对象
+
+            // 创建一个新的 Stage 对象
+            Stage filterStage = new Stage();
+            filterStage.setTitle("筛选条件");
+            filterStage.getIcons().add(MainApplication.icon);
+
+            // 设置 Scene 并显示 Stage
+            Scene scene = new Scene(root, -1, -1);
+            filterStage.setScene(scene);
+            filterStage.show();
+            // 初始化控制器
+            controller.init(filterStage, filterCriteria, this::onQueryButtonClick);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void onAddFilterButtonClicked(ActionEvent actionEvent) {
+        setFilter();
     }
 
     public void onChangeFilterButtonClicked(ActionEvent actionEvent) {
+        setFilter();
     }
 
     public void onResetFilterButtonClicked(ActionEvent actionEvent) {
         resetFilter();
     }
+    
 }

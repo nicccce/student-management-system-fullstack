@@ -224,7 +224,7 @@ public class StudentController extends ToolController {
 
         //设置表格的属性
         dataTableView.setColumnResizePolicy(
-                TableView.UNCONSTRAINED_RESIZE_POLICY
+                TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS
         );
         Styles.toggleStyleClass(dataTableView, Styles.BORDERED);//显示表格轮廓
         Styles.toggleStyleClass(dataTableView, Styles.STRIPED);//每行呈斑马交错颜色
@@ -311,17 +311,18 @@ public class StudentController extends ToolController {
         DataResponse<ArrayList<StudentEntity>> res;
         //没有筛选值调用原来的接口，有筛选值调用新接口
         if (!filterCriteria.isEmpty()){
-            req.put("numName",numName);
             //将筛选对象包装进请求
             req.putObject("filterCriteria",filterCriteria);
-            res = httpRequestUtil.requestArrayList("/api/student/getStudentListByFilter",req);
+            res = httpRequestUtil.requestArrayList("/api/student/getStudentListByFilter/" + numName,req);
+
+            //因为有筛选条件，修改一下筛选按钮
             hasFilter();
+
         }else {
             req.put("numName",numName);
             res = httpRequestUtil.requestArrayList("/api/student/getStudentList",req);
             resetFilter();
         }
-
         if(res != null && res.getCode()== 0) {
             studentList = res.getData();
             setTableViewData();
@@ -611,6 +612,7 @@ public class StudentController extends ToolController {
      */
     public void onResetFilterButtonClicked(ActionEvent actionEvent) {
         resetFilter();
+        onQueryButtonClick();
     }
     
 }

@@ -177,6 +177,11 @@ public class StudentController {
         return new OptionItemList(0, itemList);
     }
 
+    /**
+     * 根据前端的数据获取学生列表，若传回来的是空串则返回全体学生，否则返回根据学号姓名查询的学生数据
+     * @param dataRequest 前端请求参数，包含需要查询的学生学号或者姓名
+     * @return 查询到的学生信息
+     */
     @PostMapping("/getStudentList")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getStudentList(@Valid @RequestBody DataRequest dataRequest) {
@@ -397,6 +402,7 @@ public class StudentController {
         }
         return list;
     }
+
     /**
      * getStudentIntroduceData 前端获取学生个人简历数据请求服务
      * @param dataRequest 从前端获取 studentId 查询学生信息的主键 student_id
@@ -652,5 +658,34 @@ public class StudentController {
         return CommonMethod.getReturnData(classNameList);
     }
 
+    /**
+     * 根据前端的筛选数据获取学生列表
+     * @param dataRequest 前端请求参数，包含筛选数据
+     * @param numName 前端的查询框数据
+     * @return 查询到的学生信息
+     */
+    @PostMapping("/getStudentListByFilter/{numName}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse getStudentListByFilterAndNumName(@Valid @RequestBody Request<Map<String,StudentRequest>> dataRequest,@PathVariable String numName) {
+        if (numName == null){
+            numName="";
+        }
+        StudentRequest filterCriteria = dataRequest.getData().get("filterCriteria");
+        List dataList = studentService.getStudentListByFilterAndNumName(filterCriteria,numName);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
 
+    /**
+     * 根据前端的筛选数据获取学生列表
+     * @param dataRequest 前端请求参数，包含需要查询的学生学号或者姓名
+     * @return 查询到的学生信息
+     */
+    @PostMapping("/getStudentListByFilter/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse getStudentListByFilter(@Valid @RequestBody Request<Map<String,StudentRequest>> dataRequest) {
+        String numName = "";
+        StudentRequest filterCriteria = dataRequest.getData().get("filterCriteria");
+        List dataList = studentService.getStudentListByFilterAndNumName(filterCriteria,numName);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
 }

@@ -39,26 +39,36 @@ public class AddStudentController {
 
     private Runnable refreshMethod;
 
+    /**
+     * 初始化添加学生界面
+     */
     @FXML
     public void initialize(){
+        //初始化性别栏
         genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
         genderComboBox.getItems().addAll(genderList);
     }
 
+    /**
+     * 获取自己的页面对象
+     * @param stage 自己的界面对象
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    public void setRefreshMethod(Runnable refreshMethod){
-        this.refreshMethod = refreshMethod;
-    }
-
+    /**
+     * 点击添加按钮后执行操作
+     * @param actionEvent .
+     */
     public void onAddButtonClick(ActionEvent actionEvent) {
-        //弹窗错误
+        //若无学号则弹窗错误
         if( numField.getText().equals("")) {
             dialogUtil.openError("添加失败", "学号为空，不能添加！");
             return;
         }
+
+        //将需要的学生信息包装为实体类
         StudentEntity studentEntity = new StudentEntity();
         studentEntity.setNum(numField.getText());
         studentEntity.setName(nameField.getText());
@@ -66,6 +76,7 @@ public class AddStudentController {
         studentEntity.setMajor(majorField.getText());
         studentEntity.setClassName(classNameField.getText());
         studentEntity.setCard(cardField.getText());
+
 
         if (genderComboBox.getSelectionModel() != null && genderComboBox.getSelectionModel().getSelectedItem() != null) {
             OptionItem selectedGender = (OptionItem) genderComboBox.getSelectionModel().getSelectedItem();
@@ -104,9 +115,10 @@ public class AddStudentController {
         DataResponse res = HttpRequestUtil.request("/api/student/studentInsert",req);
         if (res != null) {
             if (res.getCode() == 0) {
+                //弹窗询问是否继续，若继续则设置isContinue为真
                 dialogUtil.openGeneric("添加成功", "添加成功!点击确认继续添加。", this::continueAdding);
                 //refreshMethod.run();
-                if (isContinue) {
+                if (isContinue) {//
                     isContinue = false;
                 } else {
                     stage.close();
@@ -120,6 +132,10 @@ public class AddStudentController {
     }
 
     boolean isContinue = false;
+
+    /**
+     * 设置是否继续添加
+     */
     private void continueAdding(){
         isContinue = true;
     }

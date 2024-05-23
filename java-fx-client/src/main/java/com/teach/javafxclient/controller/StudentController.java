@@ -1,6 +1,7 @@
 package com.teach.javafxclient.controller;
 
 import com.teach.javafxclient.MainApplication;
+import com.teach.javafxclient.controller.admin.AddStudentController;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.ToolController;
 import com.teach.javafxclient.model.StudentEntity;
@@ -8,17 +9,21 @@ import com.teach.javafxclient.request.*;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.controller.base.MessageDialog;
 import com.teach.javafxclient.util.DialogUtil;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import atlantafx.base.theme.*;
@@ -29,15 +34,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 /**
  * StudentController 登录交互控制类 对应 student_panel.fxml  对应于学生管理的后台业务处理的控制器，主要获取数据和保存数据的方法不同
  *  @FXML  属性 对应fxml文件中的
  *  @FXML 方法 对应于fxml文件中的 on***Click的属性
  */
 public class StudentController extends ToolController {
+    public FlowPane filterPane;
+    public MFXButton addFilterButton;
+    public MFXButton changeFilterButton;
+    public MFXButton resetFilterButton;
+    public Label filterLabel;
     @FXML
     private TableView<StudentEntity> dataTableView;  //学生信息表
     @FXML
@@ -103,6 +112,9 @@ public class StudentController extends ToolController {
 
     private final DialogUtil dialogUtil = new DialogUtil();
 
+    //存储筛选的条件
+    private StudentEntity filerCriteria = new StudentEntity();
+
     /**
      * 页面加载对象创建完成初始化方法，页面中控件属性的设置，初始数据显示等初始操作都在这里完成，其他代码都事件处理方法里
      */
@@ -122,6 +134,8 @@ public class StudentController extends ToolController {
         genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
         genderComboBox.getItems().addAll(genderList);
         birthdayPick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));
+
+        resetFilter();
     }
 
     /**
@@ -133,7 +147,9 @@ public class StudentController extends ToolController {
         dataTableView.setItems(observableList);
     }
 
-
+    /**
+     * 初始化表格
+     */
     private void setupTable(){
 
         var selectAll = new CheckBox();
@@ -200,11 +216,8 @@ public class StudentController extends ToolController {
         Styles.toggleStyleClass(dataTableView, Styles.BORDERED);
         Styles.toggleStyleClass(dataTableView, Styles.STRIPED);
 
-
-
-
     }
-
+    
     // 辅助方法：检查节点是否是有效行或单元格
     private boolean isRowOrCell(Node node) {
         if (node instanceof TableRow || node instanceof TableCell || node instanceof Text) {
@@ -291,11 +304,26 @@ public class StudentController extends ToolController {
     protected void onAddButtonClick() {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-student.fxml"));
         try {
-            Scene scene = new Scene(fxmlLoader.load(), -1, -1);
+            Parent root = fxmlLoader.load();
+            AddStudentController controller = fxmlLoader.getController(); // 获取控制器对象
+
+            // 创建一个新的 Stage 对象
             Stage addStage = new Stage();
             addStage.setTitle("添加学生信息");
-            addStage.setScene(scene);
             addStage.getIcons().add(MainApplication.icon);
+
+            // 通过控制器的 setStage 方法传递 Stage 对象
+            controller.setStage(addStage);
+
+            // 设置 Scene 并显示 Stage
+            Scene scene = new Scene(root, -1, -1);
+            addStage.setScene(scene);
+
+            // 添加关闭事件处理程序
+            addStage.setOnHiding(event -> {
+                onQueryButtonClick(); // 在关闭事件中调用 onQueryButtonClick() 方法
+            });
+
             addStage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -466,4 +494,28 @@ public class StudentController extends ToolController {
         return  selectedItems;
     }
 
+    private void resetFilter() {
+        addFilterButton.setVisible(true);
+        addFilterButton.setManaged(true);
+        changeFilterButton.setManaged(false);
+        changeFilterButton.setVisible(false);
+        resetFilterButton.setVisible(false);
+        resetFilterButton.setManaged(false); // 隐藏按钮并且不占用空间
+        filterLabel.setText("筛选：当前无筛选条件");
+        filerCriteria.empty();//清空筛选条件
+    }
+
+    private void setFilter(){
+
+    }
+
+    public void onAddFilterButtonClicked(ActionEvent actionEvent) {
+    }
+
+    public void onChangeFilterButtonClicked(ActionEvent actionEvent) {
+    }
+
+    public void onResetFilterButtonClicked(ActionEvent actionEvent) {
+        resetFilter();
+    }
 }

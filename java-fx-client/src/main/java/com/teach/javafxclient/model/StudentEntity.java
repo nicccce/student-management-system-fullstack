@@ -51,6 +51,10 @@ public class StudentEntity {
 
     private Integer personId; // 个人ID
 
+    /**
+     * 判断对象是否为空
+     * @return 为空返回true
+     */
     public boolean isEmpty() {
         return (num == null || num.isEmpty())
                 && (name == null || name.isEmpty())
@@ -69,6 +73,9 @@ public class StudentEntity {
                 && personId == null;
     }
 
+    /**
+     * 清空对象
+     */
     public void empty() {
         num = null;
         name = null;

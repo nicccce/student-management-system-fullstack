@@ -35,13 +35,13 @@ public class FilterStudentController {
 
     private List<OptionItem> genderList;   //性别选择列表数据
 
-    private List<String> deptList;
-    private List<String> majorList;
-    private List<String> classNameList;
+    private List<String> deptList;//部门列表数据
+    private List<String> majorList;//专业列表数据
+    private List<String> classNameList;//班级列表数据
 
-    private Stage stage;
+    private Stage stage;//本界面的对象
 
-    private Runnable refreshMethod;
+    private Runnable refreshMethod;//刷新主界面的方法
 
 
     //存储筛选的条件
@@ -49,6 +49,7 @@ public class FilterStudentController {
 
     @FXML
     public void initialize(){
+        //初始化各列表
         genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
         genderComboBox.getItems().addAll(genderList);
         deptList = (List<String>)(HttpRequestUtil.getRequest("/api/student/dept","",null).getData());
@@ -59,15 +60,28 @@ public class FilterStudentController {
         majorCombo.getItems().addAll(majorList);
     }
 
+    /**
+     * 初始化筛选界面
+     * @param stage 本界面对象
+     * @param filerCriteria 筛选条件，与主界面共享
+     * @param refreshMethod 刷新主界面方法
+     */
     public void init(Stage stage, StudentEntity filerCriteria, Runnable refreshMethod) {
         this.stage = stage;
         this.filerCriteria = filerCriteria;
         this.refreshMethod = refreshMethod;
+        //将筛选输入的初始条件改为与主界面一致
         fillForm(this.filerCriteria);
     }
 
+    /**
+     * 点击筛选按钮，进行筛选
+     * @param actionEvent .
+     */
     public void onFilterButtonClick(ActionEvent actionEvent) {
+        //清空筛选条件
         filerCriteria.empty();
+        //将填写的非空筛选条件包装
         if (numField.getText() != null && !numField.getText().isEmpty()) {
             filerCriteria.setNum(numField.getText());
         }
@@ -105,10 +119,16 @@ public class FilterStudentController {
         if (addressField.getText() != null && !addressField.getText().isEmpty()) {
             filerCriteria.setAddress(addressField.getText());
         }
+        //刷新主界面
         refreshMethod.run();
+        //关闭筛选窗口
         stage.close();
     }
 
+    /**
+     * 初始化筛选窗口的各各输入框元素，因为需要与主界面的筛选条件一致
+     * @param student
+     */
     public void fillForm(StudentEntity student) {
         if (student != null) {
             if (student.getNum() != null) {

@@ -134,14 +134,15 @@ public class StudentController extends ToolController {
             studentList = res.getData();
         }
 
+        //设置表的列属性和表属性
         setupTable();
 
+        //初始化右边栏元素
         genderList = HttpRequestUtil.getDictionaryOptionItemList("XBM");
         genderComboBox.getItems().addAll(genderList);
         birthdayPick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));
 
-        addButton.setFont(new MFXFontIcon("mfx-plus",12).getFont());
-
+        //初始化筛选器及其按钮
         resetFilter();
     }
 
@@ -155,14 +156,16 @@ public class StudentController extends ToolController {
     }
 
     /**
-     * 初始化表格
+     * 初始化表格列元素属性
      */
     private void setupTable(){
 
         var selectAll = new CheckBox();
 
+        //创建复选框列的全选按钮并放入column中
         checkColumn.setGraphic(selectAll);
-        checkColumn.setSortable(false);
+        checkColumn.setSortable(false);//复选框列不可点击列顶排序
+        //设置列元素为学生对象的checkColumn成员
         checkColumn.setCellValueFactory(c -> c.getValue().selectProperty());
 /*        checkColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<StudentTableEntity, Boolean>, ObservableValue<Boolean>>() {
             @Override
@@ -176,6 +179,7 @@ public class StudentController extends ToolController {
         checkColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkColumn));
         checkColumn.setEditable(true);
 
+        //初始化表中的其他数据列
         numColumn.setCellValueFactory(new PropertyValueFactory<StudentEntity,String>("num"));  //设置列值工程属性
         nameColumn.setCellValueFactory(new PropertyValueFactory<StudentEntity,String>("name"));
         deptColumn.setCellValueFactory(new PropertyValueFactory<StudentEntity,String>("dept"));
@@ -197,11 +201,13 @@ public class StudentController extends ToolController {
 
         dataTableView.getSelectionModel().selectFirst();
 
+        //添加选择行的监听器，用于更新右边栏
         TableView.TableViewSelectionModel<StudentEntity> tsm = dataTableView.getSelectionModel();
         ObservableList<Integer> list = tsm.getSelectedIndices();
         list.addListener(this::onTableRowSelect);
         setTableViewData();
 
+        //检查鼠标点击行元素时增加监听器选择或取消该行的复选框
         dataTableView.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
                 Node source = event.getPickResult().getIntersectedNode();
@@ -216,16 +222,18 @@ public class StudentController extends ToolController {
             }
         });
 
+        //设置表格的属性
         dataTableView.setColumnResizePolicy(
                 TableView.UNCONSTRAINED_RESIZE_POLICY
         );
-
-        Styles.toggleStyleClass(dataTableView, Styles.BORDERED);
-        Styles.toggleStyleClass(dataTableView, Styles.STRIPED);
+        Styles.toggleStyleClass(dataTableView, Styles.BORDERED);//显示表格轮廓
+        Styles.toggleStyleClass(dataTableView, Styles.STRIPED);//每行呈斑马交错颜色
 
     }
-    
-    // 辅助方法：检查节点是否是有效行或单元格
+
+    /**
+     * 辅助方法：检查节点是否是有效行或单元格
+     */
     private boolean isRowOrCell(Node node) {
         if (node instanceof TableRow || node instanceof TableCell || node instanceof Text) {
             return true;
@@ -254,6 +262,9 @@ public class StudentController extends ToolController {
         addressField.setText("");
     }
 
+    /**
+     * 用于点击表格数据时，更新右边栏的内容
+     */
     protected void changeStudentInfo() {
         StudentEntity form = dataTableView.getSelectionModel().getSelectedItem();
         if(form == null) {
@@ -281,24 +292,27 @@ public class StudentController extends ToolController {
         phoneField.setText(form.getPhone());
         addressField.setText(form.getAddress());
     }
+
     /**
      * 点击学生列表的某一行，根据studentId ,从后台查询学生的基本信息，切换学生的编辑信息
      */
-
     public void onTableRowSelect(ListChangeListener.Change<? extends Integer> change){
         changeStudentInfo();
     }
 
     /**
      * 点击查询按钮，从从后台根据输入的串，查询匹配的学生在学生列表中显示
+     * 也是刷新界面的方法
      */
     @FXML
     protected void onQueryButtonClick() {
         String numName = numNameTextField.getText();
         DataRequest req = new DataRequest();
         DataResponse<ArrayList<StudentEntity>> res;
+        //没有筛选值调用原来的接口，有筛选值调用新接口
         if (!filterCriteria.isEmpty()){
             req.put("numName",numName);
+            //将筛选对象包装进请求
             req.putObject("filterCriteria",filterCriteria);
             res = httpRequestUtil.requestArrayList("/api/student/getStudentListByFilter",req);
             hasFilter();
@@ -336,7 +350,7 @@ public class StudentController extends ToolController {
             Scene scene = new Scene(root, -1, -1);
             addStage.setScene(scene);
 
-            // 添加关闭事件处理程序
+            // 添加关闭事件处理程序，用来关闭时自动刷新
             addStage.setOnHiding(event -> {
                 onQueryButtonClick(); // 在关闭事件中调用 onQueryButtonClick() 方法
             });
@@ -352,11 +366,12 @@ public class StudentController extends ToolController {
      */
     @FXML
     protected void onDeleteButtonClick() {
-        getSelectedItem();
+        getSelectedItem();//更新复选框选中的学生数据
         if (selectedItemList.isEmpty()){
             dialogUtil.openError("删除失败", "当前未选择任何元素，无法删除！");
             return;
         }
+        //弹窗警告，若点击警告的“确定”，再继续进行删除操作
         dialogUtil.openWarning("警告", "将永久删除框选的 "+selectedItemList.size()+" 个学生的所有信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
         /*StudentTableEntity form = dataTableView.getSelectionModel().getSelectedItem();
         if(form == null) {
@@ -380,8 +395,12 @@ public class StudentController extends ToolController {
         }*/
     }
 
+    /**
+     * 删除复选框选中的学生对象
+     */
     public void deleteSelectedItems(){
         ArrayList<Integer> studentIdList = new ArrayList<Integer>();
+        //提取复选框选中的学生的id，包装成列表传后端
         for (StudentEntity item:
              selectedItemList) {
             studentIdList.add(item.getStudentId());
@@ -411,6 +430,7 @@ public class StudentController extends ToolController {
             dialogUtil.openError("修改失败", "学号为空，不能修改！");
             return;
         }
+        //将右边栏的输入内容包装为学生信息对象
         StudentEntity studentEntity =new StudentEntity();
         studentEntity.setNum(numField.getText());
         studentEntity.setName(nameField.getText());
@@ -442,7 +462,9 @@ public class StudentController extends ToolController {
         form.put("phone",phoneField.getText());
         form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
+        //将学生id单独包装方便后端
         req.put("studentId", studentId);
+        //将新学生信息包装进请求
         req.putObject("form", studentEntity);
         DataResponse res = HttpRequestUtil.request("/api/student/studentEditSave",req);
         if(res.getCode() == 0) {
@@ -497,6 +519,10 @@ public class StudentController extends ToolController {
 
     }
 
+    /**
+     * 获取复选框选中的列表对象
+     * @return 复选框选中的对象列表
+     */
     private List<StudentEntity> getSelectedItem(){
         List<StudentEntity> selectedItems = new ArrayList<StudentEntity>();
         for (StudentEntity items :
@@ -512,7 +538,7 @@ public class StudentController extends ToolController {
     }
 
     /**
-     * 重置筛选
+     * 重置筛选条件并修改按钮
      */
     private void resetFilter() {
         addFilterButton.setVisible(true);
@@ -525,6 +551,9 @@ public class StudentController extends ToolController {
         filterCriteria.empty();//清空筛选条件
     }
 
+    /**
+     * 检测到存在筛选条件时，修改筛选按钮
+     */
     private void hasFilter(){
         addFilterButton.setVisible(false);
         addFilterButton.setManaged(false);
@@ -553,21 +582,33 @@ public class StudentController extends ToolController {
             Scene scene = new Scene(root, -1, -1);
             filterStage.setScene(scene);
             filterStage.show();
-            // 初始化控制器
+            // 初始化筛选控制器所需要的值，并把筛选条件的指针传进去，使在弹出页面更改的会自动同步到这个页面
             controller.init(filterStage, filterCriteria, this::onQueryButtonClick);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * 点击添加筛选按钮
+     * @param actionEvent .
+     */
     public void onAddFilterButtonClicked(ActionEvent actionEvent) {
         setFilter();
     }
 
+    /**
+     * 点击修改筛选按钮
+     * @param actionEvent .
+     */
     public void onChangeFilterButtonClicked(ActionEvent actionEvent) {
         setFilter();
     }
 
+    /**
+     * 点击清除筛选按钮
+     * @param actionEvent .
+     */
     public void onResetFilterButtonClicked(ActionEvent actionEvent) {
         resetFilter();
     }

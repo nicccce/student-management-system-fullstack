@@ -32,6 +32,9 @@ public class Student {
     @Size(max = 50)
     private String className;
 
+    private @Version Long version;
+
+
     public Integer getStudentId() {
         return studentId;
     }

@@ -63,6 +63,9 @@ public class Person {
     @Size(max = 1000)
     private String introduce;
 
+    private @Version Long version;
+
+
 
     public Person() {
     }

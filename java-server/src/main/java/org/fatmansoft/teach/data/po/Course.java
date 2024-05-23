@@ -31,6 +31,7 @@ public class Course {
     @JoinColumn(name="pre_course_id")
     private Course preCourse;
 
+    private @Version Long version;
     public Integer getCourseId() {
         return courseId;
     }

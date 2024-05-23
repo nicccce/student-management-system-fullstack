@@ -34,7 +34,7 @@ public class Teacher {
 
     private LocalDateTime joinDate;
 
-
+    private @Version Long version;
 
     public Teacher (TeacherRequest teacherRequest) {
         person = new Person();

@@ -602,7 +602,12 @@ public class StudentController {
     public DataResponse studentDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
         return studentService.studentDeleteAll(dataRequest);
     }
-
+    /**
+     * studentInsert 增添学生信息Web服务 Student页面的列表里点击添加按钮则可以添加学生信息
+     *
+     * @param dataRequest  前端学生实体信息
+     * @return  正常操作
+     */
     @PostMapping ("/studentInsert")
     @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse studentInsert (@Valid @RequestBody Request<Map<String, StudentRequest>> dataRequest) {

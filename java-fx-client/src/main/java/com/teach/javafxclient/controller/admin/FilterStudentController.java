@@ -103,6 +103,7 @@ public class FilterStudentController {
         if (genderComboBox.getValue() != null) {
             OptionItem selectedGender = (OptionItem) genderComboBox.getSelectionModel().getSelectedItem();
             filerCriteria.setGender(selectedGender.getValue());
+            filerCriteria.setGenderName(selectedGender.getLabel());
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birthday = birthdayPick.getValue();
@@ -152,7 +153,13 @@ public class FilterStudentController {
                 cardField.setText(student.getCard());
             }
             if (student.getGender() != null) {
-                genderComboBox.setValue(student.getGender());
+                for (OptionItem optionItem:
+                     genderList) {
+                    if (optionItem.getValue()==student.getGender()){
+                        genderComboBox.setValue(optionItem.getLabel());
+                    }
+                }
+
             }
             if (student.getBirthday() != null) {
                 birthdayPick.setValue(LocalDate.parse(student.getBirthday()));

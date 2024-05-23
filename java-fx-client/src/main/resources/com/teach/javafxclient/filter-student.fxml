@@ -52,8 +52,6 @@
         <MFXTextField fx:id="emailField" floatMode="BORDER" floatingText="邮箱" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
         <MFXTextField fx:id="phoneField" floatMode="BORDER" floatingText="电话" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
         <MFXTextField fx:id="addressField" floatMode="BORDER" floatingText="地址" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-        <MFXDatePicker fx:id="birthdayBegin" prefHeight="38.0" prefWidth="221.0" promptText="出生日期 起" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-        <MFXDatePicker fx:id="birthdayEnd" prefHeight="38.0" prefWidth="221.0" promptText="至" GridPane.columnIndex="3" GridPane.rowIndex="12" />
         <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0" />
    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
       <children>

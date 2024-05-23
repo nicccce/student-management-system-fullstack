@@ -51,7 +51,41 @@ public class StudentEntity {
 
     private Integer personId; // 个人ID
 
+    public boolean isEmpty() {
+        return num == null || num.isEmpty()
+                && name == null || name.isEmpty()
+                && dept == null || dept.isEmpty()
+                && major == null || major.isEmpty()
+                && className == null || className.isEmpty()
+                && studentId == null
+                && card == null || card.isEmpty()
+                && gender == null || gender.isEmpty()
+                && genderName == null || genderName.isEmpty()
+                && birthday == null || birthday.isEmpty()
+                && email == null || email.isEmpty()
+                && phone == null || phone.isEmpty()
+                && address == null || address.isEmpty()
+                && introduce == null || introduce.isEmpty()
+                && personId == null;
+    }
 
+    public void empty() {
+        num = null;
+        name = null;
+        dept = null;
+        major = null;
+        className = null;
+        studentId = null;
+        card = null;
+        gender = null;
+        genderName = null;
+        birthday = null;
+        email = null;
+        phone = null;
+        address = null;
+        introduce = null;
+        personId = null;
+    }
 
     /**
      * 构造一个学生数据表格对象
@@ -95,6 +129,7 @@ public class StudentEntity {
      */
     public StudentEntity() {
     }
+
 
     public boolean isSelect() {
         return select.get();
@@ -394,4 +429,6 @@ public class StudentEntity {
                 ", introduce='" + introduce + '\'' +
                 '}';
     }
+
+
 }

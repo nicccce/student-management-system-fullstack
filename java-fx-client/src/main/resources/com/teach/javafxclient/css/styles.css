@@ -2,6 +2,10 @@
 @import '../fonts/Fonts.css';
 @import 'MFXColors.css';
 
+.root {
+}
+
+
 @font-face {
     -fx-font-family : 'Source Han Sans CN Regular';
     src: url('../fonts/SourceHanSansCN/SourceHanSansCN-Regular.otf');

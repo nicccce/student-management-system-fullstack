@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <!--  学生管理 FXML 配置文件 对应的页面交互控制类 com.teach.javafxclient.controller.StudentController 如果是切换成本地开发模式 界面配置不变，将页面交互控制类 切换为 com.teach.javafxclient.controller.StudentControllerLocal-->
 
-<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentController">
+<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentController">
     <top>
-        <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="816.0" spacing="5.0">
+        <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="1920.0" spacing="5.0">
             <children>
                 <FlowPane alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
@@ -27,12 +40,32 @@
                     </children>
                 </FlowPane>
                 <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-                <FlowPane alignment="CENTER_RIGHT" prefHeight="40" prefWidth="600.0" BorderPane.alignment="CENTER">
+                <FlowPane fx:id="filterPane" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="410.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Label prefWidth="49.0" text="学号姓名">
+                        <Label fx:id="filterLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" text="筛选：当前无筛选条件">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </FlowPane.margin></Label>
+                            </FlowPane.margin>
+                        </Label>
+                        <MFXButton fx:id="changeFilterButton" minHeight="27.0" minWidth="70.0" onAction="#onChangeFilterButtonClicked" styleClass="link-button" text="修改筛选条件">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                        </MFXButton>
+                        <MFXButton fx:id="resetFilterButton" minHeight="27.0" minWidth="70.0" onAction="#onResetFilterButtonClicked" styleClass="link-button" text="重置">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                        </MFXButton>
+                        <MFXButton fx:id="addFilterButton" minHeight="27.0" minWidth="70.0" onAction="#onAddFilterButtonClicked" styleClass="link-button" text="添加筛选条件">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                        </MFXButton>
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="322.0" BorderPane.alignment="CENTER">
+                    <children>
                         <MFXTextField fx:id="numNameTextField" floatMode="BORDER" floatingText="学号姓名" maxHeight="30" prefHeight="0.0" prefWidth="221.0">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

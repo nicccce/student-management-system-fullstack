@@ -1,12 +1,10 @@
 package com.teach.javafxclient.controller.admin;
 
-import com.teach.javafxclient.controller.base.MessageDialog;
 import com.teach.javafxclient.model.StudentEntity;
 import com.teach.javafxclient.request.DataRequest;
 import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
-import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
@@ -17,11 +15,9 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class AddStudent {
+public class AddStudentController {
 
     public MFXTextField numField;
     public MFXTextField nameField;
@@ -39,7 +35,9 @@ public class AddStudent {
 
     private List<OptionItem> genderList;   //性别选择列表数据
 
-    Stage stage;
+    private Stage stage;
+
+    private Runnable refreshMethod;
 
     @FXML
     public void initialize(){
@@ -49,6 +47,10 @@ public class AddStudent {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void setRefreshMethod(Runnable refreshMethod){
+        this.refreshMethod = refreshMethod;
     }
 
     public void onAddButtonClick(ActionEvent actionEvent) {
@@ -98,15 +100,12 @@ public class AddStudent {
         form.put("phone",phoneField.getText());
         form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
-<<<<<<< Updated upstream
-        req.put("newStudent", form);
-=======
-        req.put("newStudent", studentEntity);
->>>>>>> Stashed changes
+        req.putObject("newStudent", studentEntity);
         DataResponse res = HttpRequestUtil.request("/api/student/studentInsert",req);
         if (res != null) {
             if (res.getCode() == 0) {
                 dialogUtil.openGeneric("添加成功", "添加成功!点击确认继续添加。", this::continueAdding);
+                //refreshMethod.run();
                 if (isContinue) {
                     isContinue = false;
                 } else {

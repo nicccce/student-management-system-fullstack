@@ -29,7 +29,7 @@ public class Score {
     private Integer mark;
     private Integer ranking;
 
-
+    private @Version Long version;
     public Integer getScoreId() {
         return scoreId;
     }

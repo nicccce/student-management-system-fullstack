@@ -44,6 +44,9 @@ public class User {
     private Integer loginCount;
     private Date lastLoginTime;
 
+    private @Version Long version;
+
+
     public User() {
     }
 

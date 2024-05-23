@@ -19,6 +19,7 @@ public class Fee {
     private String day;
     private Double money;
 
+    private @Version Long version;
     public Integer getFeeId() {
         return feeId;
     }

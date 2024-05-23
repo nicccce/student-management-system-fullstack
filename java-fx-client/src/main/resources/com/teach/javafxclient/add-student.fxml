@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import io.github.palexdev.materialfx.font.MFXFontIcon?>
 <GridPane alignment="CENTER" prefHeight="500" prefWidth="809" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.AddStudentController">
     <columnConstraints>
         <ColumnConstraints prefWidth="100" />
@@ -47,10 +48,10 @@
    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
       <children>
       
-               <MFXButton buttonType="RAISED" layoutX="42.0" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="38.0" prefWidth="83.0" text="添加">
-            <font>
-               <Font size="14.0" />
-            </font>
+          <MFXButton buttonType="RAISED" layoutX="42.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="38.0" prefWidth="83.0" text="添加">
+              <graphic>
+                  <MFXFontIcon description="mfx-plus" size="16" />
+              </graphic>
          </MFXButton>
       </children>
    </AnchorPane>

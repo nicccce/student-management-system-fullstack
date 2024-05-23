@@ -121,6 +121,7 @@ button {
 
 .mfx-button {
 	-fx-text-fill: -mfx-text-he;
+	-fx-font-size: 15px;
 }
 
 .mfx-button .mfx-ripple-generator {
@@ -383,4 +384,18 @@ button {
 	-fx-background-color: white;
 	-fx-font-family: 'Source Han Sans CN Bold';
 	-fx-text-fill: #007BF6;
+}
+
+
+/**************************************************
+ * Font Resources
+**************************************************/
+
+.mfx-table-view .virtual-flow .mfx-table-row:hover,
+.mfx-table-view .virtual-flow .mfx-table-row:selected {
+	-fx-background-color: transparent;
+}
+
+.mfx-table-view .virtual-flow .mfx-table-row .mfx-ripple-generator {
+	-mfx-paused: true;
 }

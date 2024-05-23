@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<?import io.github.palexdev.materialfx.font.MFXFontIcon?>
 <GridPane alignment="CENTER" prefHeight="500" prefWidth="809" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.FilterStudentController">
     <columnConstraints>
         <ColumnConstraints prefWidth="120" />
@@ -42,9 +43,9 @@
     </rowConstraints>
     <MFXTextField fx:id="numField" floatMode="BORDER" floatingText="学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <MFXTextField fx:id="nameField" floatMode="BORDER" floatingText="姓名" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-        <MFXFilterComboBox fx:id="deptCombo" floatingText="院系" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <MFXFilterComboBox fx:id="majorCombo" floatMode="BORDER" floatingText="专业" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-        <MFXFilterComboBox fx:id="classNameCombo" floatMode="BORDER" floatingText="班级" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <MFXComboBox fx:id="deptCombo" floatMode="BORDER" floatingText="院系" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <MFXComboBox fx:id="majorCombo" floatMode="BORDER" floatingText="专业" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+        <MFXComboBox fx:id="classNameCombo" floatMode="BORDER" floatingText="班级" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
         <MFXTextField fx:id="cardField" floatMode="BORDER" floatingText="证件号码" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
         <MFXComboBox fx:id="genderComboBox" floatMode="BORDER" floatingText="性别" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
         <MFXDatePicker fx:id="birthdayPick" prefHeight="38.0" prefWidth="221.0" promptText="出生日期" GridPane.columnIndex="1" GridPane.rowIndex="12" />
@@ -57,10 +58,10 @@
    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
       <children>
       
-               <MFXButton buttonType="RAISED" layoutX="22.0" layoutY="3.0" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onFilterButtonClick" prefHeight="38.0" prefWidth="83.0" text="确定">
-            <font>
-               <Font size="14.0" />
-            </font>
+               <MFXButton buttonType="RAISED" layoutX="22.0" layoutY="3.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onFilterButtonClick" prefHeight="38.0" prefWidth="83.0" text="确定">
+                   <graphic>
+                       <MFXFontIcon description="mfx-variant9-mark" size="16" />
+                   </graphic>
          </MFXButton>
       </children>
    </AnchorPane>

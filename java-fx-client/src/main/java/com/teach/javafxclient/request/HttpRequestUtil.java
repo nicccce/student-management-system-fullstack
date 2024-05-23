@@ -367,15 +367,15 @@ public class HttpRequestUtil<T> {
             return CommonMethod.getIntegerFromObject(res.getData());
     }
 
-    public static DataResponse getRequest(String url, String pathVariable, DataRequest request) {
+    public static DataResponse getRequest(String url, String pathVariable, Map<String,Object> requestParam) {
         if (!isLocal) {
             // 添加路径参数到 URL
             String fullUrl = serverUrl + url + "/" + pathVariable;
 
             // 将请求参数添加到 URL 中
-            if (request != null && !request.isEmpty()) {
+            if (requestParam != null && !requestParam.isEmpty()) {
                 StringBuilder queryBuilder = new StringBuilder();
-                for (Map.Entry<String, Object> entry : request.getData().entrySet()) {
+                for (Map.Entry<String, Object> entry : requestParam.entrySet()) {
                     String key = entry.getKey();
                     Object value = entry.getValue();
                     queryBuilder.append(URLEncoder.encode(key, StandardCharsets.UTF_8));

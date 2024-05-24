@@ -369,8 +369,13 @@ public class HttpRequestUtil<T> {
 
     public static DataResponse getRequest(String url, String pathVariable, Map<String,Object> requestParam) {
         if (!isLocal) {
-            // 添加路径参数到 URL
-            String fullUrl = serverUrl + url + "/" + pathVariable;
+            String fullUrl;
+            if (pathVariable != null) {
+                // 添加路径参数到 URL
+                fullUrl = serverUrl + url + "/" + pathVariable;
+            }else {
+                fullUrl = serverUrl + url;
+            }
 
             // 将请求参数添加到 URL 中
             if (requestParam != null && !requestParam.isEmpty()) {

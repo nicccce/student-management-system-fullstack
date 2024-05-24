@@ -19,23 +19,30 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<!--  学生管理 FXML 配置文件 对应的页面交互控制类 com.teach.javafxclient.controller.StudentController 如果是切换成本地开发模式 界面配置不变，将页面交互控制类 切换为 com.teach.javafxclient.controller.StudentControllerLocal-->
+<!--  教师管理 FXML 配置文件 对应的页面交互控制类 com.teach.javafxclient.controller.StudentController 如果是切换成本地开发模式 界面配置不变，将页面交互控制类 切换为 com.teach.javafxclient.controller.StudentControllerLocal-->
 
+<?import io.github.palexdev.materialfx.font.MFXFontIcon?>
 <BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.TeacherController">
     <top>
         <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="1920.0" spacing="5.0">
             <children>
                 <FlowPane alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <MFXButton buttonType="RAISED" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onAction="#onAddButtonClick" text="添加" GridPane.rowIndex="4">
+                        <MFXButton fx:id="addButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="36.0" prefWidth="86.0" text="添加" GridPane.rowIndex="4">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-plus" size="16" />
+                            </graphic>
                         </MFXButton>
-                        <MFXButton buttonType="RAISED" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除" GridPane.rowIndex="4">
+                        <MFXButton fx:id="deleteButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除" GridPane.rowIndex="4">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-minus" size="16" />
+                            </graphic>
                         </MFXButton>
                     </children>
                 </FlowPane>
@@ -71,10 +78,13 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
                         </MFXTextField>
-                        <MFXButton buttonType="RAISED" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onQueryButtonClick" text="查询">
+                        <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onQueryButtonClick" text="查询">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-search" size="16" />
+                            </graphic>
                         </MFXButton>
                     </children>
                 </FlowPane>
@@ -142,7 +152,11 @@
                     <MFXTextField fx:id="phoneField" floatMode="BORDER" floatingText="电话" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                     <MFXTextField fx:id="addressField" floatMode="BORDER" floatingText="地址" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                     <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
-                        <MFXButton buttonType="RAISED" minHeight="27.0" minWidth="70.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="保存" />
+                        <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="保存" >
+                            <graphic>
+                                <MFXFontIcon description="mfx-variant9-mark" size="16" />
+                            </graphic>
+                        </MFXButton>
                     </FlowPane>
                 </VBox>
             </items>

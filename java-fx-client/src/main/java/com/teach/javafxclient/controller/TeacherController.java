@@ -4,9 +4,12 @@ import atlantafx.base.theme.Styles;
 import com.teach.javafxclient.MainApplication;
 import com.teach.javafxclient.controller.admin.AddStudentController;
 import com.teach.javafxclient.controller.admin.AddTeacherController;
+import com.teach.javafxclient.controller.admin.FilterStudentController;
+import com.teach.javafxclient.controller.admin.FilterTeacherController;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.MessageDialog;
 import com.teach.javafxclient.controller.base.ToolController;
+import com.teach.javafxclient.model.StudentEntity;
 import com.teach.javafxclient.model.TeacherEntity;
 import com.teach.javafxclient.model.TeacherEntity;
 import com.teach.javafxclient.request.DataRequest;
@@ -113,7 +116,7 @@ public class TeacherController extends ToolController {
     private final DialogUtil dialogUtil = new DialogUtil();
 
     //存储筛选的条件
-    private TeacherEntity filerCriteria = new TeacherEntity();
+    private TeacherEntity filterCriteria = new TeacherEntity();
 
     /**
      * 页面加载对象创建完成初始化方法，页面中控件属性的设置，初始数据显示等初始操作都在这里完成，其他代码都事件处理方法里
@@ -210,7 +213,7 @@ public class TeacherController extends ToolController {
         });
 
         dataTableView.setColumnResizePolicy(
-                TableView.UNCONSTRAINED_RESIZE_POLICY
+                TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS
         );
 
         Styles.toggleStyleClass(dataTableView, Styles.BORDERED);
@@ -289,8 +292,21 @@ public class TeacherController extends ToolController {
     protected void onQueryButtonClick() {
         String numName = numNameTextField.getText();
         DataRequest req = new DataRequest();
-        req.put("numName",numName);
-        DataResponse<ArrayList<TeacherEntity>> res = httpRequestUtil.requestArrayList("/api/teacher/getTeacherList",req);
+        DataResponse<ArrayList<TeacherEntity>> res;
+        //没有筛选值调用原来的接口，有筛选值调用新接口
+        if (!filterCriteria.isEmpty()){
+            //将筛选对象包装进请求
+            req.putObject("filterCriteria",filterCriteria);
+            res = httpRequestUtil.requestArrayList("/api/teacher/getTeacherListByFilter/" + numName,req);
+
+            //因为有筛选条件，修改一下筛选按钮
+            hasFilter();
+
+        }else {
+            req.put("numName",numName);
+            res = httpRequestUtil.requestArrayList("/api/teacher/getTeacherList",req);
+            resetFilter();
+        }
         if(res != null && res.getCode()== 0) {
             teacherList = res.getData();
             setTableViewData();
@@ -427,7 +443,7 @@ public class TeacherController extends ToolController {
         DataRequest req = new DataRequest();
         req.put("teacherId", teacherId);
         req.putObject("form", teacherEntity);
-        DataResponse res = HttpRequestUtil.request("/api/tacher/teacherEditSave",req);
+        DataResponse res = HttpRequestUtil.request("/api/teacher/teacherEditSave",req);
         if(res.getCode() == 0) {
             teacherId = CommonMethod.getIntegerFromObject(res.getData());
             dialogUtil.openGeneric("提交成功","提交成功！",null);
@@ -502,20 +518,51 @@ public class TeacherController extends ToolController {
         resetFilterButton.setVisible(false);
         resetFilterButton.setManaged(false); // 隐藏按钮并且不占用空间
         filterLabel.setText("筛选：当前无筛选条件");
-        filerCriteria.empty();//清空筛选条件
+        filterCriteria.empty();//清空筛选条件
+    }
+
+    private void hasFilter(){
+        addFilterButton.setVisible(false);
+        addFilterButton.setManaged(false);
+        changeFilterButton.setManaged(true);
+        changeFilterButton.setVisible(true);
+        resetFilterButton.setVisible(true);
+        resetFilterButton.setManaged(true); // 隐藏按钮并且不占用空间
+        filterLabel.setText("筛选：当前已设置筛选条件");
     }
 
     private void setFilter(){
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("filter-teacher.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+            FilterTeacherController controller = fxmlLoader.getController(); // 获取控制器对象
 
+            // 创建一个新的 Stage 对象
+            Stage filterStage = new Stage();
+            filterStage.setTitle("筛选条件");
+            filterStage.getIcons().add(MainApplication.icon);
+
+            // 设置 Scene 并显示 Stage
+            Scene scene = new Scene(root, -1, -1);
+            filterStage.setScene(scene);
+            filterStage.show();
+            // 初始化筛选控制器所需要的值，并把筛选条件的指针传进去，使在弹出页面更改的会自动同步到这个页面
+            controller.init(filterStage, filterCriteria, this::onQueryButtonClick);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void onAddFilterButtonClicked(ActionEvent actionEvent) {
+        setFilter();
     }
 
     public void onChangeFilterButtonClicked(ActionEvent actionEvent) {
+        setFilter();
     }
 
     public void onResetFilterButtonClicked(ActionEvent actionEvent) {
         resetFilter();
+        onQueryButtonClick();
     }
 }

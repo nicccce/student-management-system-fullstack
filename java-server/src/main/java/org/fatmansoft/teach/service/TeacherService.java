@@ -4,18 +4,15 @@ import org.fatmansoft.teach.data.dto.DataRequest;
 import org.fatmansoft.teach.data.dto.Request;
 import org.fatmansoft.teach.data.dto.StudentRequest;
 import org.fatmansoft.teach.data.dto.TeacherRequest;
-import org.fatmansoft.teach.data.po.Person;
-import org.fatmansoft.teach.data.po.Student;
-import org.fatmansoft.teach.data.po.Teacher;
-import org.fatmansoft.teach.data.po.User;
+import org.fatmansoft.teach.data.po.*;
 import org.fatmansoft.teach.data.vo.DataResponse;
-import org.fatmansoft.teach.repository.PersonRepository;
-import org.fatmansoft.teach.repository.StudentRepository;
-import org.fatmansoft.teach.repository.TeacherRepository;
-import org.fatmansoft.teach.repository.UserRepository;
+import org.fatmansoft.teach.repository.*;
 import org.fatmansoft.teach.util.ComDataUtil;
 import org.fatmansoft.teach.util.CommonMethod;
+import org.fatmansoft.teach.util.EmailValidator;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -29,44 +26,10 @@ public class TeacherService {
     @Autowired
     TeacherRepository teacherRepository;
 
-    public List getTeacherMapList(String numName){
-        List dataList = new ArrayList();
-        List<Teacher> teacherList = teacherRepository.findTeacherListByNumName(numName);  //数据库查询操作
-        if(teacherList == null || teacherList.size() == 0)
-            return dataList;
-        for(int i = 0; i < teacherList.size();i++) {
-            dataList.add(getMapFromTeacher(teacherList.get(i)));
-        }
-        return dataList;
-    }
-
-    public Map getMapFromTeacher(Teacher teacher) {
-        Map m = new HashMap();
-        Person person;
-        if(teacher == null)
-            return m;
-        m.put("position",teacher.getPosition());
-        m.put("joinDate",teacher.getJoinDate());
-        person = teacher.getPerson();
-        if(person == null)
-            return m;
-        m.put("qualification", teacher.getQualification());
-        m.put("personId", person.getPersonId());
-        m.put("num",person.getNum());
-        m.put("name",person.getName());
-        m.put("dept",person.getDept());
-        m.put("card",person.getCard());
-        String gender = person.getGender();
-        m.put("gender",gender);
-        m.put("genderName", ComDataUtil.getInstance().getDictionaryLabelByValue("XBM", gender)); //性别类型的值转换成数据类型名
-        m.put("birthday", person.getBirthday());  //时间格式转换字符串
-        m.put("email",person.getEmail());
-        m.put("phone",person.getPhone());
-        m.put("address",person.getAddress());
-        m.put("introduce",person.getIntroduce());
-        return m;
-    }
-
+    @Autowired
+    private PasswordEncoder encoder;  //密码服务自动注入
+    @Autowired
+    private UserTypeRepository userTypeRepository; //用户类型数据操作自动注入
     public DataResponse teacherDeleteAll(DataRequest dataRequest) {
         List<Integer> allTeacherIds = dataRequest.getList("teacherId");  // 获取studentId值
 
@@ -97,16 +60,34 @@ public class TeacherService {
         if (request == null) {
             return CommonMethod.getReturnMessageError("无有效数据传入");
         }
-//        try {
-        // 创建或更新教师实体
-        Teacher teacher = new Teacher(request.getData().get("newTeacher"));
-        teacherRepository.save(teacher);
 
-        return CommonMethod.getReturnMessageOK("教师信息保存成功");
+        try {
+            // 创建或更新学生实体
+            Teacher teacher = new Teacher(request.getData().get("newTeacher"));
+            String num = teacher.getPerson().getNum();
+            Optional<Person> nOp = personRepository.findByNum(num); //查询是否存在num的人员
+            if(nOp.isPresent()||teacher.getPerson().getNum()==""||teacher.getPerson().getNum()==null) {
+                return CommonMethod.getReturnMessageError("新学号已经存在或无效，不能添加或修改！");
+            }if (teacher.getPerson().getEmail()!=""&&!EmailValidator.isValidEmail(teacher.getPerson().getEmail())){
+                return CommonMethod.getReturnMessageError("不是合法的邮箱地址！");
+            }
+            personRepository.save(teacher.getPerson());
+            teacherRepository.save(teacher);
+            String password = encoder.encode("123456");
+            User u= new User();
+            u.setUserId(teacher.getPerson().getPersonId());
+            u.setPerson(teacher.getPerson());
+            u.setUserName(num);
+            u.setPassword(password);
+            u.setUserType(userTypeRepository.findByName(EUserType.ROLE_STUDENT));
+            userRepository.saveAndFlush(u); //插入新的User记录
+            return CommonMethod.getReturnMessageOK("教师信息保存成功");
 
-//        } catch (Exception e) {
-//            return CommonMethod.getReturnMessageError("数据处理异常：" + e.getMessage());
-//        }
+        }catch (ConstraintViolationException e){
+            return CommonMethod.getReturnMessageError(e.getMessage());
+        } catch (Exception e) {
+            return CommonMethod.getReturnMessageError("数据处理异常：" + e.getMessage());
+        }
     }
 
 

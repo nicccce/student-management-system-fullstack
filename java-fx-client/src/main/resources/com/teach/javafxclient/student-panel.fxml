@@ -13,7 +13,7 @@
     <top>
         <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="1920.0" spacing="5.0">
             <children>
-                <FlowPane alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <FlowPane alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="197.0" BorderPane.alignment="CENTER">
                     <children>
                         <MFXButton fx:id="addButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="36.0" prefWidth="86.0" text="添加" GridPane.rowIndex="4">
                             <FlowPane.margin>
@@ -23,19 +23,32 @@
                                 <MFXFontIcon description="mfx-plus" size="16" />
                             </graphic>
                         </MFXButton>
-                        <MFXButton fx:id="deleteButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除" GridPane.rowIndex="4">
+                        <MFXButton fx:id="deleteButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="40.0" prefWidth="85.0" text="删除" GridPane.rowIndex="4">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
                             <graphic>
-                                <MFXFontIcon description="mfx-minus" size="16" />
+                                <MFXFontIcon description="mfx-delete" size="16" />
+                            </graphic>
+                        </MFXButton>
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" columnHalignment="RIGHT" prefHeight="80.0" prefWidth="397.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <MFXButton fx:id="getExcelButton" minHeight="27.0" minWidth="70.0" onAction="#onGetExcelButtonClicked" styleClass="link-button" text="导出为Excel">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-file" size="20" />
                             </graphic>
                         </MFXButton>
                     </children>
                 </FlowPane>
                 <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
-                <FlowPane fx:id="filterPane" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="410.0" BorderPane.alignment="CENTER">
+                <FlowPane fx:id="filterPane" alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="474.0" BorderPane.alignment="CENTER">
                     <children>
+                          <MFXFontIcon description="mfx-filter" size="20" />
                         <Label fx:id="filterLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" text="筛选：当前无筛选条件">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -45,16 +58,25 @@
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-filter-alt" size="20" />
+                            </graphic>
                         </MFXButton>
                         <MFXButton fx:id="resetFilterButton" minHeight="27.0" minWidth="70.0" onAction="#onResetFilterButtonClicked" styleClass="link-button" text="重置">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-filter-alt-clear" size="20" />
+                            </graphic>
                         </MFXButton>
                         <MFXButton fx:id="addFilterButton" minHeight="27.0" minWidth="70.0" onAction="#onAddFilterButtonClicked" styleClass="link-button" text="添加筛选条件">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-filter-alt" size="20" />
+                            </graphic>
                         </MFXButton>
                     </children>
                 </FlowPane>
@@ -139,7 +161,7 @@
                         <MFXTextField fx:id="phoneField" floatMode="BORDER" floatingText="电话" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                         <MFXTextField fx:id="addressField" floatMode="BORDER" floatingText="地址" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                         <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
-                            <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="保存" >
+                            <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="保存">
                                 <graphic>
                                     <MFXFontIcon description="mfx-variant9-mark" size="16" />
                                 </graphic>

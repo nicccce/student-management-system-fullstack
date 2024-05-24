@@ -688,4 +688,16 @@ public class StudentController {
         List dataList = studentService.getStudentListByFilterAndNumName(filterCriteria,numName);
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
+
+    /**
+     * getStudentListExcl 前端下载导出选中的学生基本信息Excl表数据
+     * @param dataRequest 前端传入需要生成的学生信息列表
+     * @return 生成的Excel文件流
+     */
+    @PostMapping("/getSelectedStudentListExcl")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<StreamingResponseBody> getSelectedStudentListExcl(@Valid @RequestBody Request<Map<String,List<StudentRequest>>> dataRequest) {
+        List<StudentRequest> selectedList =dataRequest.getData().get("selectedStudent");
+        return studentService.getSelectedStudentListExcl(selectedList);
+    }
 }

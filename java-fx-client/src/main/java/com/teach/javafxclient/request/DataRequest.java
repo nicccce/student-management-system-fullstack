@@ -136,4 +136,20 @@ public class DataRequest {
         HashMap<String, Object> map = JSON.parseObject(jsonString, typeToken.getType());
         data.put(key, map);
     }
+
+    /**
+     * 添加对象列表方法
+     */
+    public void putObjectList(String key, List objectList){
+        SerializeFilter filter = new SimpleBooleanPropertyFilter();
+        List<Map> mapList = new ArrayList<>(){};
+        for (Object object :
+                objectList) {
+            String jsonString = JSON.toJSONString(object, filter);
+            TypeToken<HashMap<String, Object>> typeToken = new TypeToken<HashMap<String, Object>>() {};
+            HashMap<String, Object> map = JSON.parseObject(jsonString, typeToken.getType());
+            mapList.add(map);
+        }
+        data.put(key, mapList);
+    }
 }

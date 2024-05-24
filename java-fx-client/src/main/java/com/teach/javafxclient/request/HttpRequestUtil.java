@@ -1,6 +1,8 @@
 package com.teach.javafxclient.request;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.reflect.TypeToken;
 import com.teach.javafxclient.AppStore;
 import com.google.gson.Gson;
 import com.teach.javafxclient.util.CommonMethod;
@@ -53,7 +55,7 @@ public class HttpRequestUtil<T> {
         }else {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(URI.create(serverUrl + "/api/auth/login"))
-                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                    .POST(HttpRequest.BodyPublishers.ofString(JSON.toJSONString(request)))
                     .headers("Content-Type", "application/json")
                     .build();
             try {
@@ -91,7 +93,7 @@ public class HttpRequestUtil<T> {
         }else {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(URI.create(serverUrl + url))
-                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                    .POST(HttpRequest.BodyPublishers.ofString(JSON.toJSONString(request)))
                     .headers("Content-Type", "application/json")
                     .headers("Authorization", "Bearer " + AppStore.getJwt().getAccessToken())
                     .build();
@@ -135,7 +137,7 @@ public class HttpRequestUtil<T> {
         }else {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(URI.create(serverUrl + url))
-                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                    .POST(HttpRequest.BodyPublishers.ofString(JSON.toJSONString(request)))
                     .headers("Content-Type", "application/json")
                     .headers("Authorization", "Bearer " + AppStore.getJwt().getAccessToken())
                     .build();
@@ -184,7 +186,7 @@ public class HttpRequestUtil<T> {
         }else {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(URI.create(serverUrl + url))
-                    .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                    .POST(HttpRequest.BodyPublishers.ofString(JSON.toJSONString(request)))
                     .headers("Content-Type", "application/json")
                     .headers("Authorization", "Bearer " + AppStore.getJwt().getAccessToken())
                     .build();
@@ -219,7 +221,7 @@ public class HttpRequestUtil<T> {
     public static MyTreeNode requestTreeNode(String url, DataRequest request){
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(serverUrl + url))
-                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                .POST(HttpRequest.BodyPublishers.ofString(JSON.toJSONString(request)))
                 .headers("Content-Type", "application/json")
                 .headers("Authorization", "Bearer "+AppStore.getJwt().getAccessToken())
                 .build();
@@ -246,7 +248,7 @@ public class HttpRequestUtil<T> {
     public static List<OptionItem> requestOptionItemList(String url, DataRequest request){
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(serverUrl + url))
-                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                .POST(HttpRequest.BodyPublishers.ofString(JSON.toJSONString(request)))
                 .headers("Content-Type", "application/json")
                 .headers("Authorization", "Bearer "+AppStore.getJwt().getAccessToken())
                 .build();
@@ -285,7 +287,7 @@ public class HttpRequestUtil<T> {
     public static byte[] requestByteData(String url, DataRequest request){
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(serverUrl + url))
-                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                .POST(HttpRequest.BodyPublishers.ofString(JSON.toJSONString(request)))
                 .headers("Content-Type", "application/json")
                 .headers("Authorization", "Bearer "+AppStore.getJwt().getAccessToken())
                 .build();
@@ -427,7 +429,7 @@ public class HttpRequestUtil<T> {
         } else {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(URI.create(serverUrl + url))
-                    .method("DELETE", HttpRequest.BodyPublishers.ofString(gson.toJson(request)))
+                    .method("DELETE", HttpRequest.BodyPublishers.ofString(JSON.toJSONString(request)))
                     .headers("Content-Type", "application/json")
                     .headers("Authorization", "Bearer " + AppStore.getJwt().getAccessToken())
                     .build();

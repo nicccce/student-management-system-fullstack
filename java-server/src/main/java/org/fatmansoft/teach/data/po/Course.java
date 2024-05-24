@@ -27,9 +27,11 @@ public class Course {
     private String name;
     private Integer credit;
 
+/*
     @ManyToOne
     @JoinColumn(name="pre_course_id")
     private Course preCourse;
+*/
 
     private @Version Long version;
     public Integer getCourseId() {

@@ -1,6 +1,7 @@
 package org.fatmansoft.teach.service;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.poi.xssf.usermodel.*;
 import org.fatmansoft.teach.data.dto.DataRequest;
 import org.fatmansoft.teach.data.dto.Request;
 import org.fatmansoft.teach.data.dto.StudentRequest;
@@ -17,9 +18,11 @@ import org.fatmansoft.teach.util.CommonMethod;
 import org.fatmansoft.teach.util.EmailValidator;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -158,6 +161,64 @@ public class StudentService {
             matchedStudentRequest.add(new StudentRequest(student));
         }
         return matchedStudentRequest;
+    }
+
+    public ResponseEntity<StreamingResponseBody> getSelectedStudentListExcl(List<StudentRequest> list){
+        Integer widths[] = {8, 20, 10, 15, 15, 15, 25, 10, 15, 30, 20, 30};
+        int i, j, k;
+        String titles[] = {"序号","学号", "姓名", "学院", "专业", "班级", "证件号码", "性别","出生日期","邮箱","电话","地址"};
+        String outPutSheetName = "student.xlsx";
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFCellStyle styleTitle = CommonMethod.createCellStyle(wb, 20);
+        XSSFSheet sheet = wb.createSheet(outPutSheetName);
+        for(j=0;j < widths.length;j++) {
+            sheet.setColumnWidth(j,widths[j]*256);
+        }
+        //合并第一行
+        XSSFCellStyle style = CommonMethod.createCellStyle(wb, 11);
+        XSSFRow row = null;
+        XSSFCell cell[] = new XSSFCell[widths.length];
+        row = sheet.createRow((int) 0);
+        for (j = 0; j < widths.length; j++) {
+            cell[j] = row.createCell(j);
+            cell[j].setCellStyle(style);
+            cell[j].setCellValue(titles[j]);
+            cell[j].getCellStyle();
+        }
+        StudentRequest studentRequest;
+        if (list != null && list.size() > 0) {
+            for (i = 0; i < list.size(); i++) {
+                row = sheet.createRow(i + 1);
+                for (j = 0; j < widths.length; j++) {
+                    cell[j] = row.createCell(j);
+                    cell[j].setCellStyle(style);
+                }
+                studentRequest = list.get(i);
+                cell[0].setCellValue((i + 1) + "");
+                cell[1].setCellValue(studentRequest.getNum());
+                cell[2].setCellValue(studentRequest.getName());
+                cell[3].setCellValue(studentRequest.getDept());
+                cell[4].setCellValue(studentRequest.getMajor());
+                cell[5].setCellValue(studentRequest.getClassName());
+                cell[6].setCellValue(studentRequest.getCard());
+                cell[7].setCellValue(studentRequest.getGenderName());
+                cell[8].setCellValue(studentRequest.getBirthday());
+                cell[9].setCellValue(studentRequest.getEmail());
+                cell[10].setCellValue(studentRequest.getPhone());
+                cell[11].setCellValue(studentRequest.getAddress());
+            }
+        }
+        try {
+            StreamingResponseBody stream = outputStream -> {
+                wb.write(outputStream);
+            };
+            return ResponseEntity.ok()
+                    .contentType(CommonMethod.exelType)
+                    .body(stream);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
 

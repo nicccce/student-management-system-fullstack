@@ -565,4 +565,36 @@ public class TeacherController extends ToolController {
         resetFilter();
         onQueryButtonClick();
     }
+
+    public void onGetExcelButtonClicked(ActionEvent actionEvent) {
+        Integer selectedNumber = getSelectedItem().size();
+        if (selectedNumber == 0){
+            dialogUtil.openError("导出失败", "未选中任何教师信息");
+        }else {
+            dialogUtil.openInfo("导出教师信息", "点击确认导出选中的 "+selectedNumber+" 条教师信息。", this::getExcel);
+        }
+    }
+    public void getExcel(){
+        DataRequest req = new DataRequest();
+        req.putObjectList("selectedTeacher",getSelectedItem());
+        byte[] bytes = HttpRequestUtil.requestByteData("/api/teacher/getSelectedTeacherListExcl", req);
+        if (bytes != null) {
+            try {
+                FileChooser fileDialog = new FileChooser();
+                fileDialog.setTitle("请选择保存的文件");
+                fileDialog.setInitialDirectory(new File("C:/"));
+                fileDialog.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("XLSX 文件", "*.xlsx"));
+                fileDialog.setInitialFileName("teacher.xlsx");
+                File file = fileDialog.showSaveDialog(null);
+                if(file != null) {
+                    FileOutputStream out = new FileOutputStream(file);
+                    out.write(bytes);
+                    out.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 }

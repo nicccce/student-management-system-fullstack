@@ -37,7 +37,7 @@ public class TeacherController {
     @Autowired
     private PersonRepository personRepository;  //人员数据操作自动注入
     @Autowired
-    private UserRepository userRepository;  //学生数据操作自动注入
+    private UserRepository userRepository;  //教师数据操作自动注入
     @Autowired
     private UserTypeRepository userTypeRepository; //用户类型数据操作自动注入
     @Autowired
@@ -78,7 +78,7 @@ public class TeacherController {
         return id;
     };
     /**
-     *  获取 student 表的新的Id StringBoot 对SqLite 主键自增支持不好  插入记录是需要设置主键ID，编写方法获取新的 student_id
+     *  获取 teacher 表的新的Id StringBoot 对SqLite 主键自增支持不好  插入记录是需要设置主键ID，编写方法获取新的 teacher_id
      * @return id
      */
     public synchronized Integer getNewTeacherId(){
@@ -105,7 +105,7 @@ public class TeacherController {
 
 
     /**
-     * getMapFromStudent 将学生表属性数据转换复制MAp集合里
+     * getMapFromStudent 将教师表属性数据转换复制MAp集合里
      * @param
      * @return
      */
@@ -137,7 +137,7 @@ public class TeacherController {
     }
 
     /**
-     *  getStudentMapList 根据输入参数查询得到学生数据的 Map List集合 参数为空 查出所有学生， 参数不为空，查出人员编号或人员名称 包含输入字符串的学生
+     *  getStudentMapList 根据输入参数查询得到教师数据的 Map List集合 参数为空 查出所有教师， 参数不为空，查出人员编号或人员名称 包含输入字符串的教师
      * @param numName 输入参数
      * @return  Map List 集合
      */
@@ -153,9 +153,9 @@ public class TeacherController {
     }
 
     /**
-     *  getStudentList 学生管理 点击查询按钮请求
+     *  getStudentList 教师管理 点击查询按钮请求
      *  前台请求参数 numName 学号或名称的 查询串
-     * 返回前端 存储学生信息的 MapList 框架会自动将Map转换成用于前后台传输数据的Json对象，Map的嵌套结构和Json的嵌套结构类似
+     * 返回前端 存储教师信息的 MapList 框架会自动将Map转换成用于前后台传输数据的Json对象，Map的嵌套结构和Json的嵌套结构类似
      * @return
      */
     @PostMapping("/getTeacherItemOptionList")
@@ -178,16 +178,16 @@ public class TeacherController {
     }
 
     /**
-     * studentDelete 删除学生信息Web服务 Student页面的列表里点击删除按钮则可以删除已经存在的学生信息， 前端会将该记录的id 回传到后端，方法从参数获取id，查出相关记录，调用delete方法删除
+     * teacherDelete 删除教师信息Web服务 Student页面的列表里点击删除按钮则可以删除已经存在的教师信息， 前端会将该记录的id 回传到后端，方法从参数获取id，查出相关记录，调用delete方法删除
      * 这里注意删除顺序，应为user关联person,Student关联Person 所以要先删除Student,User，再删除Person
-     * @param dataRequest  前端studentId 药删除的学生的主键 student_id
+     * @param dataRequest  前端teacherId 药删除的教师的主键 teacher_id
      * @return  正常操作
      */
 
     @PostMapping("/teacherDelete")
     @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse teacherDelete(@Valid @RequestBody DataRequest dataRequest) {
-        Integer teacherId = dataRequest.getInteger("teacherId");  //获取student_id值
+        Integer teacherId = dataRequest.getInteger("teacherId");  //获取teacher_id值
         Teacher s= null;
         Optional<Teacher> op;
         if(teacherId != null) {
@@ -197,21 +197,21 @@ public class TeacherController {
             }
         }
         if(s != null) {
-            Optional<User> uOp = userRepository.findByPersonPersonId(s.getPerson().getPersonId()); //查询对应该学生的账户
+            Optional<User> uOp = userRepository.findByPersonPersonId(s.getPerson().getPersonId()); //查询对应该教师的账户
             if(uOp.isPresent()) {
-                userRepository.delete(uOp.get()); //删除对应该学生的账户
+                userRepository.delete(uOp.get()); //删除对应该教师的账户
             }
             Person p = s.getPerson();
-            teacherRepository.delete(s);    //首先数据库永久删除学生信息
-            personRepository.delete(p);   // 然后数据库永久删除学生信息
+            teacherRepository.delete(s);    //首先数据库永久删除教师信息
+            personRepository.delete(p);   // 然后数据库永久删除教师信息
         }
         return CommonMethod.getReturnMessageOK();  //通知前端操作正常
     }
 
     /**
-     * getStudentInfo 前端点击学生列表时前端获取学生详细信息请求服务
-     * @param dataRequest 从前端获取 studentId 查询学生信息的主键 student_id
-     * @return  根据studentId从数据库中查出数据，存在Map对象里，并返回前端
+     * getStudentInfo 前端点击教师列表时前端获取教师详细信息请求服务
+     * @param dataRequest 从前端获取 teacherId 查询教师信息的主键 teacher_id
+     * @return  根据teacherId从数据库中查出数据，存在Map对象里，并返回前端
      */
 
     @PostMapping("/getTeacherInfo")
@@ -221,20 +221,20 @@ public class TeacherController {
         Teacher s= null;
         Optional<Teacher> op;
         if(teacherId != null) {
-            op= teacherRepository.findById(teacherId); //根据学生主键从数据库查询学生的信息
+            op= teacherRepository.findById(teacherId); //根据教师主键从数据库查询教师的信息
             if(op.isPresent()) {
                 s = op.get();
             }
         }
-        return CommonMethod.getReturnData(getMapFromTeacher(s)); //这里回传包含学生信息的Map对象
+        return CommonMethod.getReturnData(getMapFromTeacher(s)); //这里回传包含教师信息的Map对象
     }
 
     /**
-     * studentEditSave 前端学生信息提交服务
+     * teacherEditSave 前端教师信息提交服务
      * 前端把所有数据打包成一个Json对象作为参数传回后端，后端直接可以获得对应的Map对象form, 再从form里取出所有属性，复制到
      * 实体对象里，保存到数据库里即可，如果是添加一条记录， id 为空，这是先 new Person, User,Student 计算新的id， 复制相关属性，保存，如果是编辑原来的信息，
-     * studentId不为空。则查询出实体对象，复制相关属性，保存后修改数据库信息，永久修改
-     * @return  新建修改学生的主键 student_id 返回前端
+     * teacherId不为空。则查询出实体对象，复制相关属性，保存后修改数据库信息，永久修改
+     * @return  新建修改教师的主键 teacher_id 返回前端
      */
     @PostMapping("/teacherEditSave")
     @PreAuthorize(" hasRole('ADMIN')")
@@ -303,8 +303,8 @@ public class TeacherController {
         personRepository.save(p);  // 修改保存人员信息
         s.setQualification(CommonMethod.getString(form,"qualification"));
         s.setPosition(CommonMethod.getString(form,"position"));
-        teacherRepository.save(s);  //修改保存学生信息
-        return CommonMethod.getReturnData(s.getTeacherId());  // 将studentId返回前端
+        teacherRepository.save(s);  //修改保存教师信息
+        return CommonMethod.getReturnData(s.getTeacherId());  // 将teacherId返回前端
     }
 
 
@@ -322,7 +322,7 @@ public class TeacherController {
         for(Score s:sList){
             m = new HashMap();
             c = s.getCourse();
-            m.put("studentNum",s.getStudent().getPerson().getNum());
+            m.put("teacherNum",s.getStudent().getPerson().getNum());
             m.put("scoreId",s.getScoreId());
             m.put("courseNum", c.getNum());
             m.put("courseName", c.getName());
@@ -335,8 +335,8 @@ public class TeacherController {
     }
 
     *//**
-     * getStudentMarkList 计算学生的的成绩等级
-     * @param sList 学生成绩列表
+     * getStudentMarkList 计算教师的的成绩等级
+     * @param sList 教师成绩列表
      * @return 成绩等级Map对象列表
      *//*
     public List getStudentMarkList(List<Score> sList){
@@ -370,12 +370,12 @@ public class TeacherController {
     }
 
     *//**
-     * getStudentFeeList 获取学生的消费Map对象列表集合
-     * @param studentId
+     * getStudentFeeList 获取教师的消费Map对象列表集合
+     * @param teacherId
      * @return
      *//*
-    public List getStudentFeeList(Integer studentId){
-        List<Fee> sList =feeRepository.findListByStudent(studentId);  // 查询某个学生消费记录集合
+    public List getStudentFeeList(Integer teacherId){
+        List<Fee> sList =feeRepository.findListByStudent(teacherId);  // 查询某个教师消费记录集合
         List list = new ArrayList();
         if(sList == null || sList.size() == 0)
             return list;
@@ -390,9 +390,9 @@ public class TeacherController {
         return list;
     }
     /**
-     * getStudentIntroduceData 前端获取学生个人简历数据请求服务
-     * @param dataRequest 从前端获取 studentId 查询学生信息的主键 student_id
-     * @return  根据studentId从数据库中查出相关数据，存在Map对象里，并返回前端
+     * getStudentIntroduceData 前端获取教师个人简历数据请求服务
+     * @param dataRequest 从前端获取 teacherId 查询教师信息的主键 teacher_id
+     * @return  根据teacherId从数据库中查出相关数据，存在Map对象里，并返回前端
      */
 /*    @PostMapping("/getStudentIntroduceData")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
@@ -402,12 +402,12 @@ public class TeacherController {
         if(!uOp.isPresent())
             return CommonMethod.getReturnMessageError("用户不存在！");
         User u = uOp.get();
-        Optional<Student> sOp= studentRepository.findByPersonPersonId(u.getUserId());  // 查询获得 Student对象
+        Optional<Student> sOp= teacherRepository.findByPersonPersonId(u.getUserId());  // 查询获得 Student对象
         if(!sOp.isPresent())
-            return CommonMethod.getReturnMessageError("学生不存在！");
+            return CommonMethod.getReturnMessageError("教师不存在！");
         Student s= sOp.get();
-        Map info = getMapFromTeacher(s);  // 查询学生信息Map对象
-        List<Score> sList = scoreRepository.findByStudentStudentId(s.getStudentId()); //获得学生成绩对象集合
+        Map info = getMapFromTeacher(s);  // 查询教师信息Map对象
+        List<Score> sList = scoreRepository.findByStudentStudentId(s.getStudentId()); //获得教师成绩对象集合
         Map data = new HashMap();
         data.put("info",info);
         data.put("scoreList",getStudentScoreList(sList));
@@ -417,19 +417,19 @@ public class TeacherController {
     }
 
    /**
-     * saveStudentIntroduce 前端学生个人简介信息introduce提交服务
-     * @param dataRequest 从前端获取 studentId student表 student_id introduce 学生个人简介信息
+     * saveStudentIntroduce 前端教师个人简介信息introduce提交服务
+     * @param dataRequest 从前端获取 teacherId teacher表 teacher_id introduce 教师个人简介信息
      * @return  操作正常
      *//*
 
     @PostMapping("/saveStudentIntroduce")
     @PreAuthorize("hasRole('ROLE_STUDENT')")
     public DataResponse saveStudentIntroduce(@Valid @RequestBody DataRequest dataRequest) {
-        Integer studentId = dataRequest.getInteger("studentId");
+        Integer teacherId = dataRequest.getInteger("teacherId");
         String introduce = dataRequest.getString("introduce");
-        Optional<Student> sOp= studentRepository.findById(studentId);
+        Optional<Student> sOp= teacherRepository.findById(teacherId);
         if(!sOp.isPresent())
-            return CommonMethod.getReturnMessageError("学生不存在！");
+            return CommonMethod.getReturnMessageError("教师不存在！");
         Student s= sOp.get();
         Person p = s.getPerson();
         p.setIntroduce(introduce);
@@ -440,7 +440,7 @@ public class TeacherController {
   /*  *//** importFeeData 前端上传消费流水Excl表数据服务
      * @param barr  文件二进制数据
      * @param uploader  上传者
-     * @param studentIdStr  student 主键
+     * @param teacherIdStr  teacher 主键
      * @param fileName  前端上传的文件名
      * @return
      *//*
@@ -448,10 +448,10 @@ public class TeacherController {
     @PostMapping(path = "/importFeeData")
     public DataResponse importFeeData(@RequestBody byte[] barr,
                                       @RequestParam(name = "uploader") String uploader,
-                                      @RequestParam(name = "studentId") String studentIdStr,
+                                      @RequestParam(name = "teacherId") String teacherIdStr,
                                       @RequestParam(name = "fileName") String fileName) {
         try {
-            Integer studentId = Integer.parseInt(studentIdStr);
+            Integer teacherId = Integer.parseInt(teacherIdStr);
             InputStream in = new ByteArrayInputStream(barr);
             XSSFWorkbook workbook = new XSSFWorkbook(in);  //打开Excl数据流
             XSSFSheet sheet = workbook.getSheetAt(0);
@@ -473,12 +473,12 @@ public class TeacherController {
                 day = cell.getStringCellValue();  //获取一行消费记录 日期 金额
                 cell = row.getCell(1);
                 money = cell.getStringCellValue();
-                fOp = feeRepository.findByStudentIdAndDay(studentId, day);  //查询是否存在记录
+                fOp = feeRepository.findByStudentIdAndDay(teacherId, day);  //查询是否存在记录
                 if (!fOp.isPresent()) {
                     f = new Fee();
                     f.setFeeId(getNewFeeId());
                     f.setDay(day);
-                    f.setStudentId(studentId);  //不存在 添加
+                    f.setStudentId(teacherId);  //不存在 添加
                 } else {
                     f = fOp.get();  //存在 更新
                 }
@@ -499,7 +499,7 @@ public class TeacherController {
     }
 
     *//**
-     * getStudentListExcl 前端下载导出学生基本信息Excl表数据
+     * getStudentListExcl 前端下载导出教师基本信息Excl表数据
      * @param dataRequest
      * @return
      *//*
@@ -511,7 +511,7 @@ public class TeacherController {
         Integer widths[] = {8, 20, 10, 15, 15, 15, 25, 10, 15, 30, 20, 30};
         int i, j, k;
         String titles[] = {"序号","学号", "姓名", "学院", "专业", "班级", "证件号码", "性别","出生日期","邮箱","电话","地址"};
-        String outPutSheetName = "student.xlsx";
+        String outPutSheetName = "teacher.xlsx";
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFCellStyle styleTitle = CommonMethod.createCellStyle(wb, 20);
         XSSFSheet sheet = wb.createSheet(outPutSheetName);
@@ -568,26 +568,26 @@ public class TeacherController {
 
     *//**
      * getStudentIntroducePdf 生成获取个人简历的PDF数据流服务
-     * @param dataRequest  studentId 学生主键
+     * @param dataRequest  teacherId 教师主键
      * @return  返回PDF文件二进制数据
      *//*
     @PostMapping("/getStudentIntroducePdf")
     public ResponseEntity<StreamingResponseBody> getStudentIntroducePdf(@Valid @RequestBody DataRequest dataRequest) {
-        Integer studentId = dataRequest.getInteger("studentId");
-        Student s = studentRepository.getById(studentId);  //查询获得Student对象
-        Map info = getMapFromTeacher(s); //获得学生信息
+        Integer teacherId = dataRequest.getInteger("teacherId");
+        Student s = teacherRepository.getById(teacherId);  //查询获得Student对象
+        Map info = getMapFromTeacher(s); //获得教师信息
         String content = (String)info.get("introduce");  // 个人简历的HTML字符串
         content = CommonMethod.addHeadInfo(content,"<style> html { font-family: \"SourceHanSansSC\", \"Open Sans\";}  </style> <meta charset='UTF-8' />  <title>Insert title here</title>");  // 插入由HTML转换PDF需要的头信息
         System.out.println(content);
         content = CommonMethod.removeErrorString(content,"&nbsp;","style=\"font-family: &quot;&quot;;\""); //删除无法转化不合法的HTML标签
-        content= CommonMethod.replaceNameValue(content,info); //将HTML中标记串${name}等替换成学生实际的信息
-        return baseService.getPdfDataFromHtml(content); //生成学生简历PDF二进制数据
+        content= CommonMethod.replaceNameValue(content,info); //将HTML中标记串${name}等替换成教师实际的信息
+        return baseService.getPdfDataFromHtml(content); //生成教师简历PDF二进制数据
     }*/
 
     /**
-     * teacherDeleteAll 删除学生信息Web服务 Student页面的列表里点击删除按钮则可以删除已经存在的学生信息， 前端会将该记录的id 回传到后端，方法从参数获取id，查出相关记录，调用delete方法删除
+     * teacherDeleteAll 删除教师信息Web服务 Student页面的列表里点击删除按钮则可以删除已经存在的教师信息， 前端会将该记录的id 回传到后端，方法从参数获取id，查出相关记录，调用delete方法删除
      * 这里注意删除顺序，应为user关联person,Student关联Person 所以要先删除Student,User，再删除Person
-     * @param dataRequest  前端studentId 药删除的学生的主键 student_id
+     * @param dataRequest  前端teacherId 药删除的教师的主键 teacher_id
      * @return  正常操作
      */
     @DeleteMapping ("/teacherDeleteAll")
@@ -597,9 +597,9 @@ public class TeacherController {
     }
 
     /**
-     * studentInsert 增添学生信息Web服务 Student页面的列表里点击添加按钮则可以添加学生信息
+     * teacherInsert 增添教师信息Web服务 Student页面的列表里点击添加按钮则可以添加教师信息
      *
-     * @param dataRequest  前端学生实体信息
+     * @param dataRequest  前端教师实体信息
      * @return  正常操作
      */
     @PostMapping ("/teacherInsert")
@@ -609,9 +609,9 @@ public class TeacherController {
     }
 
     /**
-     * 获取学生的部门列表。
+     * 获取教师的部门列表。
      *
-     * @return 包含学生部门的数据响应对象
+     * @return 包含教师部门的数据响应对象
      */
     @GetMapping("/dept")
     @PreAuthorize("hasRole('ADMIN')")
@@ -621,9 +621,9 @@ public class TeacherController {
     }
 
     /**
-     * 获取学生的专业列表。
+     * 获取教师的专业列表。
      *
-     * @return 包含学生专业的数据响应对象
+     * @return 包含教师专业的数据响应对象
      */
     @GetMapping("/position")
     @PreAuthorize("hasRole('ADMIN')")
@@ -633,9 +633,9 @@ public class TeacherController {
     }
 
     /**
-     * 获取学生的班级列表。
+     * 获取教师的班级列表。
      *
-     * @return 包含学生班级的数据响应对象
+     * @return 包含教师班级的数据响应对象
      */
     @GetMapping("/qualification")
     @PreAuthorize("hasRole('ADMIN')")
@@ -645,10 +645,10 @@ public class TeacherController {
     }
 
     /**
-     * 根据前端的筛选数据获取学生列表
+     * 根据前端的筛选数据获取教师列表
      * @param dataRequest 前端请求参数，包含筛选数据
      * @param numName 前端的查询框数据
-     * @return 查询到的学生信息
+     * @return 查询到的教师信息
      */
     @PostMapping("/getTeacherListByFilter/{numName}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -662,9 +662,9 @@ public class TeacherController {
     }
 
     /**
-     * 根据前端的筛选数据获取学生列表
-     * @param dataRequest 前端请求参数，包含需要查询的学生学号或者姓名
-     * @return 查询到的学生信息
+     * 根据前端的筛选数据获取教师列表
+     * @param dataRequest 前端请求参数，包含需要查询的教师学号或者姓名
+     * @return 查询到的教师信息
      */
     @PostMapping("/getTeacherListByFilter/")
     @PreAuthorize("hasRole('ADMIN')")
@@ -675,6 +675,18 @@ public class TeacherController {
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
 
+
+    /**
+     * getStudentListExcl 前端下载导出选中的教师基本信息Excl表数据
+     * @param dataRequest 前端传入需要生成的教师信息列表
+     * @return 生成的Excel文件流
+     */
+    @PostMapping("/getSelectedTeacherListExcl")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<StreamingResponseBody> getSelectedTeacherListExcl(@Valid @RequestBody Request<Map<String,List<TeacherRequest>>> dataRequest) {
+        List<TeacherRequest> selectedList =dataRequest.getData().get("selectedTeacher");
+        return teacherService.getSelectedTeacherListExcl(selectedList);
+    }
 }
 
 

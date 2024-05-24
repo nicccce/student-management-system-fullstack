@@ -17,7 +17,6 @@ public class TeacherRequest {
     private Integer personId; //个人Id
     private String position; //职位
     private String qualification;// 学历
-    private LocalDateTime joinDate; //入职时间
     private String num; // 学号
     private String name; // 姓名
     private String dept; // 部门

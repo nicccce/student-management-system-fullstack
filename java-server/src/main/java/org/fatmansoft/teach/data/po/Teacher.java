@@ -22,7 +22,7 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer teacherId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="person_id")
     private Person person;
 
@@ -31,8 +31,6 @@ public class Teacher {
 
     @Size(max = 50)
     private String qualification;
-
-    private LocalDateTime joinDate;
 
     private @Version Long version;
 
@@ -50,7 +48,6 @@ public class Teacher {
         person.setPersonId(teacherRequest.getPersonId());
         person.setIntroduce(teacherRequest.getIntroduce());
         setTeacherId(teacherRequest.getTeacherId());
-        setJoinDate(teacherRequest.getJoinDate());
         setQualification(teacherRequest.getQualification());
         setPosition(teacherRequest.getPosition());
 

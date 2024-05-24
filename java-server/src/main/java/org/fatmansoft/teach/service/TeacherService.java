@@ -89,6 +89,70 @@ public class TeacherService {
             return CommonMethod.getReturnMessageError("数据处理异常：" + e.getMessage());
         }
     }
+    /**
+     * 获取所有学生的部门列表，去重后返回。
+     *
+     * @return 学生的部门列表
+     */
+    public List<String> getTeacherDeptList() {
+        List<Teacher> teacherList = teacherRepository.findAll();
+        Set<String> uniqueDepts = new HashSet<>();
+
+        for (Teacher teacher : teacherList) {
+            String dept = teacher.getPerson().getDept();
+            uniqueDepts.add(dept);
+        }
+
+        List<String> deptList = new ArrayList<>(uniqueDepts);
+        return deptList;
+    }
+
+    /**
+     * 获取所有教师的职位列表，去重后返回。
+     *
+     * @return 教师的职位列表
+     */
+    public List<String> getTeacherPositionList() {
+        List<Teacher> teacherList = teacherRepository.findAll();
+        Set<String> uniquePosition = new HashSet<>();
+
+        for (Teacher teacher : teacherList) {
+            String position = teacher.getPosition();
+            uniquePosition.add(position);
+        }
+
+        List<String> positionList = new ArrayList<>(uniquePosition);
+        return positionList;
+    }
+
+    /**
+     * 获取所有教师的班级列表，去重后返回。
+     *
+     * @return 教师的班级列表
+     */
+    public List<String> getTeacherQualificationList() {
+        List<Teacher> teacherList = teacherRepository.findAll();
+        Set<String> uniqueQualification = new HashSet<>();
+
+        for (Teacher teacher : teacherList) {
+            String qualification = teacher.getQualification();
+            uniqueQualification.add(qualification);
+        }
+
+        List<String> qualificationList = new ArrayList<>(uniqueQualification);
+        return qualificationList;
+    }
+
+    public List<TeacherRequest> getTeacherListByFilterAndNumName(TeacherRequest filterCriteria, String numName){
+        Teacher filterCriteriaTeacher = new Teacher(filterCriteria);
+        List<Teacher> matchedTeacher =  teacherRepository.findByExample(filterCriteriaTeacher, numName);
+        List<TeacherRequest> matchedTeacherRequest = new ArrayList<>(){};
+        for (Teacher teacher:
+                matchedTeacher) {
+            matchedTeacherRequest.add(new TeacherRequest(teacher));
+        }
+        return matchedTeacherRequest;
+    }
 
 
 }

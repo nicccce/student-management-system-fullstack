@@ -608,42 +608,72 @@ public class TeacherController {
         return teacherService.teacherInsert(dataRequest);
     }
 
-/*    *//**
+    /**
      * 获取学生的部门列表。
      *
      * @return 包含学生部门的数据响应对象
-     *//*
+     */
     @GetMapping("/dept")
     @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse getStudentDeptList() {
-        List<String> deptList = studentService.getStudentDeptList();
+    public DataResponse getTeacherDeptList() {
+        List<String> deptList = teacherService.getTeacherDeptList();
         return CommonMethod.getReturnData(deptList);
     }
 
-    *//**
+    /**
      * 获取学生的专业列表。
      *
      * @return 包含学生专业的数据响应对象
-     *//*
-    @GetMapping("/major")
+     */
+    @GetMapping("/position")
     @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse getStudentMajorList() {
-        List<String> majorList = studentService.getStudentMajorList();
-        return CommonMethod.getReturnData(majorList);
+    public DataResponse getTeacherPositionList() {
+        List<String> positionList = teacherService.getTeacherPositionList();
+        return CommonMethod.getReturnData(positionList);
     }
 
-    *//**
+    /**
      * 获取学生的班级列表。
      *
      * @return 包含学生班级的数据响应对象
-     *//*
-    @GetMapping("/class")
+     */
+    @GetMapping("/qualification")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getStudentClassNameList() {
-        List<String> classNameList = studentService.getStudentClassNameList();
-        return CommonMethod.getReturnData(classNameList);
-    }*/
+        List<String> qualificationList = teacherService.getTeacherQualificationList();
+        return CommonMethod.getReturnData(qualificationList);
+    }
 
+    /**
+     * 根据前端的筛选数据获取学生列表
+     * @param dataRequest 前端请求参数，包含筛选数据
+     * @param numName 前端的查询框数据
+     * @return 查询到的学生信息
+     */
+    @PostMapping("/getTeacherListByFilter/{numName}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse getTeacherListByFilterAndNumName(@Valid @RequestBody Request<Map<String,TeacherRequest>> dataRequest,@PathVariable String numName) {
+        if (numName == null){
+            numName="";
+        }
+        TeacherRequest filterCriteria = dataRequest.getData().get("filterCriteria");
+        List dataList = teacherService.getTeacherListByFilterAndNumName(filterCriteria,numName);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+
+    /**
+     * 根据前端的筛选数据获取学生列表
+     * @param dataRequest 前端请求参数，包含需要查询的学生学号或者姓名
+     * @return 查询到的学生信息
+     */
+    @PostMapping("/getTeacherListByFilter/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse getTeacherListByFilter(@Valid @RequestBody Request<Map<String,TeacherRequest>> dataRequest) {
+        String numName = "";
+        TeacherRequest filterCriteria = dataRequest.getData().get("filterCriteria");
+        List dataList = teacherService.getTeacherListByFilterAndNumName(filterCriteria,numName);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
 
 }
 

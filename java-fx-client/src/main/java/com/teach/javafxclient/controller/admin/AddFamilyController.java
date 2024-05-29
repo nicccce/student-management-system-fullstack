@@ -53,7 +53,30 @@ public class AddFamilyController {
 
     public void onAddButtonClick(ActionEvent actionEvent) {
         //弹窗错误
-        openJudge();
+        if( numField.getText().equals("")) {
+            dialogUtil.openError("添加失败", "学号为空，不能添加！");
+            return;
+        }
+        if( !fatherAgeField.getText().matches("\\d+")) {
+            dialogUtil.openError("添加失败", "父亲年龄格式不正确，不能添加！");
+            return;
+        }
+        if( !familySizeField.getText().matches("\\d+")) {
+            dialogUtil.openError("添加失败", "家庭人口格式不正确，不能添加！");
+            return;
+        }
+        if( !fatherContactField.getText().matches("\\d+")) {
+            dialogUtil.openError("添加失败", "父亲联系方式格式不正确，不能添加！");
+            return;
+        }
+        if( !motherAgeField.getText().matches("\\d+")) {
+            dialogUtil.openError("添加失败", "母亲年龄格式不正确，不能添加！");
+            return;
+        }
+        if( !motherContactField.getText().matches("\\d+")) {
+            dialogUtil.openError("添加失败", "母亲联系方式格式不正确，不能添加！");
+            return;
+        }
         FamilyEntity familyEntity = new FamilyEntity();
         familyEntity.setNum(numField.getText());
         familyEntity.setFamilySize(familySizeField.getText());
@@ -92,30 +115,5 @@ public class AddFamilyController {
     private void continueAdding(){
         isContinue = true;
     }
-    private void openJudge() {
-        if( numField.getText().equals("")) {
-            dialogUtil.openError("添加失败", "学号为空，不能添加！");
-            return;
-        }
-        if( !fatherAgeField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "父亲年龄格式不正确，不能添加！");
-            return;
-        }
-        if( !familySizeField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "家庭人口格式不正确，不能添加！");
-            return;
-        }
-        if( !fatherContactField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "父亲联系方式格式不正确，不能添加！");
-            return;
-        }
-        if( !motherAgeField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "母亲年龄格式不正确，不能添加！");
-            return;
-        }
-        if( !motherContactField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "母亲联系方式格式不正确，不能添加！");
-            return;
-        }
-    }
+
 }

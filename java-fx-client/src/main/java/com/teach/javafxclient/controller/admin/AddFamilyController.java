@@ -57,6 +57,7 @@ public class AddFamilyController {
             dialogUtil.openError("添加失败", "学号为空，不能添加！");
             return;
         }
+        //检查数字格式等
         if( !fatherAgeField.getText().matches("\\d+")) {
             dialogUtil.openError("添加失败", "父亲年龄格式不正确，不能添加！");
             return;

@@ -82,7 +82,7 @@ public class TeacherService {
             u.setPerson(teacher.getPerson());
             u.setUserName(num);
             u.setPassword(password);
-            u.setUserType(userTypeRepository.findByName(EUserType.ROLE_STUDENT));
+            u.setUserType(userTypeRepository.findByName(EUserType.ROLE_TEACHER));
             userRepository.saveAndFlush(u); //插入新的User记录
             return CommonMethod.getReturnMessageOK("教师信息保存成功");
 

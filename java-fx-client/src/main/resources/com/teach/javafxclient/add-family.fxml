@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import io.github.palexdev.materialfx.font.MFXFontIcon?>
+<GridPane alignment="CENTER" prefHeight="500" prefWidth="809" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.AddFamilyController">
+    <columnConstraints>
+        <ColumnConstraints prefWidth="100" />
+        <ColumnConstraints prefWidth="221.0" />
+        <ColumnConstraints prefWidth="167" />
+        <ColumnConstraints prefWidth="221.0" />
+        <ColumnConstraints prefWidth="100" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="25.0" minHeight="8.0" prefHeight="8.0" />
+        <RowConstraints maxHeight="65.0" minHeight="48.0" prefHeight="65.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints maxHeight="66.0" minHeight="43.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="33.0" minHeight="11.0" prefHeight="11.0" />
+    </rowConstraints>
+    <MFXTextField fx:id="numField" floatMode="BORDER" floatingText="学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <MFXTextField fx:id="familySizeField" floatMode="BORDER" floatingText="家庭人数" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+    <MFXTextField fx:id="fatherNameField" floatMode="BORDER" floatingText="父亲姓名" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <MFXTextField fx:id="fatherOccupationField" floatMode="BORDER" floatingText="父亲职业" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+    <MFXTextField fx:id="fatherAgeField" floatMode="BORDER" floatingText="父亲年龄" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <MFXTextField fx:id="fatherContactField" floatMode="BORDER" floatingText="父亲联系方式" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+    <MFXTextField fx:id="motherNameField" floatMode="BORDER" floatingText="母亲姓名" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+    <MFXTextField fx:id="motherOccupationField" floatMode="BORDER" floatingText="母亲职业" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+    <MFXTextField fx:id="motherAgeField" floatMode="BORDER" floatingText="母亲年龄" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+    <MFXTextField fx:id="motherContactField" floatMode="BORDER" floatingText="母亲联系方式" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+    <MFXTextField fx:id="addressField" floatMode="BORDER" floatingText="地址" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+    <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0" />
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
+        <children>
+
+            <MFXButton buttonType="RAISED" layoutX="42.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="38.0" prefWidth="83.0" text="添加">
+                <graphic>
+                    <MFXFontIcon description="mfx-plus" size="16" />
+                </graphic>
+            </MFXButton>
+        </children>
+    </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <children>
+            <Label layoutX="12.0" layoutY="14.0" text="新增家庭信息" style="-fx-font-size: 24px;">
+            </Label>
+        </children>
+    </AnchorPane>
+
+</GridPane>

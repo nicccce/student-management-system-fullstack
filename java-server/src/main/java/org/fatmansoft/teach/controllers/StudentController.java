@@ -226,7 +226,6 @@ public class StudentController {
      * @param dataRequest 从前端获取 studentId 查询学生信息的主键 student_id
      * @return  根据studentId从数据库中查出数据，存在Map对象里，并返回前端
      */
-
     @PostMapping("/getStudentInfo")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getStudentInfo(@Valid @RequestBody DataRequest dataRequest) {

@@ -33,6 +33,8 @@ public class TeacherService {
     private PasswordEncoder encoder;  //密码服务自动注入
     @Autowired
     private UserTypeRepository userTypeRepository; //用户类型数据操作自动注入
+    @Autowired
+    CourseRepository courseRepository;
     public DataResponse teacherDeleteAll(DataRequest dataRequest) {
         List<Integer> allTeacherIds = dataRequest.getList("teacherId");  // 获取teacherId值
 
@@ -47,6 +49,11 @@ public class TeacherService {
                 Optional<User> uOp = userRepository.findByPersonPersonId(s.getPerson().getPersonId()); // 查询对应该学生的账户
                 if (uOp.isPresent()) {
                     userRepository.delete(uOp.get()); // 删除对应该学生的账户
+                }
+                List<Course> courseList = courseRepository.findByTeachers(s);
+                for (Course course :
+                        courseList) {
+                    course.getTeachers().remove(s);
                 }
                 Person p = s.getPerson();
                 teacherRepository.delete(s);    // 首先数据库永久删除教师信息

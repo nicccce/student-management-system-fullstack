@@ -135,7 +135,7 @@
                         <TableColumn fx:id="addressColumn" prefWidth="145.0" text="地址" />
                     </columns>
                 </TableView>
-                <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="300.0" spacing="20.0">
+                <VBox alignment="TOP_CENTER" maxWidth="300" prefWidth="300.0" spacing="20.0">
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>

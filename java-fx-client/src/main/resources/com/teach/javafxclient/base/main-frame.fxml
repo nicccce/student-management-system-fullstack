@@ -15,10 +15,10 @@
     <MenuBar fx:id="menuBar" />
   </top>
   <center>
-    <TabPane fx:id="contentTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+    <TabPane fx:id="contentTabPane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
     </TabPane>
   </center>
-  <bottom>
+<!--  <bottom>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
       <children>
         <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
@@ -36,5 +36,5 @@
         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
       </padding>
     </HBox>
-  </bottom>
+  </bottom>-->
 </BorderPane>

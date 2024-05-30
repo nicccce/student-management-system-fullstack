@@ -5,15 +5,9 @@ import org.apache.poi.xssf.usermodel.*;
 import org.fatmansoft.teach.data.dto.DataRequest;
 import org.fatmansoft.teach.data.dto.Request;
 import org.fatmansoft.teach.data.dto.StudentRequest;
-import org.fatmansoft.teach.data.po.EUserType;
-import org.fatmansoft.teach.data.po.Person;
-import org.fatmansoft.teach.data.po.Student;
-import org.fatmansoft.teach.data.po.User;
+import org.fatmansoft.teach.data.po.*;
 import org.fatmansoft.teach.data.vo.DataResponse;
-import org.fatmansoft.teach.repository.PersonRepository;
-import org.fatmansoft.teach.repository.StudentRepository;
-import org.fatmansoft.teach.repository.UserRepository;
-import org.fatmansoft.teach.repository.UserTypeRepository;
+import org.fatmansoft.teach.repository.*;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.fatmansoft.teach.util.EmailValidator;
 import org.hibernate.exception.ConstraintViolationException;
@@ -39,6 +33,9 @@ public class StudentService {
     private PasswordEncoder encoder;  //密码服务自动注入
     @Autowired
     private UserTypeRepository userTypeRepository; //用户类型数据操作自动注入
+    @Autowired
+    private CourseRepository courseRepository;
+
     public DataResponse studentDeleteAll(DataRequest dataRequest) {
         List<Integer> allStudentIds = dataRequest.getList("studentId");  // 获取studentId值
 
@@ -53,6 +50,11 @@ public class StudentService {
                 Optional<User> uOp = userRepository.findByPersonPersonId(s.getPerson().getPersonId()); // 查询对应该学生的账户
                 if (uOp.isPresent()) {
                     userRepository.delete(uOp.get()); // 删除对应该学生的账户
+                }
+                List<Course> courseList = courseRepository.findByStudents(s);
+                for (Course course :
+                        courseList) {
+                    course.getStudents().remove(s);
                 }
                 Person p = s.getPerson();
                 studentRepository.delete(s);    // 首先数据库永久删除学生信息

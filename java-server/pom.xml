@@ -134,6 +134,18 @@
             <version>1.9.3</version>
             <scope>compile</scope>
         </dependency>
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.76</version>
+        </dependency>
+        <!--easyexcel-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.8</version>
+        </dependency>
     </dependencies>
     <!-- 统一管理SpringData版本-->
     <dependencyManagement>

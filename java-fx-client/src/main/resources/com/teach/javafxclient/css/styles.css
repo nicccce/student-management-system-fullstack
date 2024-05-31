@@ -139,6 +139,41 @@ button {
 	-fx-text-fill: white
 }
 
+#unselected-custom {
+	-fx-background-color: white;
+	-fx-text-fill: #9FA4B6
+}
+
+#schedule-custom1 {
+    -fx-background-color: #FBC2C2;
+    -fx-text-fill: black;
+}
+
+#schedule-custom2 {
+    -fx-background-color: #CDDDFC;
+    -fx-text-fill: black;
+}
+
+#schedule-custom3 {
+    -fx-background-color: #BEEDF2;
+    -fx-text-fill: black;
+}
+
+#schedule-custom4 {
+    -fx-background-color: #FCD9B5;
+    -fx-text-fill: black;
+}
+
+#schedule-custom5 {
+    -fx-background-color: #C8C6F6;
+    -fx-text-fill: black;
+}
+
+#schedule-custom6 {
+    -fx-background-color: #F7B3FF;
+    -fx-text-fill: black;
+}
+
 .outline-button {
 	-fx-background-color: transparent;
 	-fx-border-color: -mfx-purple;

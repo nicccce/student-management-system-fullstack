@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<?import io.github.palexdev.materialfx.font.MFXFontIcon?>
+
+<GridPane alignment="CENTER" prefHeight="618" prefWidth="1000" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.CourseScheduleEditorController">
+        <columnConstraints>
+            <ColumnConstraints maxWidth="10000.0" minWidth="0.0" prefWidth="37.0" />
+      <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="93.0" />
+      <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+      <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+      <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+      <ColumnConstraints maxWidth="11000.0" minWidth="0.0" prefWidth="125.0" />
+      <ColumnConstraints maxWidth="992.0" minWidth="29.0" prefWidth="125.0" />
+            <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+            <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+            <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="38.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="40.0" />
+            <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="36.0" />
+            <RowConstraints maxHeight="73.0" minHeight="50.0" prefHeight="50.0" />
+            <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+            <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+            <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+            <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+            <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+            <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="50.0" />
+      <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="15.0" />
+        </rowConstraints>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+      <children>
+                <Label layoutX="69.0" layoutY="-16.0" style="-fx-font-size: 24px;" text="选择课程时间">
+                </Label>
+      </children>
+        </AnchorPane>
+    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #D8E6FF;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Label layoutX="6.0" layoutY="6.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="周/节次" textFill="#3b82ff">
+         <font>
+            <Font size="10.0" />
+         </font>
+        </Label>
+    </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <children>
+         <Label layoutX="18.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期一" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="3" GridPane.rowIndex="2">
+      <children>
+         <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期二" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="4" GridPane.rowIndex="2">
+      <children>
+         <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期三" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="5" GridPane.rowIndex="2">
+      <children>
+         <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期四" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="6" GridPane.rowIndex="2">
+      <children>
+         <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期五" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="107.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="7" GridPane.rowIndex="2">
+      <children>
+         <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期六" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="107.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="8" GridPane.rowIndex="2">
+      <children>
+         <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期日" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <children>
+         <Label layoutX="2.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第一节" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <children>
+         <Label layoutX="2.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第二节" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+      <children>
+         <Label layoutX="4.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第三节" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+          <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="38.0" prefWidth="83.0" text="保存" GridPane.columnIndex="8" GridPane.rowIndex="8">
+              <graphic>
+                  <MFXFontIcon description="mfx-variant9-mark" size="16" />
+              </graphic>
+          </MFXButton>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="6">
+      <children>
+         <Label layoutX="4.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第四节" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="7">
+      <children>
+         <Label layoutX="2.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第五节" textFill="#a0a4b6">
+            <font>
+               <Font size="10.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+        <MFXButton id="unselected-custom" fx:id="button11" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton11Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+    </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button12" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton12Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button13" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton13Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button14" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton14Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button15" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton15Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button21" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton21Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button22" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton22Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button23" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton23Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button24" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton24Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button25" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton25Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button31" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton31Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button32" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton32Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button33" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton33Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button34" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton34Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button35" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton35Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button41" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton41Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button42" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton42Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button43" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton43Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button44" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton44Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button45" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton45Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button51" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton51Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button52" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton52Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button53" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton53Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button54" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton54Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button55" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton55Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button61" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton61Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button62" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton62Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button63" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton63Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button64" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton64Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button65" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton65Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="3">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button71" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton71Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="4">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button72" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton72Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button73" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton73Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="6">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button74" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton74Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="7">
+      <children>
+         <MFXButton id="unselected-custom" fx:id="button75" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton75Click" prefHeight="75.0" prefWidth="110.0" text="选择" />
+      </children>
+   </AnchorPane>
+   <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="36.0" prefWidth="242.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <children>
+         <MFXButton id="schedule-custom1" alignment="CENTER" layoutX="60.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="必修" />
+         <MFXButton id="schedule-custom2" alignment="CENTER" layoutX="130.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="限选" />
+         <MFXButton id="schedule-custom3" alignment="CENTER" layoutX="200.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="任选" />
+      </children>
+   </AnchorPane>
+   <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="36.0" prefWidth="242.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+      <children>
+         <MFXButton id="schedule-custom6" alignment="CENTER" layoutX="160.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="其他" />
+         <MFXButton id="schedule-custom5" alignment="CENTER" layoutX="90.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="交流" />
+         <MFXButton id="schedule-custom4" alignment="CENTER" layoutX="20.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="选修" />
+      </children>
+   </AnchorPane>
+
+
+    </GridPane>

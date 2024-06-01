@@ -135,7 +135,6 @@ public class ExpenseController {
 
 
     @PostMapping("/getExpenseList")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getExpenseList(@Valid @RequestBody DataRequest dataRequest) {
         String numName= dataRequest.getString("numName");
         List dataList = getExpenseMapList(numName);
@@ -151,7 +150,6 @@ public class ExpenseController {
      */
 
     @PostMapping("/getExpenseInfo")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getExpenseInfo(@Valid @RequestBody DataRequest dataRequest) {
         Integer expenseId = dataRequest.getInteger("expenseId");
         Expense s= null;
@@ -173,7 +171,6 @@ public class ExpenseController {
      * @return  新建修改教师的主键 teacher_id 返回前端
      */
     @PostMapping("/expenseEditSave")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse expenseEditSave(@Valid @RequestBody DataRequest dataRequest) {
         System.out.println(dataRequest.getData());
         Integer expenseId = dataRequest.getInteger("expenseId");
@@ -224,7 +221,6 @@ public class ExpenseController {
      * @return  正常操作
      */
     @DeleteMapping("/expenseDeleteAll")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse expenseDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
         return expenseService.expenseDeleteAll(dataRequest);
     }
@@ -236,7 +232,6 @@ public class ExpenseController {
      * @return  正常操作
      */
     @PostMapping ("/expenseInsert")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse expenseInsert (@Valid @RequestBody Request<Map<String, ExpenseRequest>> dataRequest) {
         return expenseService.expenseInsert(dataRequest);
     }
@@ -247,7 +242,6 @@ public class ExpenseController {
      * @return 查询到的学生信息
      */
     @PostMapping("/getExpenseListByFilter/{numName}")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getExpenseListByFilterAndNumName(@Valid @RequestBody Request<Map<String,ExpenseRequest>> dataRequest,@PathVariable String numName) {
         if (numName == null){
             numName="";
@@ -263,7 +257,6 @@ public class ExpenseController {
      * @return 查询到的学生信息
      */
     @PostMapping("/getExpenseListByFilter/")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getExpenseListByFilter(@Valid @RequestBody Request<Map<String,ExpenseRequest>> dataRequest) {
         String numName = "";
         ExpenseRequest filterCriteria = dataRequest.getData().get("filterCriteria");
@@ -277,10 +270,31 @@ public class ExpenseController {
      * @return 生成的Excel文件流
      */
     @PostMapping("/getSelectedExpenseListExcl")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<StreamingResponseBody> getSelectedExpenseListExcl(@Valid @RequestBody Request<Map<String,List<ExpenseRequest>>> dataRequest) {
         List<ExpenseRequest> selectedList =dataRequest.getData().get("selectedExpense");
         return expenseService.getSelectedExpenseListExcl(selectedList);
+    }
+    @PostMapping("/getExpenseListByUserId")
+    public DataResponse getExpenseListByUserId(@Valid @RequestBody DataRequest dataRequest) {
+        String numName= dataRequest.getString("userId");
+        Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
+        User u = op.get();
+        String s = u.getPerson().getNum();
+        List dataList = getExpenseMapList(s);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+
+    @PostMapping("/getBee")
+    public DataResponse getBee(@Valid @RequestBody DataRequest dataRequest) {
+        String numName= dataRequest.getString("userId");
+        Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
+        User u = op.get();
+        String num = u.getPerson().getNum();
+        String name = u.getPerson().getName();
+        Map Bee = new HashMap<>();
+        Bee.put("num",num);
+        Bee.put("name",name);
+        return CommonMethod.getReturnData(Bee);  //按照测试框架规范会送Map的list
     }
 
 

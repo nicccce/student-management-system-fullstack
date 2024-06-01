@@ -60,7 +60,6 @@ public class InnovationService {
         Innovation innovation = new Innovation(request.getData().get("newInnovation"));
         String num = request.getData().get("newInnovation").getNum();
         Optional<Person> nOp = personRepository.findByNum(num);
-        Optional<Innovation> nFp = innovationRepository.findByPersonNum(num);
         if (nOp.isPresent() || num == null || num.isEmpty()) {
         /*   if(nFp.isPresent()) {
                 return CommonMethod.getReturnMessageError("创新实践信息已存在,无法添加学生创新实践信息,请转到修改页面修改");

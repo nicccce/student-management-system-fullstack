@@ -60,7 +60,6 @@ public class ActivityService {
         Activity activity = new Activity(request.getData().get("newActivity"));
         String num = request.getData().get("newActivity").getNum();
         Optional<Person> nOp = personRepository.findByNum(num);
-        Optional<Activity> nFp = activityRepository.findByPersonNum(num);
         if (nOp.isPresent() || num == null || num.isEmpty()) {
 /*            if(nFp.isPresent()) {
                 return CommonMethod.getReturnMessageError("日常活动信息已存在,无法添加学生日常活动信息,请转到修改页面修改");

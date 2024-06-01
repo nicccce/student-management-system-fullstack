@@ -361,7 +361,7 @@ public class InnovationStudentController {
 
             // 创建一个新的 Stage 对象
             Stage addStage = new Stage();
-            addStage.setTitle("添加教师信息");
+            addStage.setTitle("添加创新信息");
             addStage.getIcons().add(MainApplication.icon);
 
             // 通过控制器的 setStage 方法传递 Stage 对象

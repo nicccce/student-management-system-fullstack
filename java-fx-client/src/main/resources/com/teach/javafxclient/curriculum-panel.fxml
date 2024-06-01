@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import io.github.palexdev.materialfx.font.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
+
+<!--  学生管理 FXML 配置文件 对应的页面交互控制类 com.teach.javafxclient.controller.StudentController 如果是切换成本地开发模式 界面配置不变，将页面交互控制类 切换为 com.teach.javafxclient.controller.StudentControllerLocal-->
+
+<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.student.curriculumController">
+    <top>
+        <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="1920.0" spacing="5.0">
+            <children>
+                <FlowPane alignment="CENTER_LEFT" prefHeight="92.0" prefWidth="787.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="32.0" prefWidth="93.0" text="开始日期" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                        </Label>
+                        <DatePicker fx:id="beginTimePick" prefHeight="32.0" prefWidth="201.0" promptText="开始日期" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                        </DatePicker>
+                        <Label alignment="CENTER" prefHeight="32.0" prefWidth="93.0" text="结束日期" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                        </Label>
+                        <DatePicker fx:id="endTimePick" prefHeight="32.0" prefWidth="201.0" promptText="结束日期" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                        </DatePicker>
+                        <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onQueryButtonClick" text="查询">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-search" size="16" />
+                            </graphic>
+                        </MFXButton>
+                    </children>
+                </FlowPane>
+                <FlowPane alignment="CENTER_LEFT" columnHalignment="RIGHT" prefHeight="80.0" prefWidth="415.0" BorderPane.alignment="CENTER">
+                    <children>
+                    </children>
+                </FlowPane>
+                <Pane HBox.hgrow="ALWAYS" />
+                <FlowPane fx:id="filterPane" alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="474.0" BorderPane.alignment="CENTER" />
+                <FlowPane alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="322.0" BorderPane.alignment="CENTER" />
+            </children>
+            <padding>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </padding>
+        </HBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.7420229405630866" prefHeight="1800" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <items>
+                <AnchorPane>
+                <GridPane alignment="TOP_CENTER" layoutX="219.0" prefHeight="618" prefWidth="1000">
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="10000.0" minWidth="0.0" prefWidth="37.0" />
+                        <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="93.0" />
+                        <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+                        <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+                        <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+                        <ColumnConstraints maxWidth="11000.0" minWidth="0.0" prefWidth="125.0" />
+                        <ColumnConstraints maxWidth="992.0" minWidth="29.0" prefWidth="125.0" />
+                        <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+                        <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="125.0" />
+                        <ColumnConstraints maxWidth="1000.0" minWidth="0.0" prefWidth="38.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="40.0" />
+                        <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="36.0" />
+                        <RowConstraints maxHeight="73.0" minHeight="50.0" prefHeight="50.0" />
+                        <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+                        <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+                        <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+                        <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+                        <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" />
+                        <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="50.0" />
+                        <RowConstraints maxHeight="1000.0" minHeight="0.0" prefHeight="15.0" />
+                    </rowConstraints>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                        <children>
+                            <Label layoutX="69.0" layoutY="-16.0" style="-fx-font-size: 24px;" text="查看课程时间">
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #D8E6FF;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label layoutX="6.0" layoutY="6.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="周/节次" textFill="#3b82ff">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <children>
+                            <Label layoutX="18.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期一" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                        <children>
+                            <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期二" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                        <children>
+                            <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期三" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                        <children>
+                            <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期四" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                        <children>
+                            <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期五" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="107.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                        <children>
+                            <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期六" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="107.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                        <children>
+                            <Label layoutX="19.0" layoutY="9.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="星期日" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <children>
+                            <Label layoutX="2.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第一节" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <children>
+                            <Label layoutX="2.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第二节" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <children>
+                            <Label layoutX="4.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第三节" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <children>
+                            <Label layoutX="4.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第四节" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="43.0" prefWidth="80.0" style="-fx-background-color: #F3F8FF;" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <children>
+                            <Label layoutX="2.0" layoutY="27.0" prefHeight="19.0" prefWidth="84.0" style="-fx-font-size: 24px;" text="第五节" textFill="#a0a4b6">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <MFXButton id="unselected-custom" fx:id="button11" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton11Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button12" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton12Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button13" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton13Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button14" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton14Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button15" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton15Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button21" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton21Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button22" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton22Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button23" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton23Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button24" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton24Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button25" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton25Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button31" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton31Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button32" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton32Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button33" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton33Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button34" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton34Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button35" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton35Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button41" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton41Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button42" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton42Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button43" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton43Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button44" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton44Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button45" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton45Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button51" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton51Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button52" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton52Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button53" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton53Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button54" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton54Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button55" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton55Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button61" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton61Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button62" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton62Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button63" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton63Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button64" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton64Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button65" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton65Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="3">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button71" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton71Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="4">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button72" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton72Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="5">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button73" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton73Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="6">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button74" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton74Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.rowIndex="7">
+                        <children>
+                            <MFXButton id="unselected-custom" fx:id="button75" layoutX="5.0" layoutY="5.0" minHeight="27.0" minWidth="70.0" onAction="#onButton75Click" prefHeight="75.0" prefWidth="110.0" text="" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="36.0" prefWidth="242.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <children>
+                            <MFXButton id="schedule-custom1" alignment="CENTER" layoutX="60.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="必修" />
+                            <MFXButton id="schedule-custom2" alignment="CENTER" layoutX="130.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="限选" />
+                            <MFXButton id="schedule-custom3" alignment="CENTER" layoutX="200.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="任选" />
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="36.0" prefWidth="242.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                        <children>
+                            <MFXButton id="schedule-custom6" alignment="CENTER" layoutX="160.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="其他" />
+                            <MFXButton id="schedule-custom5" alignment="CENTER" layoutX="90.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="交流" />
+                            <MFXButton id="schedule-custom4" alignment="CENTER" layoutX="20.0" layoutY="-20.0" minHeight="27.0" minWidth="50.0" prefHeight="40.0" prefWidth="64.0" text="选修" />
+                        </children>
+                    </AnchorPane>
+
+
+                </GridPane>
+                    <VBox layoutX="239.0" layoutY="628.0" style="-fx-border-color: purple; -fx-border-width: 2px; -fx-border-radius: 10px;">
+                        <AnchorPane prefHeight="39.0" prefWidth="850.0" style="-fx-border-color: purple; -fx-border-width: 2px; -fx-border-radius: 10px;">
+                            <HBox prefHeight="25.0" prefWidth="309.0" style="-fx-padding: 10px;">
+                                <Pane style="-fx-background-color: purple; -fx-pref-width: 5px;" />
+                                <Pane prefHeight="27.0" prefWidth="7.0" />
+                                <Label fx:id="contentLabel" text="通知公告栏">
+                                    <font>
+                                        <Font size="20.0" />
+                                    </font>
+                                </Label>
+                                <Pane prefHeight="27.0" prefWidth="6.0" />
+                                <StackPane prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: red; -fx-background-radius: 50%;">
+                                    <children>
+                                        <Label fx:id="notificationCircle" text="0" textFill="WHITE">
+                                            <font>
+                                                <Font size="15.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </StackPane>
+                            </HBox>
+                        </AnchorPane>
+                        <WebView fx:id="announcementWebView" prefHeight="159.0" prefWidth="957.0" style="-fx-padding: 10px;" />
+                    </VBox>
+                </AnchorPane>
+                <VBox alignment="TOP_CENTER" maxWidth="386.0" prefHeight="1798.0" prefWidth="386.0" spacing="20.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <GridPane alignment="CENTER" prefHeight="60.0" prefWidth="218.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="0.0" prefWidth="8.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="86.0" minWidth="40.0" prefWidth="55.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="243.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.0" minWidth="9.0" prefWidth="9.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="38.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="课程编号" GridPane.columnIndex="1" GridPane.rowIndex="0">
+
+                            </Label>
+                            <Label fx:id="numLabel" GridPane.columnIndex="2" GridPane.rowIndex="0">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="课程名称" GridPane.columnIndex="1" GridPane.rowIndex="2">
+
+                            </Label>
+                            <Label fx:id="nameLabel" GridPane.columnIndex="2" GridPane.rowIndex="2">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="开课单位" GridPane.columnIndex="1" GridPane.rowIndex="4">
+
+                            </Label>
+                            <Label fx:id="departmentLabel" GridPane.columnIndex="2" GridPane.rowIndex="4">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="课程类型" GridPane.columnIndex="1" GridPane.rowIndex="6">
+
+                            </Label>
+                            <Label fx:id="typeLabel" GridPane.columnIndex="2" GridPane.rowIndex="6">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="学分" GridPane.columnIndex="1" GridPane.rowIndex="8">
+
+                            </Label>
+                            <Label fx:id="creditLabel" GridPane.columnIndex="2" GridPane.rowIndex="8">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="上课地点" GridPane.columnIndex="1" GridPane.rowIndex="10">
+
+                            </Label>
+                            <Label fx:id="locationLabel" GridPane.columnIndex="2" GridPane.rowIndex="10">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="授课老师" GridPane.columnIndex="1" GridPane.rowIndex="12">
+
+                            </Label>
+                            <Label fx:id="teacherLabel" GridPane.columnIndex="2" GridPane.rowIndex="12">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="开始日期" GridPane.columnIndex="1" GridPane.rowIndex="14">
+
+                            </Label>
+                            <Label fx:id="beginTimeLabel" GridPane.columnIndex="2" GridPane.rowIndex="14">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="结束日期" GridPane.columnIndex="1" GridPane.rowIndex="16">
+
+                            </Label>
+                            <Label fx:id="endTimeLabel" GridPane.columnIndex="2" GridPane.rowIndex="16">
+
+                            </Label>
+
+                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="上课时间" GridPane.columnIndex="1" GridPane.rowIndex="18">
+
+                            </Label>
+                            <Label fx:id="ScheduleLabel" GridPane.columnIndex="2" GridPane.rowIndex="18">
+
+                            </Label>
+
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="课程简介" GridPane.columnIndex="1" GridPane.rowIndex="20">
+
+                            </Label>
+                            <Label fx:id="introductionLabel" GridPane.columnIndex="2" GridPane.rowIndex="20">
+                            </Label>
+                        </children>
+                    </GridPane>
+                    <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
+
+                    </FlowPane>
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>

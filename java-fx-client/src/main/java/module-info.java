@@ -16,6 +16,7 @@ module com.teach.javafxclient {
     requires commons.beanutils;
     requires atlantafx.base;
     requires fastjson;
+    requires jdk.jsobject;
 
 
     opens com.teach.javafxclient to javafx.fxml;
@@ -39,4 +40,6 @@ module com.teach.javafxclient {
     opens com.teach.javafxclient.controller.demo.model to com.google.gson, javafx.fxml, fastjson;
     exports com.teach.javafxclient.model;
     opens com.teach.javafxclient.base to com.google.gson,fastjson;
+    opens com.teach.javafxclient.controller.student to com.google.gson, javafx.fxml, fastjson;
+    opens com.teach.javafxclient.controller.teacher to com.google.gson, javafx.fxml, fastjson;
 }

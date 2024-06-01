@@ -92,7 +92,6 @@ public class StudentIntroduceController extends ToolController {
         creditColumn.setCellValueFactory(new MapValueFactory<>("credit"));
         markColumn.setCellValueFactory(new MapValueFactory<>("mark"));
         rankingColumn.setCellValueFactory(new MapValueFactory<>("ranking"));
-
         getIntroduceData();
     }
 

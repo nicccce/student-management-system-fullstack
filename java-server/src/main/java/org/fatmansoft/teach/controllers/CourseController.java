@@ -59,13 +59,33 @@ public class CourseController {
         return CommonMethod.getReturnData(dataList);  // 按照测试框架规范返回 Map 的列表
     }
 
+    @PostMapping("/getTeacherCourseListByFilter/{numName}")
+    @PreAuthorize("hasRole('TEACHER')")
+    public DataResponse getTeacherCourseListByFilterAndNumName(@Valid @RequestBody Request<Map<String, CourseRequest>> dataRequest, @PathVariable String numName, @RequestParam String filterStudent, @RequestParam String filterTeacher) {
+        if (numName == null) {
+            numName = "";
+        }
+        CourseRequest filterCriteria = dataRequest.getData().get("filterCriteria");
+        List<CourseRequest> dataList = courseService.getCourseListByFilterAndNumNameAndTeacher(filterCriteria, numName, filterStudent, filterTeacher, CommonMethod.getUserId());
+        return CommonMethod.getReturnData(dataList);  // 按照测试框架规范返回 Map 的列表
+    }
+
+    @PostMapping("/getTeacherCourseListByFilter/")
+    @PreAuthorize("hasRole('TEACHER')")
+    public DataResponse getTeacherCourseListByFilter(@Valid @RequestBody Request<Map<String, CourseRequest>> dataRequest, @RequestParam String filterStudent, @RequestParam String filterTeacher) {
+        String numName = "";
+        CourseRequest filterCriteria = dataRequest.getData().get("filterCriteria");
+        List<CourseRequest> dataList = courseService.getCourseListByFilterAndNumNameAndTeacher(filterCriteria, numName, filterStudent, filterTeacher, CommonMethod.getUserId());
+        return CommonMethod.getReturnData(dataList);  // 按照测试框架规范返回 Map 的列表
+    }
+
+
     /**
      * getSelectedCourseListExcl 前端下载导出选中的课程基本信息 Excel 表数据
      * @param dataRequest 前端传入需要生成的课程信息列表
      * @return 生成的 Excel 文件流
      */
     @PostMapping("/getSelectedCourseListExcl")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<StreamingResponseBody> getSelectedCourseListExcl(@Valid @RequestBody Request<Map<String, List<CourseRequest>>> dataRequest) {
         List<CourseRequest> selectedList = dataRequest.getData().get("selectedCourse");
         return courseService.getSelectedCourseListExcl(selectedList);
@@ -81,7 +101,6 @@ public class CourseController {
      * @return 新建或修改课程的主键 courseId 返回给前端
      */
     @PostMapping("/courseEditSave")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseEditSave(@Valid @RequestBody Request<Map<String,CourseRequest>> dataRequest) {
             CourseRequest courseRequest = dataRequest.getData().get("course");
             if (courseRequest == null){
@@ -92,25 +111,21 @@ public class CourseController {
     }
 
     @PostMapping("/getStudent/{courseId}")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getCourseStudent(@PathVariable Integer courseId){
         return courseService.getCourseStudent(courseId);
     }
 
     @PostMapping("/getTeacher/{courseId}")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getCourseTeacher(@PathVariable Integer courseId) {
         return courseService.getCourseTeacher(courseId);
     }
 
     @PostMapping("/editStudent")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseEditStudent(@Valid @RequestBody DataRequest dataRequest){
         return courseService.courseEditStudent(dataRequest.getList("studentList"), dataRequest.getInteger("courseId"));
     }
 
     @PostMapping("/editTeacher")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseEditTeacher(@Valid @RequestBody DataRequest dataRequest) {
         return courseService.courseEditTeacher(dataRequest.getList("teacherList"), dataRequest.getInteger("courseId"));
     }
@@ -121,7 +136,6 @@ public class CourseController {
      * @return 包含课程类型的数据响应对象
      */
     @GetMapping("/type")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getCourseTypeList() {
         List<String> courseTypeList = courseService.getCourseTypeList();
         return CommonMethod.getReturnData(courseTypeList);
@@ -137,7 +151,6 @@ public class CourseController {
      * @return 正常操作
      */
     @DeleteMapping("/courseDeleteAll")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse courseDeleteAll(@Valid @RequestBody DataRequest dataRequest) {
         return courseService.courseDeleteAll(dataRequest.getList("courseId"));
     }
@@ -148,7 +161,6 @@ public class CourseController {
      * @return  根据courseId从数据库中查出数据，存在Map对象里，并返回给前端
      */
     @PostMapping("/getCourseInfo")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getCourseInfo(@Valid @RequestBody DataRequest dataRequest) {
         Integer courseId = dataRequest.getInteger("courseId");
         return CommonMethod.getReturnData(courseService.getCourseInfo(courseId)); // 这里返回包含课程信息的 CourseResponse 对象
@@ -182,4 +194,16 @@ public class CourseController {
         }
     }
 
+    @PostMapping("/getStudentCourse")
+    public DataResponse getStudentCourse(){
+        return CommonMethod.getReturnData(courseService.getStudentCourseByUserId(CommonMethod.getUserId()));
+    }
+
+    @PostMapping("/getCourseByNum/{num}")
+    public DataResponse getCourseByNum(@PathVariable String num){
+        CourseRequest course = courseService.getCourseByNum(num);
+        if (course!=null){
+            return CommonMethod.getReturnData(course);
+        }return CommonMethod.getReturnMessageError("课程数据获取失败！");
+    }
 }

@@ -34,6 +34,7 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
      */
     default List<Course> findByExample(Course filterCriteria, String numName) {
 
+        System.out.println(filterCriteria);
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withIgnoreNullValues()
                 .withMatcher("num", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
@@ -43,7 +44,7 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
                 .withMatcher("endTime", ExampleMatcher.GenericPropertyMatchers.exact())
                 .withMatcher("type", ExampleMatcher.GenericPropertyMatchers.exact())
                 .withMatcher("credit", ExampleMatcher.GenericPropertyMatchers.exact())
-                .withIgnorePaths("schedule");;
+                .withIgnorePaths("schedule");
 
         Example<Course> example = Example.of(filterCriteria, matcher);
         List<Course> courseByExample = findAll(example);
@@ -53,7 +54,14 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
         // 使用 Stream 过滤出两个列表中的重叠数据，并根据课程时间进行筛选
         List<Course> matchedCourses = courseByExample.stream()
                 .filter(course -> coursesByNumName.contains(course))
-                .filter(course -> ((filterCriteria.getSchedule() == 0L)||(course.getSchedule() & filterCriteria.getSchedule()) == filterCriteria.getSchedule()))
+                .filter(course -> ((filterCriteria.getSchedule() == 0L)
+                        ||(course.getSchedule() & filterCriteria.getSchedule()) == filterCriteria.getSchedule()))
+                .filter(course -> filterCriteria.getStudents() == null
+                        || course.getStudents().stream().anyMatch(student
+                        -> filterCriteria.getStudents().contains(student)))
+                .filter(course -> filterCriteria.getTeachers() == null
+                        || course.getTeachers().stream().anyMatch(teacher
+                        -> filterCriteria.getTeachers().contains(teacher)))
                 .collect(Collectors.toList());
         return matchedCourses;
     }

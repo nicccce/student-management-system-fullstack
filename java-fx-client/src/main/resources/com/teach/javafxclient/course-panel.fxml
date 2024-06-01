@@ -33,7 +33,7 @@
                         </MFXButton>
                     </children>
                 </FlowPane>
-                <FlowPane alignment="CENTER_LEFT" columnHalignment="RIGHT" prefHeight="80.0" prefWidth="397.0" BorderPane.alignment="CENTER">
+                <FlowPane alignment="CENTER_LEFT" columnHalignment="RIGHT" prefHeight="80.0" prefWidth="415.0" BorderPane.alignment="CENTER">
                     <children>
                         <MFXButton fx:id="getExcelButton" minHeight="27.0" minWidth="70.0" onAction="#onGetExcelButtonClicked" styleClass="link-button" text="导出为Excel">
                             <FlowPane.margin>
@@ -41,6 +41,14 @@
                             </FlowPane.margin>
                             <graphic>
                                 <MFXFontIcon description="mfx-file" size="20" />
+                            </graphic>
+                        </MFXButton>
+                        <MFXButton minHeight="27.0" minWidth="70.0" onAction="#onCalculateScheduleButtonClicked" styleClass="link-button" text="检查课程时间">
+                            <FlowPane.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </FlowPane.margin>
+                            <graphic>
+                                <MFXFontIcon description="mfx-debug" size="20" />
                             </graphic>
                         </MFXButton>
                     </children>
@@ -82,7 +90,7 @@
                 </FlowPane>
                 <FlowPane alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="322.0" BorderPane.alignment="CENTER">
                     <children>
-                        <MFXTextField fx:id="numNameTextField" floatMode="BORDER" floatingText="学号姓名" maxHeight="30" prefHeight="0.0" prefWidth="221.0">
+                        <MFXTextField fx:id="numNameTextField" floatMode="BORDER" floatingText="课程名/编号" maxHeight="30" prefHeight="0.0" prefWidth="221.0">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
@@ -132,7 +140,7 @@
                         <MFXTextField fx:id="typeField" floatMode="BORDER" floatingText="课程类型" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <MFXTextField fx:id="creditField" floatMode="BORDER" floatingText="学分" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <MFXTextField fx:id="locationField" floatMode="BORDER" floatingText="上课地点" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <HBox/>
+                        <HBox />
                <GridPane alignment="CENTER" prefHeight="60.0" prefWidth="218.0">
                  <columnConstraints>
                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="0.0" prefWidth="8.0" />
@@ -158,7 +166,7 @@
                           </font>
                       </Label>
                       <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="0">
-                          <MFXButton alignment="CENTER" buttonType="RAISED" layoutX="87.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onEditTeacherButtonClick" text="修改" />
+                          <MFXButton alignment="CENTER" buttonType="RAISED" layoutX="87.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onEditTeacherButtonClick" text="导入" />
                           <MFXButton alignment="CENTER" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onCheckTeacherButtonClick" text="查看" />
                       </AnchorPane>
                       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="选课学生" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -167,7 +175,7 @@
                           </font>
                       </Label>
                       <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="2">
-                          <MFXButton alignment="CENTER" buttonType="RAISED" layoutX="87.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onEditStudentButtonClick" text="修改" />
+                          <MFXButton alignment="CENTER" buttonType="RAISED" layoutX="87.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onEditStudentButtonClick" text="导入" />
                           <MFXButton alignment="CENTER" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onCheckStudentButtonClick" text="查看" />
                       </AnchorPane>
                       <Label alignment="CENTER" prefHeight="32.0" prefWidth="93.0" text="开始日期" GridPane.columnIndex="1" GridPane.rowIndex="4">

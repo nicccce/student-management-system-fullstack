@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<?import io.github.palexdev.materialfx.font.MFXFontIcon?>
+<?import javafx.scene.control.DatePicker?>
+<GridPane alignment="CENTER" prefHeight="500" prefWidth="809" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.FilterCourseController">
+    <columnConstraints>
+        <ColumnConstraints prefWidth="120" />
+        <ColumnConstraints prefWidth="221.0" />
+        <ColumnConstraints prefWidth="127" />
+        <ColumnConstraints prefWidth="221.0" />
+        <ColumnConstraints prefWidth="120" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="25.0" minHeight="8.0" prefHeight="8.0" />
+        <RowConstraints maxHeight="65.0" minHeight="48.0" prefHeight="65.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints maxHeight="66.0" minHeight="43.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="33.0" minHeight="11.0" prefHeight="11.0" />
+    </rowConstraints>
+    <MFXTextField fx:id="numField" floatMode="BORDER" floatingText="课程编号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <MFXTextField fx:id="nameField" floatMode="BORDER" floatingText="课程名称" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+    <MFXTextField fx:id="departmentField" floatMode="BORDER" floatingText="开课单位" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <MFXTextField fx:id="typeField" floatMode="BORDER" floatingText="课程类型" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+    <MFXTextField fx:id="creditField" floatMode="BORDER" floatingText="学分" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <MFXTextField fx:id="locationField" floatMode="BORDER" floatingText="上课地点" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+
+    <MFXTextField fx:id="studentField" floatMode="BORDER" floatingText="选课学生姓名/学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+    <MFXTextField fx:id="teacherField" floatMode="BORDER" floatingText="授课教师姓名/编号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+
+    <DatePicker fx:id="beginTimePick" prefHeight="38.0" prefWidth="221.0" promptText="开始日期" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+    <DatePicker fx:id="endTimePick" promptText="结束日期" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+
+    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="12">
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="13.0" prefHeight="15.0" prefWidth="91.0" text="上课时间" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        </Label>
+        <MFXButton alignment="CENTER" buttonType="RAISED" layoutX="101.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onEditScheduleButtonClick" prefHeight="40.0" prefWidth="100.0" text="设置" />
+    </AnchorPane>
+    <MFXTextField fx:id="introduceField" floatMode="BORDER" floatingText="课程简介"  prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+    <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0" />
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
+      <children>
+      
+               <MFXButton buttonType="RAISED" layoutX="22.0" layoutY="3.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onFilterButtonClick" prefHeight="38.0" prefWidth="83.0" text="确定">
+                   <graphic>
+                       <MFXFontIcon description="mfx-variant9-mark" size="16" />
+                   </graphic>
+         </MFXButton>
+      </children>
+   </AnchorPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <children>
+         <Label layoutX="18.0" layoutY="17.0" style="-fx-font-size: 24px;" text="筛选条件">
+         </Label>
+      </children>
+   </AnchorPane>
+
+
+</GridPane>

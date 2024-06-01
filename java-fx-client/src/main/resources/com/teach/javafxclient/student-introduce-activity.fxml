@@ -5,10 +5,11 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <!--  教师管理 FXML 配置文件 对应的页面交互控制类 com.teach.javafxclient.controller.StudentController 如果是切换成本地开发模式 界面配置不变，将页面交互控制类 切换为 com.teach.javafxclient.controller.StudentControllerLocal-->
 
-<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.InnovationStudentController">
+<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.ActivityStudentController">
     <top>
         <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="1920.0" spacing="5.0">
             <children>
@@ -94,11 +95,11 @@
                         <TableColumn fx:id="checkColumn" prefWidth="35.0" />
                         <TableColumn fx:id="numColumn" prefWidth="149.19999313354492" text="学号" />
                         <TableColumn fx:id="nameColumn" prefWidth="71.59999084472656" text="姓名" />
-                        <TableColumn fx:id="innovationNameColumn" prefWidth="80.39999389648438" text="项目名称" />
-                        <TableColumn fx:id="innovationTypeColumn" prefWidth="60.199981689453125" text="项目种类" />
-                        <TableColumn fx:id="instructorColumn" prefWidth="115.20004272460938" text="指导老师" />
-                        <TableColumn fx:id="teamPositionColumn" prefWidth="102.39999389648438" text="队伍名次" />
-                        <TableColumn fx:id="teamNameColumn" prefWidth="118.39996337890625" text="队伍名称" />
+                        <TableColumn fx:id="activityNameColumn" prefWidth="80.39999389648438" text="活动名称" />
+                        <TableColumn fx:id="activityTypeColumn" prefWidth="60.199981689453125" text="活动类型" />
+                        <TableColumn fx:id="activityContentColumn" prefWidth="115.20004272460938" text="活动内容" />
+                        <TableColumn fx:id="activityDateColumn" prefWidth="102.39999389648438" text="活动日期" />
+
                         <!--<TableColumn fx:id="motherNameColumn" minWidth="3.4000244140625" prefWidth="175.0" text="母亲姓名" />
                         <TableColumn fx:id="motherOccupationColumn" prefWidth="164.99993896484375" text="母亲职业" />
                         <TableColumn fx:id="motherAgeColumn" prefWidth="70.5999755859375" text="母亲年龄" />
@@ -110,8 +111,8 @@
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>
-                    <MFXTextField disable="true" fx:id="numField" floatMode="BORDER" floatingText="学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                    <MFXTextField  fx:id="innovationNameField" floatMode="BORDER" floatingText="项目名称" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <MFXTextField fx:id="numField" disable="true" floatMode="BORDER" floatingText="学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <MFXTextField fx:id="activityNameField" floatMode="BORDER" floatingText="活动名称" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <GridPane prefHeight="52.0" prefWidth="260.0">
                         <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="0.0" prefWidth="8.0" />
@@ -121,18 +122,26 @@
                         </columnConstraints>
                         <rowConstraints>
                             <RowConstraints minHeight="38.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="30.0" minHeight="30" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="57.0" minHeight="38.0" prefHeight="57.0" vgrow="SOMETIMES" />
                         </rowConstraints>
                         <children>
-                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="项目种类" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                            <ComboBox fx:id="innovationTypeComboBox" prefHeight="38.0" prefWidth="181.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="活动类型" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                            <ComboBox fx:id="activityTypeComboBox" prefHeight="38.0" prefWidth="181.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <Label alignment="CENTER" prefHeight="32.0" prefWidth="93.0" text="活动日期" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
+
+                            <DatePicker fx:id="activityDatePick" prefHeight="66.0" prefWidth="201.0" promptText="活动日期" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         </children>
                     </GridPane>
 
 
                     <!--<MFXTextField fx:id="innovationTypeField" floatMode="BORDER" floatingText="项目种类" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />-->
-                    <MFXTextField fx:id="instructorField" floatMode="BORDER" floatingText="指导老师" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <MFXTextField fx:id="teamPositionField" floatMode="BORDER" floatingText="队伍名次" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <MFXTextField fx:id="teamNameField" floatMode="BORDER" floatingText="队伍名称" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <MFXTextField fx:id="activityContentField" floatMode="BORDER" floatingText="活动内容" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
                     <!--<MFXTextField fx:id="motherNameField" floatMode="BORDER" floatingText="母亲姓名" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                     <MFXTextField fx:id="motherOccupationField" floatMode="BORDER" floatingText="母亲职业" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                     <MFXTextField fx:id="motherAgeField" floatMode="BORDER" floatingText="母亲年龄" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />

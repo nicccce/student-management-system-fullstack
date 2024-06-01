@@ -48,6 +48,10 @@ public class FilterActivityController {
         activityTypeComboBox.getItems().addAll(activityTypeList);
 
     }
+    public void Age(String num,String name) {
+        numField.setText(num);
+        nameField.setText(name);
+    }
 
     /**
      * 初始化筛选界面

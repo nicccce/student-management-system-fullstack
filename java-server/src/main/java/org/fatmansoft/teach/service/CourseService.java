@@ -2,21 +2,22 @@ package org.fatmansoft.teach.service;
 
 import org.apache.poi.xssf.usermodel.*;
 import org.fatmansoft.teach.data.dto.*;
-import org.fatmansoft.teach.data.po.Course;
-import org.fatmansoft.teach.data.po.Student;
-import org.fatmansoft.teach.data.po.Teacher;
+import org.fatmansoft.teach.data.po.*;
 import org.fatmansoft.teach.data.vo.DataResponse;
 import org.fatmansoft.teach.repository.CourseRepository;
 import org.fatmansoft.teach.repository.StudentRepository;
 import org.fatmansoft.teach.repository.TeacherRepository;
 import org.fatmansoft.teach.util.CommonMethod;
+import org.fatmansoft.teach.util.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -29,8 +30,21 @@ public class CourseService {
 
     @Autowired
     TeacherRepository teacherRepository;
-    public List<CourseRequest> getCourseListByFilterAndNumName(CourseRequest filterCriteria, String numName){
+
+    @Autowired
+    StudentService studentService;
+
+    @Autowired
+    TeacherService teacherService;
+
+    public List<CourseRequest> getCourseListByFilterAndNumName(CourseRequest filterCriteria, String numName, String filterStudent, String filterTeacher){
         Course filterCriteriaCourse = new Course(filterCriteria);
+        if (filterStudent!=null && !filterStudent.isEmpty()){
+            filterCriteriaCourse.setStudents(studentRepository.findStudentListByNumName(filterStudent));
+        }
+        if (filterTeacher!= null && !filterTeacher.isEmpty()){
+            filterCriteriaCourse.setTeachers(teacherRepository.findTeacherListByNumName(filterTeacher));
+        }
         List<Course> matchedCourse =  courseRepository.findByExample(filterCriteriaCourse, numName);
         List<CourseRequest> matchedCourseRequest = new ArrayList<>(){};
         for (Course course:
@@ -242,5 +256,86 @@ public class CourseService {
             }
         }
         return new CourseRequest();
+    }
+
+    public DataResponse importStudentByExcel(MultipartFile file, Integer courseId) throws IOException {
+        try {
+            List<Student> studentList = new ArrayList<Student>(){};
+            List<StudentRequest> studentRequestList = studentService.changeExcelToStudent(file);
+            for (StudentRequest studentRequest :
+                    studentRequestList) {
+                if (studentRequest.getNum() != null && !studentRequest.getNum().isEmpty()){
+                    String num = studentRequest.getNum();
+                    Optional<Student> student = studentRepository.findByPersonNum(num);
+                    if (student.isPresent()){
+                        studentList.add(student.get());
+                    }else {
+                        return CommonMethod.getReturnMessageError("学号 " + num + "不存在，导入学生列表失败！");
+                    }
+                }else {
+                    return CommonMethod.getReturnMessageError("存在学号为空，无法搜索到学生，导入学生列表失败！");
+                }
+            }
+            Optional<Course> course = courseRepository.findById(courseId);
+            if (course.isPresent()){
+                course.get().setStudents(studentList);
+                course.ifPresent(courseRepository::saveAndFlush);
+            }else {
+                return  CommonMethod.getReturnMessageError("课程id不存在，请刷新后重试！");
+            }
+        }catch (Exception e) {
+            return CommonMethod.getReturnMessageError("传入数据异常，请重试！！\n" + e.getMessage());
+        }
+        return CommonMethod.getReturnMessageOK("学生列表导入成功");
+    }
+
+    public DataResponse importTeacherByExcel(MultipartFile file, Integer courseId) throws IOException {
+        try {
+            List<Teacher> teacherList = new ArrayList<Teacher>(){};
+            List<TeacherRequest> teacherRequestList = teacherService.changeExcelToTeacher(file);
+            for (TeacherRequest teacherRequest :
+                    teacherRequestList) {
+                if (teacherRequest.getNum() != null && !teacherRequest.getNum().isEmpty()){
+                    String num = teacherRequest.getNum();
+                    Optional<Teacher> teacher = teacherRepository.findByPersonNum(num);
+                    if (teacher.isPresent()){
+                        teacherList.add(teacher.get());
+                    }else {
+                        return CommonMethod.getReturnMessageError("教师编号 " + num + "不存在，导入教师列表失败！");
+                    }
+                }else {
+                    return CommonMethod.getReturnMessageError("存在教师编号为空，无法搜索到教师，导入教师列表失败！");
+                }
+            }
+            Optional<Course> course = courseRepository.findById(courseId);
+            if (course.isPresent()){
+                course.get().setTeachers(teacherList);
+                course.ifPresent(courseRepository::saveAndFlush);
+            }else {
+                return  CommonMethod.getReturnMessageError("课程id不存在，请刷新后重试！");
+            }
+        }catch (Exception e) {
+            return CommonMethod.getReturnMessageError("传入数据异常，请重试！！\n" + e.getMessage());
+        }
+        return CommonMethod.getReturnMessageOK("教师列表导入成功");
+    }
+
+    public List<StudentRequest> getCourseStudentByCourseID (Integer courseID){
+        Optional<Course> course = courseRepository.findById(courseID);
+        List<StudentRequest> studentRequestList = new ArrayList<StudentRequest>(){};
+        if (course.isPresent()){
+            List<Student> studentList = course.get().getStudents();
+            if (studentList != null){
+                for (Student student :
+                        studentList) {
+                    studentRequestList.add(new StudentRequest(student));
+                }
+                return studentRequestList;
+            }else {
+                return studentRequestList;
+            }
+        }
+        return null;
+
     }
 }

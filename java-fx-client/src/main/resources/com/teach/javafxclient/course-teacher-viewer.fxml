@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import io.github.palexdev.materialfx.font.MFXFontIcon?>
+<AnchorPane prefHeight="800" prefWidth="1500" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.CourseTeacherViewerController">
+    <Label layoutX="678.0" layoutY="42.0" style="-fx-font-size: 24px;" text="查看授课老师">
+    </Label>
+    <MFXPaginatedTableView fx:id="teacherTable" layoutX="77.0" layoutY="92.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="1347.0" />
+    <MFXButton fx:id="getExcelButton" layoutX="1224.0" layoutY="687.0" minHeight="27.0" minWidth="70.0" onAction="#onGetExcelButtonClicked" styleClass="link-button" text="导出为Excel">
+        <graphic>
+            <MFXFontIcon description="mfx-file" size="20" />
+        </graphic>
+    </MFXButton>
+</AnchorPane>

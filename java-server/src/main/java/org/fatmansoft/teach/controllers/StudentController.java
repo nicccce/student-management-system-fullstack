@@ -15,11 +15,13 @@ import org.fatmansoft.teach.service.BaseService;
 import org.fatmansoft.teach.service.StudentService;
 import org.fatmansoft.teach.util.ComDataUtil;
 import org.fatmansoft.teach.util.CommonMethod;
+import org.fatmansoft.teach.util.MultipartFileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.validation.Valid;
@@ -698,5 +700,19 @@ public class StudentController {
     public ResponseEntity<StreamingResponseBody> getSelectedStudentListExcl(@Valid @RequestBody Request<Map<String,List<StudentRequest>>> dataRequest) {
         List<StudentRequest> selectedList =dataRequest.getData().get("selectedStudent");
         return studentService.getSelectedStudentListExcl(selectedList);
+    }
+
+
+    @PostMapping(path = "/importByExcel")
+    public DataResponse importByExcel(@RequestBody byte[] barr,
+                                      @RequestParam(name = "uploader") String uploader,
+                                      @RequestParam(name = "fileName") String fileName) {
+        try {
+            MultipartFile studentExcel = MultipartFileUtils.convertToMultipartFile(barr,fileName);
+            return studentService.importStudentByExcel(studentExcel);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonMethod.getReturnMessageError("上传错误！");
+        }
     }
 }

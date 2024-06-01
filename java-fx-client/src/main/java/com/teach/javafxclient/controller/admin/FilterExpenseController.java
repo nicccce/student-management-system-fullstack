@@ -49,6 +49,10 @@ public class FilterExpenseController {
         expenseTypeComboBox.getItems().addAll(expenseTypeList);
 
     }
+    public void Age(String num,String name) {
+        numField.setText(num);
+        nameField.setText(name);
+    }
 
     /**
      * 初始化筛选界面

@@ -2,11 +2,12 @@ package com.teach.javafxclient.controller;
 
 import atlantafx.base.theme.Styles;
 import com.teach.javafxclient.MainApplication;
-import com.teach.javafxclient.controller.admin.*;
+import com.teach.javafxclient.controller.admin.AddExpenseController;
+import com.teach.javafxclient.controller.admin.AddStudentExpenseController;
+import com.teach.javafxclient.controller.admin.FilterExpenseController;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.MessageDialog;
-import com.teach.javafxclient.controller.base.ToolController;
-import com.teach.javafxclient.model.*;
+import com.teach.javafxclient.model.ExpenseEntity;
 import com.teach.javafxclient.request.DataRequest;
 import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
@@ -37,9 +38,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ExpenseController extends ToolController {
+public class ExpenseStudentController {
     public FlowPane filterPane;
     public MFXButton addFilterButton;
     public MFXButton changeFilterButton;
@@ -99,8 +102,6 @@ public class ExpenseController extends ToolController {
     //@FXML
     // private TextField addressField;  //教师信息  地址输入域
 
-    @FXML
-    private TextField numNameTextField;  //查询 姓名学号输入域
 
     private Integer expenseId = null;  //当前编辑修改的学生的主键
     private ArrayList<ExpenseEntity> expenseList = new ArrayList<ExpenseEntity>();  // 学生信息列表数据
@@ -112,6 +113,26 @@ public class ExpenseController extends ToolController {
     private HttpRequestUtil<ExpenseEntity> httpRequestUtil = new HttpRequestUtil<>(ExpenseEntity.class);
 
     private final DialogUtil dialogUtil = new DialogUtil();
+    private Map Bee = new HashMap<>();
+
+    private String Bnum;
+    private String Bname;
+
+    public String getBnum() {
+        return Bnum;
+    }
+
+    public void setBnum(String bnum) {
+        Bnum = bnum;
+    }
+
+    public String getBname() {
+        return Bname;
+    }
+
+    public void setBname(String bname) {
+        Bname = bname;
+    }
 
     //存储筛选的条件
     private ExpenseEntity filterCriteria = new ExpenseEntity();
@@ -124,10 +145,16 @@ public class ExpenseController extends ToolController {
     public void initialize() throws InvocationTargetException, IllegalAccessException {
         DataResponse<ArrayList<ExpenseEntity>> res;
         DataRequest req =new DataRequest();
-        req.put("numName","");
-        res = httpRequestUtil.requestArrayList("/api/expense/getExpenseList",req); //从后台获取所有学生信息列表集合
+        req.put("userId","");
+        res = httpRequestUtil.requestArrayList("/api/expense/getExpenseListByUserId",req); //从后台获取所有学生信息列表集合
         if(res != null && res.getCode()== 0) {
             expenseList = res.getData();
+        }
+        res =httpRequestUtil.request("/api/expense/getBee",req);
+        if(res != null && res.getCode()== 0) {
+            Bee=(Map) res.getData();
+            setBnum((String) Bee.get("num"));
+            setBname((String) Bee.get("name"));
         }
 
         setupTable();
@@ -300,20 +327,19 @@ public class ExpenseController extends ToolController {
      */
     @FXML
     protected void onQueryButtonClick() {
-        String numName = numNameTextField.getText();
         DataRequest req = new DataRequest();
         DataResponse<ArrayList<ExpenseEntity>> res;
         //没有筛选值调用原来的接口，有筛选值调用新接口
         if (!filterCriteria.isEmpty()){
             //将筛选对象包装进请求
             req.putObject("filterCriteria",filterCriteria);
-            res = httpRequestUtil.requestArrayList("/api/expense/getExpenseListByFilter/" + numName,req);
+            res = httpRequestUtil.requestArrayList("/api/expense/getExpenseListByFilter/" ,req);
 
             //因为有筛选条件，修改一下筛选按钮
             hasFilter();
         }else {
-            req.put("numName",numName);
-            res = httpRequestUtil.requestArrayList("/api/expense/getExpenseList",req);
+            req.put("userId","");
+            res = httpRequestUtil.requestArrayList("/api/expense/getExpenseListByUserId",req);
             resetFilter();
         }
         if(res != null && res.getCode()== 0) {
@@ -327,10 +353,10 @@ public class ExpenseController extends ToolController {
      */
     @FXML
     protected void onAddButtonClick() {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-expense.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-student-expense.fxml"));
         try {
             Parent root = fxmlLoader.load();
-            AddExpenseController controller = fxmlLoader.getController(); // 获取控制器对象
+            AddStudentExpenseController controller = fxmlLoader.getController(); // 获取控制器对象
 
             // 创建一个新的 Stage 对象
             Stage addStage = new Stage();
@@ -350,6 +376,7 @@ public class ExpenseController extends ToolController {
             });
 
             addStage.show();
+            controller.Age(Bnum);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -478,34 +505,6 @@ public class ExpenseController extends ToolController {
         onDeleteButtonClick();
     }
 
-    /**
-     * 导出学生信息表的示例 重写ToolController 中的doExport 这里给出了一个导出学生基本信息到Excl表的示例， 后台生成Excl文件数据，传回前台，前台将文件保存到本地
-     */
-    public void doExport(){
-        String numName = numNameTextField.getText();
-        DataRequest req = new DataRequest();
-        req.put("numName",numName);
-        byte[] bytes = HttpRequestUtil.requestByteData("/api/expense/getExpenseListExcl", req);
-        if (bytes != null) {
-            try {
-                FileChooser fileDialog = new FileChooser();
-                fileDialog.setTitle("前选择保存的文件");
-                fileDialog.setInitialDirectory(new File("C:/"));
-                fileDialog.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("XLSX 文件", "*.xlsx"));
-                File file = fileDialog.showSaveDialog(null);
-                if(file != null) {
-                    FileOutputStream out = new FileOutputStream(file);
-                    out.write(bytes);
-                    out.close();
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-
-    }
-
     private List<ExpenseEntity> getSelectedItem(){
         List<ExpenseEntity> selectedItems = new ArrayList<ExpenseEntity>();
         for (ExpenseEntity items :
@@ -542,7 +541,7 @@ public class ExpenseController extends ToolController {
     }
 
     private void setFilter(){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("filter-expense.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("student-filter-expense.fxml"));
         try {
             Parent root = fxmlLoader.load();
             FilterExpenseController controller = fxmlLoader.getController(); // 获取控制器对象
@@ -556,6 +555,7 @@ public class ExpenseController extends ToolController {
             Scene scene = new Scene(root, -1, -1);
             filterStage.setScene(scene);
             filterStage.show();
+            controller.Age(Bnum,Bname);
             // 初始化筛选控制器所需要的值，并把筛选条件的指针传进去，使在弹出页面更改的会自动同步到这个页面
             controller.init(filterStage, filterCriteria, this::onQueryButtonClick);
         } catch (IOException e) {
@@ -616,5 +616,4 @@ public class ExpenseController extends ToolController {
             }
         }
     }
-
 }

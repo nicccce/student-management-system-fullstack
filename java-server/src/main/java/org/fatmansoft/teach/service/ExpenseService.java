@@ -59,11 +59,10 @@ public class ExpenseService {
         Expense expense = new Expense(request.getData().get("newExpense"));
         String num = request.getData().get("newExpense").getNum();
         Optional<Person> nOp = personRepository.findByNum(num);
-        Optional<Expense> nFp = expenseRepository.findByPersonNum(num);
         if (nOp.isPresent() || num == null || num.isEmpty()) {
-            if(nFp.isPresent()) {
+           /* if(nFp.isPresent()) {
                 return CommonMethod.getReturnMessageError("消费信息已存在,无法添加学生消费信息,请转到修改页面修改");
-            } //ToDo：疑似不满足多对一关系，如果有时间可以修改
+            } //ToDo：疑似不满足多对一关系，如果有时间可以修改*/
             expense.setPerson(nOp.get());
             expenseRepository.save(expense);
             return CommonMethod.getReturnMessageOK("消费信息保存成功");

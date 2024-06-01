@@ -2,17 +2,18 @@ package com.teach.javafxclient.controller;
 
 import atlantafx.base.theme.Styles;
 import com.teach.javafxclient.MainApplication;
-import com.teach.javafxclient.controller.admin.AddCourseController;
-import com.teach.javafxclient.controller.admin.FilterCourseController;
+import com.teach.javafxclient.controller.admin.*;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.MessageDialog;
 import com.teach.javafxclient.model.CourseEntity;
+import com.teach.javafxclient.model.TeacherEntity;
 import com.teach.javafxclient.request.DataRequest;
 import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXProgressBar;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -49,6 +50,8 @@ import java.util.List;
  */
 public class CourseController {
 
+    public MFXProgressBar determinateBar;
+    public Label progressLable;
     @FXML
     private MFXButton addButton;
 
@@ -155,6 +158,9 @@ public class CourseController {
     private final DialogUtil dialogUtil = new DialogUtil();
 
     private CourseEntity filterCriteria = new CourseEntity();
+    private StringBuilder filterStudent = new StringBuilder("");
+    private StringBuilder filterTeacher = new StringBuilder("");
+
 
     /**
      * 页面加载对象创建完成初始化方法，页面中控件属性的设置，初始数据显示等初始操作都在这里完成，其他代码都事件处理方法里
@@ -165,16 +171,12 @@ public class CourseController {
         DataResponse<ArrayList<CourseEntity>> res;
         DataRequest req =new DataRequest();
         req.putObject("filterCriteria",filterCriteria);
-        res = httpRequestUtil.requestArrayList("/api/course/getCourseListByFilter/",req); //从后台获取所有课程信息列表集合
+        res = httpRequestUtil.requestArrayList("/api/course/getCourseListByFilter/?filterStudent="+filterStudent+"&filterTeacher="+filterTeacher,req); //从后台获取所有课程信息列表集合
         if(res != null && res.getCode()== 0) {
             courseList = res.getData();
         }
-        for (CourseEntity course :
-                courseList) {
-            if (course.getSchedule()!=0L){
-                course.setScheduleString(getScheduleString(course.getSchedule()));
-            }
-        }
+
+        setUpCourseList();
 
         //设置表的列属性和表属性
         setupTable();
@@ -197,6 +199,32 @@ public class CourseController {
 
         //初始化筛选器及其按钮
         resetFilter();
+    }
+
+    private  void setUpCourseList(){
+        HttpRequestUtil<TeacherEntity> teacherEntityHttpRequestUtil= new HttpRequestUtil<TeacherEntity>(TeacherEntity.class);
+
+        for (int c = 0;c < courseList.size(); c++) {
+            CourseEntity course = courseList.get(c);
+            if (course.getSchedule()!=0L){
+                course.setScheduleString(getScheduleString(course.getSchedule()));
+            }
+            DataResponse<ArrayList<TeacherEntity>> rest;
+            DataRequest reqt =new DataRequest();
+            rest = teacherEntityHttpRequestUtil.requestArrayList("/api/course/getTeacher/"+course.getCourseId(),reqt); //从后台获取所有课程信息列表集合
+            if(rest == null || rest.getCode()== 1) {
+                continue;
+            }
+            List<TeacherEntity> teacherList = rest.getData();
+            StringBuilder teacherStringBuilder = new StringBuilder();
+            for (int i = 0; i < teacherList.size(); i++) {
+                teacherStringBuilder.append(teacherList.get(i).getName());
+                if (i < teacherList.size() - 1) {
+                    teacherStringBuilder.append(",");
+                }
+            }
+            course.setTeachers(teacherStringBuilder.toString());
+        }
     }
 
     private String getScheduleString(Long schedule){
@@ -406,9 +434,9 @@ public class CourseController {
         DataResponse<ArrayList<CourseEntity>> res;
         //将筛选对象包装进请求
         req.putObject("filterCriteria",filterCriteria);
-        res = httpRequestUtil.requestArrayList("/api/course/getCourseListByFilter/" + numName,req);
+        res = httpRequestUtil.requestArrayList("/api/course/getCourseListByFilter/" + numName+"?filterStudent="+filterStudent+"&filterTeacher="+filterTeacher,req);
         //没有筛选值调用原来的接口，有筛选值调用新接口
-        if (!filterCriteria.isEmpty()){
+        if (!filterCriteria.isEmpty()||!filterStudent.isEmpty()||filterTeacher.isEmpty()){
             //因为有筛选条件，修改一下筛选按钮
             hasFilter();
         }else {
@@ -416,12 +444,7 @@ public class CourseController {
         }
         if(res != null && res.getCode()== 0) {
             courseList = res.getData();
-            for (CourseEntity course :
-                    courseList) {
-                if (course.getSchedule()!=0L){
-                    course.setScheduleString(getScheduleString(course.getSchedule()));
-                }
-            }
+            setUpCourseList();
             setTableViewData();
         }
 
@@ -592,6 +615,8 @@ public class CourseController {
         resetFilterButton.setManaged(false); // 隐藏按钮并且不占用空间
         filterLabel.setText("筛选：当前无筛选条件");
         filterCriteria.empty();//清空筛选条件
+        filterStudent = new StringBuilder("");
+        filterTeacher = new StringBuilder("");
     }
 
     /**
@@ -626,7 +651,7 @@ public class CourseController {
             filterStage.setScene(scene);
             filterStage.show();
             // 初始化筛选控制器所需要的值，并把筛选条件的指针传进去，使在弹出页面更改的会自动同步到这个页面
-            controller.init(filterStage, filterCriteria, this::onQueryButtonClick);
+            controller.init(filterStage, filterCriteria, filterStudent, filterTeacher,this::onQueryButtonClick);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -695,23 +720,148 @@ public class CourseController {
 
     @FXML
     private void onAddButtonClick(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("course-add.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+            AddCourseController controller = fxmlLoader.getController(); // 获取控制器对象
+
+            // 创建一个新的 Stage 对象
+            Stage addStage = new Stage();
+            addStage.setTitle("添加课程信息");
+            addStage.getIcons().add(MainApplication.icon);
+
+            // 通过控制器的 setStage 方法传递 Stage 对象
+            controller.setStage(addStage);
+
+            // 设置 Scene 并显示 Stage
+            Scene scene = new Scene(root, -1, -1);
+            addStage.setScene(scene);
+
+            // 添加关闭事件处理程序，用来关闭时自动刷新
+            addStage.setOnHiding(event -> {
+                onQueryButtonClick(); // 在关闭事件中调用 onQueryButtonClick() 方法
+            });
+
+            addStage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     private void onEditTeacherButtonClick(ActionEvent actionEvent) {
+        CourseEntity course = dataTableView.getSelectionModel().getSelectedItem();
+        if (course == null){
+            dialogUtil.openError("无法导入", "请先选择需要导入授课教师的课程！");
+            return;
+        }
+        FileChooser fileDialog = new FileChooser();
+        fileDialog.setTitle("导入教师表格");
+        fileDialog.setInitialDirectory(new File("C:/"));
+        fileDialog.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XLSX 文件", "*.xlsx"));
+        File file = fileDialog.showOpenDialog(null);
+        if (file != null){
+            DataResponse res = HttpRequestUtil.importData("/api/course/importTeacherByExcel", file.getPath(), "courseId=" + course.getCourseId());
+            if (res != null) {
+                if (res.getCode() == 0) {
+                    dialogUtil.openGeneric("上传成功", "上传成功！");
+                } else {
+                    dialogUtil.openError("上传失败", res.getMsg());
+                }
+            } else {
+                dialogUtil.openError("上传失败", "上传失败");
+            }
+            onQueryButtonClick();
+        }
     }
 
     @FXML
     private void onCheckTeacherButtonClick(ActionEvent actionEvent) {
+        CourseEntity course = dataTableView.getSelectionModel().getSelectedItem();
+        if (course == null){
+            dialogUtil.openError("无法查看", "请先选择需要查看的课程！");
+            return;
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("course-teacher-viewer.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+            CourseTeacherViewerController controller = fxmlLoader.getController(); // 获取控制器对象
+
+            // 创建一个新的 Stage 对象
+            Stage addStage = new Stage();
+            addStage.setTitle("查看授课教师信息");
+            addStage.getIcons().add(MainApplication.icon);
+
+            // 设置 Scene 并显示 Stage
+            Scene scene = new Scene(root, -1, -1);
+            addStage.setScene(scene);
+
+            addStage.show();
+
+            controller.init(dataTableView.getSelectionModel().getSelectedItem().getCourseId());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     private void onEditStudentButtonClick(ActionEvent actionEvent) {
+        CourseEntity course = dataTableView.getSelectionModel().getSelectedItem();
+        if (course == null){
+            dialogUtil.openError("无法导入", "请先选择需要导入学生的课程！");
+            return;
+        }
+        FileChooser fileDialog = new FileChooser();
+        fileDialog.setTitle("导入学生表格");
+        fileDialog.setInitialDirectory(new File("C:/"));
+        fileDialog.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XLSX 文件", "*.xlsx"));
+        File file = fileDialog.showOpenDialog(null);
+        if (file != null){
+            DataResponse res = HttpRequestUtil.importData("/api/course/importStudentByExcel", file.getPath(), "courseId=" + course.getCourseId());
+            if (res != null) {
+                if (res.getCode() == 0) {
+                    dialogUtil.openGeneric("上传成功", "上传成功！");
+                } else {
+                    dialogUtil.openError("上传失败", res.getMsg());
+                }
+            } else {
+                dialogUtil.openError("上传失败", "上传失败");
+            }
+            onQueryButtonClick();
+        }
     }
 
 
     @FXML
     private void onCheckStudentButtonClick(ActionEvent actionEvent) {
+        CourseEntity course = dataTableView.getSelectionModel().getSelectedItem();
+        if (course == null){
+            dialogUtil.openError("无法查看", "请先选择需要查看的课程！");
+            return;
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("course-student-viewer.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+            CourseStudentViewerController controller = fxmlLoader.getController(); // 获取控制器对象
+
+            // 创建一个新的 Stage 对象
+            Stage addStage = new Stage();
+            addStage.setTitle("查看学生信息");
+            addStage.getIcons().add(MainApplication.icon);
+
+            // 设置 Scene 并显示 Stage
+            Scene scene = new Scene(root, -1, -1);
+            addStage.setScene(scene);
+
+            addStage.show();
+
+            controller.init(dataTableView.getSelectionModel().getSelectedItem().getCourseId());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML
@@ -767,6 +917,51 @@ public class CourseController {
             controller.init(course, editorStage);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private long checkSchedule (List<Long> scheduleList){
+        long a = 0L,result = 0L;
+        for (long schedule :
+                scheduleList) {
+            a |= schedule;
+        }
+        for (long schedule :
+                scheduleList) {
+            long ans = solve(a,schedule);
+            result|=ans;
+            a-=schedule-ans;
+        }
+        return result;
+    }
+
+    private long solve (long a, long b){
+        Long ans = 0L;
+        for (int i = 0; i<35 ; i++){
+            if ((a&1)==0&&(b&1)==1){
+                ans += 1L <<i;
+            }
+            a>>=1;b>>=1;
+        }
+        return ans;
+    }
+
+    public void onCalculateScheduleButtonClicked(ActionEvent actionEvent) {
+        Integer selectedNumber = getSelectedItem().size();
+        if (selectedNumber <= 1){
+            dialogUtil.openError("检查失败", "请选择数量不少于2门的课程");
+        }else {
+            List<Long> scheduleList = new ArrayList<>(){};
+            for (CourseEntity course :
+                    selectedItemList) {
+                scheduleList.add(course.getSchedule());
+            }
+            String scheduleString = getScheduleString(checkSchedule(scheduleList));
+            if (!scheduleString.isEmpty()) {
+                dialogUtil.openInfo("检查课程时间", "点击确认选中的 " + selectedNumber + " 条课程信息在" + scheduleString + "发生了时间冲突！");
+            }else {
+                dialogUtil.openInfo("检查课程时间", "点击确认选中的 " + selectedNumber + " 条课程信息没有时间冲突。");
+            }
         }
     }
 }

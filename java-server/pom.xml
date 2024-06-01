@@ -146,6 +146,11 @@
             <artifactId>easyexcel</artifactId>
             <version>2.2.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>6.1.3</version>
+        </dependency>
     </dependencies>
     <!-- 统一管理SpringData版本-->
     <dependencyManagement>

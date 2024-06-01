@@ -2,6 +2,7 @@ package org.fatmansoft.teach.service;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.poi.xssf.usermodel.*;
+import org.fatmansoft.teach.data.dto.CourseRequest;
 import org.fatmansoft.teach.data.dto.DataRequest;
 import org.fatmansoft.teach.data.dto.Request;
 import org.fatmansoft.teach.data.dto.StudentRequest;
@@ -10,16 +11,21 @@ import org.fatmansoft.teach.data.vo.DataResponse;
 import org.fatmansoft.teach.repository.*;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.fatmansoft.teach.util.EmailValidator;
+import org.fatmansoft.teach.util.ExcelUtil;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
+
+
 
 @Service
 public class StudentService {
@@ -222,5 +228,53 @@ public class StudentService {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    public List<StudentRequest> changeExcelToStudent(MultipartFile file) throws IOException {
+        Map<String, String> headerMap = new HashMap<String, String>() {{
+            put("学号", "num");
+            put("姓名", "name");
+            put("学院", "dept");
+            put("专业", "major");
+            put("班级", "className");
+            put("证件号码", "card");
+            put("性别", "genderName");
+            put("出生日期", "birthday");
+            put("邮箱", "email");
+            put("电话", "phone");
+            put("地址", "address");
+        }};
+        List<StudentRequest> studentRequestList = ExcelUtil.<StudentRequest>readExcelOfList(file,StudentRequest.class,headerMap);
+        return studentRequestList;
+    }
+
+    public DataResponse importStudentByExcel(MultipartFile file) throws IOException {
+        try {
+            List<StudentRequest> studentRequestList = changeExcelToStudent(file);
+            for (StudentRequest studentRequest :
+                    studentRequestList) {
+                Student student = new Student(studentRequest);
+                String num = student.getPerson().getNum();
+                Optional<Person> nOp = personRepository.findByNum(num); //查询是否存在num的人员
+                if(nOp.isPresent()||student.getPerson().getNum()==""||student.getPerson().getNum()==null) {
+                    return CommonMethod.getReturnMessageError("学号 " + num + " 已经存在或无效，不能添加或修改！");
+                }if (student.getPerson().getEmail()!=""&&!EmailValidator.isValidEmail(student.getPerson().getEmail())){
+                    return CommonMethod.getReturnMessageError(student.getPerson().getEmail()+"不是合法的邮箱地址！");
+                }
+                studentRepository.save(student);
+                String password = encoder.encode("123456");
+                User u= new User();
+                u.setUserId(student.getPerson().getPersonId());
+                u.setPerson(student.getPerson());
+                u.setUserName(num);
+                u.setPassword(password);
+                u.setUserType(userTypeRepository.findByName(EUserType.ROLE_STUDENT));
+                userRepository.saveAndFlush(u); //插入新的User记录
+            }
+        }catch (Exception e) {
+            return CommonMethod.getReturnMessageError("传入数据异常，请重试！！\n" + e.getMessage());
+        }
+        return CommonMethod.getReturnMessageOK("学生信息保存成功");
+    }
+
 }
 

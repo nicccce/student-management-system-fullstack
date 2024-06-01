@@ -62,9 +62,9 @@ public class InnovationService {
         Optional<Person> nOp = personRepository.findByNum(num);
         Optional<Innovation> nFp = innovationRepository.findByPersonNum(num);
         if (nOp.isPresent() || num == null || num.isEmpty()) {
-           if(nFp.isPresent()) {
+        /*   if(nFp.isPresent()) {
                 return CommonMethod.getReturnMessageError("创新实践信息已存在,无法添加学生创新实践信息,请转到修改页面修改");
-            } //ToDo：疑似不满足多对一关系，如果有时间可以修改
+            } //ToDo：疑似不满足多对一关系，如果有时间可以修改*/
             innovation.setPerson(nOp.get());
             innovationRepository.save(innovation);
             return CommonMethod.getReturnMessageOK("创新实践信息保存成功");

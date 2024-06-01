@@ -138,12 +138,13 @@ public class InnovationController {
 
 
     @PostMapping("/getInnovationList")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getInnovationList(@Valid @RequestBody DataRequest dataRequest) {
         String numName= dataRequest.getString("numName");
         List dataList = getInnovationMapList(numName);
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
+
+
 
 
 
@@ -154,7 +155,6 @@ public class InnovationController {
      */
 
     @PostMapping("/getInnovationInfo")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getInnovationInfo(@Valid @RequestBody DataRequest dataRequest) {
         Integer innovationId = dataRequest.getInteger("innovationId");
         Innovation s= null;
@@ -176,7 +176,6 @@ public class InnovationController {
      * @return  新建修改教师的主键 teacher_id 返回前端
      */
     @PostMapping("/innovationEditSave")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse innovationEditSave(@Valid @RequestBody DataRequest dataRequest) {
         System.out.println(dataRequest.getData());
         Integer innovationId = dataRequest.getInteger("innovationId");
@@ -226,7 +225,6 @@ public class InnovationController {
      * @return  正常操作
      */
     @DeleteMapping("/innovationDeleteAll")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse innovationDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
         return innovationService.innovationDeleteAll(dataRequest);
     }
@@ -238,7 +236,6 @@ public class InnovationController {
      * @return  正常操作
      */
     @PostMapping ("/innovationInsert")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse innovationInsert (@Valid @RequestBody Request<Map<String, InnovationRequest>> dataRequest) {
         return innovationService.innovationInsert(dataRequest);
     }
@@ -249,7 +246,6 @@ public class InnovationController {
      * @return 查询到的学生信息
      */
     @PostMapping("/getInnovationListByFilter/{numName}")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getInnovationListByFilterAndNumName(@Valid @RequestBody Request<Map<String,InnovationRequest>> dataRequest,@PathVariable String numName) {
         if (numName == null){
             numName="";
@@ -265,7 +261,6 @@ public class InnovationController {
      * @return 查询到的学生信息
      */
     @PostMapping("/getInnovationListByFilter/")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getInnovationListByFilter(@Valid @RequestBody Request<Map<String,InnovationRequest>> dataRequest) {
         String numName = "";
         InnovationRequest filterCriteria = dataRequest.getData().get("filterCriteria");
@@ -279,11 +274,30 @@ public class InnovationController {
      * @return 生成的Excel文件流
      */
     @PostMapping("/getSelectedInnovationListExcl")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<StreamingResponseBody> getSelectedInnovationListExcl(@Valid @RequestBody Request<Map<String,List<InnovationRequest>>> dataRequest) {
         List<InnovationRequest> selectedList =dataRequest.getData().get("selectedInnovation");
         return innovationService.getSelectedInnovationListExcl(selectedList);
     }
+    @PostMapping("/getInnovationListByUserId")
+    public DataResponse getInnovationListByUserId(@Valid @RequestBody DataRequest dataRequest) {
+        String numName= dataRequest.getString("userId");
+        Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
+        User u = op.get();
+        String s = u.getPerson().getNum();
+        List dataList = getInnovationMapList(s);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
 
-
+    @PostMapping("/getBee")
+    public DataResponse getBee(@Valid @RequestBody DataRequest dataRequest) {
+        String numName= dataRequest.getString("userId");
+        Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
+        User u = op.get();
+        String num = u.getPerson().getNum();
+        String name = u.getPerson().getName();
+        Map Bee = new HashMap<>();
+        Bee.put("num",num);
+        Bee.put("name",name);
+        return CommonMethod.getReturnData(Bee);  //按照测试框架规范会送Map的list
+    }
 }

@@ -1,4 +1,4 @@
-package com.teach.javafxclient.controller;
+package com.teach.javafxclient.controller.admin;
 
 import com.teach.javafxclient.model.CourseEntity;
 import io.github.palexdev.materialfx.controls.MFXButton;

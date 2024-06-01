@@ -25,7 +25,7 @@ public class StudentEntity {
 
     private String name; // 姓名
 
-    private String dept; // 部门
+    private String dept; // 学院
 
     private String major; // 专业
 

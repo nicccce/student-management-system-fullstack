@@ -135,7 +135,6 @@ public class ActivityController {
 
 
     @PostMapping("/getActivityList")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getActivityList(@Valid @RequestBody DataRequest dataRequest) {
         String numName= dataRequest.getString("numName");
         List dataList = getActivityMapList(numName);
@@ -151,7 +150,6 @@ public class ActivityController {
      */
 
     @PostMapping("/getActivityInfo")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getActivityInfo(@Valid @RequestBody DataRequest dataRequest) {
         Integer activityId = dataRequest.getInteger("activityId");
         Activity s= null;
@@ -173,7 +171,6 @@ public class ActivityController {
      * @return  新建修改教师的主键 teacher_id 返回前端
      */
     @PostMapping("/activityEditSave")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse activityEditSave(@Valid @RequestBody DataRequest dataRequest) {
         System.out.println(dataRequest.getData());
         Integer activityId = dataRequest.getInteger("activityId");
@@ -223,7 +220,6 @@ public class ActivityController {
      * @return  正常操作
      */
     @DeleteMapping("/activityDeleteAll")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse activityDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
         return activityService.activityDeleteAll(dataRequest);
     }
@@ -235,7 +231,6 @@ public class ActivityController {
      * @return  正常操作
      */
     @PostMapping ("/activityInsert")
-    @PreAuthorize(" hasRole('ADMIN')")
     public DataResponse activityInsert (@Valid @RequestBody Request<Map<String, ActivityRequest>> dataRequest) {
         return activityService.activityInsert(dataRequest);
     }
@@ -246,7 +241,6 @@ public class ActivityController {
      * @return 查询到的学生信息
      */
     @PostMapping("/getActivityListByFilter/{numName}")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getActivityListByFilterAndNumName(@Valid @RequestBody Request<Map<String,ActivityRequest>> dataRequest,@PathVariable String numName) {
         if (numName == null){
             numName="";
@@ -262,7 +256,6 @@ public class ActivityController {
      * @return 查询到的学生信息
      */
     @PostMapping("/getActivityListByFilter/")
-    @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getActivityListByFilter(@Valid @RequestBody Request<Map<String,ActivityRequest>> dataRequest) {
         String numName = "";
         ActivityRequest filterCriteria = dataRequest.getData().get("filterCriteria");
@@ -276,10 +269,31 @@ public class ActivityController {
      * @return 生成的Excel文件流
      */
     @PostMapping("/getSelectedActivityListExcl")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<StreamingResponseBody> getSelectedActivityListExcl(@Valid @RequestBody Request<Map<String,List<ActivityRequest>>> dataRequest) {
         List<ActivityRequest> selectedList =dataRequest.getData().get("selectedActivity");
         return activityService.getSelectedActivityListExcl(selectedList);
+    }
+    @PostMapping("/getActivityListByUserId")
+    public DataResponse getActivityListByUserId(@Valid @RequestBody DataRequest dataRequest) {
+        String numName= dataRequest.getString("userId");
+        Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
+        User u = op.get();
+        String s = u.getPerson().getNum();
+        List dataList = getActivityMapList(s);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
+
+    @PostMapping("/getBee")
+    public DataResponse getBee(@Valid @RequestBody DataRequest dataRequest) {
+        String numName= dataRequest.getString("userId");
+        Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
+        User u = op.get();
+        String num = u.getPerson().getNum();
+        String name = u.getPerson().getName();
+        Map Bee = new HashMap<>();
+        Bee.put("num",num);
+        Bee.put("name",name);
+        return CommonMethod.getReturnData(Bee);  //按照测试框架规范会送Map的list
     }
 
 

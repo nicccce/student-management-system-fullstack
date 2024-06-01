@@ -378,7 +378,7 @@ public class BaseController {
         String oldPassword  = dataRequest.getString("oldPassword");  //获取oldPassword
         String newPassword  = dataRequest.getString("newPassword");  //获取newPassword
         Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
-        if(op.isPresent())
+        if(!op.isPresent())
             return CommonMethod.getReturnMessageError("账户不存在！");  //通知前端操作正常
         User u = op.get();
         if(!encoder.matches(oldPassword, u.getPassword())) {

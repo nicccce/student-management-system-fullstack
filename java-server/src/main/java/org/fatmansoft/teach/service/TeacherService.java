@@ -11,13 +11,16 @@ import org.fatmansoft.teach.repository.*;
 import org.fatmansoft.teach.util.ComDataUtil;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.fatmansoft.teach.util.EmailValidator;
+import org.fatmansoft.teach.util.ExcelUtil;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -25,7 +28,7 @@ public class TeacherService {
     @Autowired
     private PersonRepository personRepository;  //人员数据操作自动注入
     @Autowired
-    private UserRepository userRepository;  //学生数据操作自动注入
+    private UserRepository userRepository;  //教师数据操作自动注入
     @Autowired
     TeacherRepository teacherRepository;
 
@@ -46,9 +49,9 @@ public class TeacherService {
             Optional<Teacher> op = teacherRepository.findById(teacherId);   // 查询获得实体对象
             if (op.isPresent()) {
                 Teacher s = op.get();
-                Optional<User> uOp = userRepository.findByPersonPersonId(s.getPerson().getPersonId()); // 查询对应该学生的账户
+                Optional<User> uOp = userRepository.findByPersonPersonId(s.getPerson().getPersonId()); // 查询对应该教师的账户
                 if (uOp.isPresent()) {
-                    userRepository.delete(uOp.get()); // 删除对应该学生的账户
+                    userRepository.delete(uOp.get()); // 删除对应该教师的账户
                 }
                 List<Course> courseList = courseRepository.findByTeachers(s);
                 for (Course course :
@@ -72,7 +75,7 @@ public class TeacherService {
         }
 
         try {
-            // 创建或更新学生实体
+            // 创建或更新教师实体
             Teacher teacher = new Teacher(request.getData().get("newTeacher"));
             String num = teacher.getPerson().getNum();
             Optional<Person> nOp = personRepository.findByNum(num); //查询是否存在num的人员
@@ -100,9 +103,9 @@ public class TeacherService {
         }
     }
     /**
-     * 获取所有学生的部门列表，去重后返回。
+     * 获取所有教师的部门列表，去重后返回。
      *
-     * @return 学生的部门列表
+     * @return 教师的部门列表
      */
     public List<String> getTeacherDeptList() {
         List<Teacher> teacherList = teacherRepository.findAll();
@@ -167,7 +170,7 @@ public class TeacherService {
     public ResponseEntity<StreamingResponseBody> getSelectedTeacherListExcl(List<TeacherRequest> list){
         Integer widths[] = {8, 20, 10, 15, 15, 15, 25, 10, 15, 30, 20, 30};
         int i, j, k;
-        String titles[] = {"序号","学号", "姓名", "学院", "职位", "学历", "证件号码", "性别","出生日期","邮箱","电话","地址"};
+        String titles[] = {"序号","教师编号", "姓名", "学院", "职位", "学历", "证件号码", "性别","出生日期","邮箱","电话","地址"};
         String outPutSheetName = "teacher.xlsx";
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFCellStyle styleTitle = CommonMethod.createCellStyle(wb, 20);
@@ -220,5 +223,52 @@ public class TeacherService {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    public List<TeacherRequest> changeExcelToTeacher(MultipartFile file) throws IOException {
+        Map<String, String> headerMap = new HashMap<String, String>() {{
+            put("教师编号", "num");
+            put("姓名", "name");
+            put("学院", "dept");
+            put("职位", "position");
+            put("学历", "qualification");
+            put("证件号码", "card");
+            put("性别", "genderName");
+            put("出生日期", "birthday");
+            put("邮箱", "email");
+            put("电话", "phone");
+            put("地址", "address");
+        }};
+        List<TeacherRequest> teacherRequestList = ExcelUtil.<TeacherRequest>readExcelOfList(file,TeacherRequest.class,headerMap);
+        return teacherRequestList;
+    }
+
+    public DataResponse importTeacherByExcel(MultipartFile file) throws IOException {
+        try {
+            List<TeacherRequest> teacherRequestList = changeExcelToTeacher(file);
+            for (TeacherRequest teacherRequest :
+                    teacherRequestList) {
+                Teacher teacher = new Teacher(teacherRequest);
+                String num = teacher.getPerson().getNum();
+                Optional<Person> nOp = personRepository.findByNum(num); //查询是否存在num的人员
+                if(nOp.isPresent()||teacher.getPerson().getNum()==""||teacher.getPerson().getNum()==null) {
+                    return CommonMethod.getReturnMessageError("学号 " + num + " 已经存在或无效，不能添加或修改！");
+                }if (teacher.getPerson().getEmail()!=""&&!EmailValidator.isValidEmail(teacher.getPerson().getEmail())){
+                    return CommonMethod.getReturnMessageError(teacher.getPerson().getEmail()+"不是合法的邮箱地址！");
+                }
+                teacherRepository.save(teacher);
+                String password = encoder.encode("123456");
+                User u= new User();
+                u.setUserId(teacher.getPerson().getPersonId());
+                u.setPerson(teacher.getPerson());
+                u.setUserName(num);
+                u.setPassword(password);
+                u.setUserType(userTypeRepository.findByName(EUserType.ROLE_STUDENT));
+                userRepository.saveAndFlush(u); //插入新的User记录
+            }
+        }catch (Exception e) {
+            return CommonMethod.getReturnMessageError("传入数据异常，请重试！！\n" + e.getMessage());
+        }
+        return CommonMethod.getReturnMessageOK("教师信息保存成功");
     }
 }

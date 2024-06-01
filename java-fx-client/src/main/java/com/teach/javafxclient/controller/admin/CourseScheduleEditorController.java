@@ -1,4 +1,4 @@
-package com.teach.javafxclient.controller;
+package com.teach.javafxclient.controller.admin;
 
 import com.teach.javafxclient.model.CourseEntity;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -164,6 +164,7 @@ public class CourseScheduleEditorController {
     private void onButtonClick(Integer day, Integer period) {
         MFXButton clickedButton = getButtonByIndex(day,period);
         if (Objects.equals(getButtonByIndex(day,period).getId(), "unselected-custom")){
+
             clickedButton.setId("schedule-custom"+courseType.toString());
             clickedButton.setText(course.getNum() + '\n' + course.getName());
             setSchedule(day, period, 1);
@@ -175,6 +176,9 @@ public class CourseScheduleEditorController {
     }
 
     public static int mapCourseType(String courseType) {
+        if (courseType==null){
+            courseType="";
+        }
         if (courseType.contains("必修")) {
             return 1;
         } else if (courseType.contains("限选")) {

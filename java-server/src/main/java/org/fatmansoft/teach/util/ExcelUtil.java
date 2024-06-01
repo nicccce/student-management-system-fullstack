@@ -4,6 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,10 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ExcelUtil {
 
@@ -86,6 +84,7 @@ public class ExcelUtil {
         EasyExcel.read(inputStream, head, analysisEventListener).sheet().doRead();
         return list;
     }
+
 
     /**
      * Excel文件下载
@@ -194,4 +193,48 @@ public class ExcelUtil {
         workbook.close();
         fileOutputStream.close();
     }
+
+    private static String headerMapper(String header, Map<String, String> headerMap){
+        if (headerMap.containsKey(header)) {
+            String newHeaderValue = headerMap.get(header);
+            return newHeaderValue;
+        }return header;
+    }
+
+    /**
+     * 获取Excel，将数据转换成 List<T> 的形式
+     * Excel 数据要求第一行为对象的属性名称
+     *
+     * @param file  文件
+     * @param tClass    要转换成的实体类
+     * @param <T>
+     * @return List对象数组
+     * @throws IOException
+     */
+    public static <T> List<T> readExcelOfList(MultipartFile file, Class<T> tClass, Map<String,String> headerMap) throws IOException {
+        List<T> resultMapList = new ArrayList<>();
+        // 使用工厂模式 根据文件扩展名 创建对应的Workbook
+        Workbook workbook = WorkbookFactory.create(file.getInputStream());
+        Sheet sheet = workbook.getSheet(file.getName());
+        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+        JSONObject jsonObject;
+        Map<String, Object> resultMap;
+        for (int i = 1; i < rowCount + 1; i++) {
+            Row row = sheet.getRow(i);
+            resultMap = new HashMap<>();
+            for (int j = 0; j < row.getLastCellNum(); j++) {
+                if(Objects.equals(row.getCell(j).getCellType(), CellType.STRING)) {
+                    resultMap.put(headerMapper(sheet.getRow(0).getCell(j).toString(), headerMap), row.getCell(j).getStringCellValue());
+                } else if(Objects.equals(row.getCell(j).getCellType(), CellType.NUMERIC)) {
+                    resultMap.put(headerMapper(sheet.getRow(0).getCell(j).toString(), headerMap), row.getCell(j).getNumericCellValue());
+                }else {
+                    resultMap.put(headerMapper(sheet.getRow(0).getCell(j).toString(), headerMap), row.getCell(j).getStringCellValue());
+                }
+            }
+            jsonObject = new JSONObject(resultMap);
+            resultMapList.add(JSON.parseObject(jsonObject.toJSONString(),tClass));
+        }
+        return resultMapList;
+    }
+
 }

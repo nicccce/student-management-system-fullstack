@@ -52,6 +52,8 @@ public class StudentController extends ToolController {
     public Label filterLabel;
     public MFXButton addButton;
     public MFXButton deleteButton;
+    public MFXButton getExcelButton;
+    public MFXButton importExcelButton;
     @FXML
     private TableView<StudentEntity> dataTableView;  //学生信息表
     @FXML
@@ -644,6 +646,29 @@ public class StudentController extends ToolController {
             }catch(Exception e){
                 e.printStackTrace();
             }
+        }
+    }
+
+    @FXML
+    private void onImportExcelButtonClicked(ActionEvent actionEvent) {
+        FileChooser fileDialog = new FileChooser();
+        fileDialog.setTitle("导入学生表格");
+        fileDialog.setInitialDirectory(new File("C:/"));
+        fileDialog.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("XLSX 文件", "*.xlsx"));
+        File file = fileDialog.showOpenDialog(null);
+        if (file != null){
+            DataResponse res = HttpRequestUtil.importData("/api/student/importByExcel", file.getPath(), "");
+            if (res != null) {
+                if (res.getCode() == 0) {
+                    dialogUtil.openGeneric("上传成功", "上传成功！");
+                } else {
+                    dialogUtil.openError("上传失败", res.getMsg());
+                }
+            } else {
+                dialogUtil.openError("上传失败", "上传失败");
+            }
+            onQueryButtonClick();
         }
     }
 }

@@ -1,15 +1,14 @@
 package org.fatmansoft.teach.service;
 
 import org.apache.poi.xssf.usermodel.*;
-import org.fatmansoft.teach.data.dto.ActivityRequest;
-import org.fatmansoft.teach.data.dto.DataRequest;
-import org.fatmansoft.teach.data.dto.InnovationRequest;
-import org.fatmansoft.teach.data.dto.Request;
+import org.fatmansoft.teach.data.dto.*;
 import org.fatmansoft.teach.data.po.Activity;
+import org.fatmansoft.teach.data.po.Expense;
 import org.fatmansoft.teach.data.po.Innovation;
 import org.fatmansoft.teach.data.po.Person;
 import org.fatmansoft.teach.data.vo.DataResponse;
 import org.fatmansoft.teach.repository.ActivityRepository;
+import org.fatmansoft.teach.repository.ExpenseRepository;
 import org.fatmansoft.teach.repository.InnovationRepository;
 import org.fatmansoft.teach.repository.PersonRepository;
 import org.fatmansoft.teach.util.CommonMethod;
@@ -22,53 +21,53 @@ import javax.validation.Valid;
 import java.util.*;
 
 @Service
-public class ActivityService {
+public class ExpenseService {
 
     @Autowired
     private PersonRepository personRepository;
 
     @Autowired
-    private ActivityRepository activityRepository;
+    private ExpenseRepository expenseRepository;
 
-    public DataResponse activityDeleteAll(DataRequest dataRequest) {
-        List<Integer> allActivityIds = dataRequest.getList("activityId");
+    public DataResponse expenseDeleteAll(DataRequest dataRequest) {
+        List<Integer> allExpenseIds = dataRequest.getList("expenseId");
 
-        if (allActivityIds == null || allActivityIds.isEmpty()) {
-            return CommonMethod.getReturnMessageError("无日常活动实体传入");
+        if (allExpenseIds == null || allExpenseIds.isEmpty()) {
+            return CommonMethod.getReturnMessageError("无消费信息实体传入");
         }
 
-        for (Integer activityId : allActivityIds) {
-            Optional<Activity> op = activityRepository.findById(activityId);
+        for (Integer expenseId : allExpenseIds) {
+            Optional<Expense> op = expenseRepository.findById(expenseId);
             if (op.isPresent()) {
-                Activity i = op.get();
-                activityRepository.delete(i);
+                Expense i = op.get();
+                expenseRepository.delete(i);
             } else {
-                return CommonMethod.getReturnMessageError("日常活动ID传入错误：" + activityId);
+                return CommonMethod.getReturnMessageError("消费信息ID传入错误：" + expenseId);
             }
         }
 
         return CommonMethod.getReturnMessageOK();
     }
 
-    public DataResponse activityInsert(@Valid Request<Map<String, ActivityRequest>> activityRequest) {
-        Request<Map<String, ActivityRequest>> request = new Request<>((activityRequest.getData()));
+    public DataResponse expenseInsert(@Valid Request<Map<String, ExpenseRequest>> expenseRequest) {
+        Request<Map<String, ExpenseRequest>> request = new Request<>((expenseRequest.getData()));
         if (request == null) {
             return CommonMethod.getReturnMessageError("无有效数据传入");
         }
 
         //try {
-        Activity activity = new Activity(request.getData().get("newActivity"));
-        String num = request.getData().get("newActivity").getNum();
+        Expense expense = new Expense(request.getData().get("newExpense"));
+        String num = request.getData().get("newExpense").getNum();
         Optional<Person> nOp = personRepository.findByNum(num);
         if (nOp.isPresent() || num == null || num.isEmpty()) {
-/*            if(nFp.isPresent()) {
-                return CommonMethod.getReturnMessageError("日常活动信息已存在,无法添加学生日常活动信息,请转到修改页面修改");
+           /* if(nFp.isPresent()) {
+                return CommonMethod.getReturnMessageError("消费信息已存在,无法添加学生消费信息,请转到修改页面修改");
             } //ToDo：疑似不满足多对一关系，如果有时间可以修改*/
-            activity.setPerson(nOp.get());
-            activityRepository.save(activity);
-            return CommonMethod.getReturnMessageOK("日常活动信息保存成功");
+            expense.setPerson(nOp.get());
+            expenseRepository.save(expense);
+            return CommonMethod.getReturnMessageOK("消费信息保存成功");
         } else {
-            return CommonMethod.getReturnMessageError("学号不存在,无法添加学生日常活动信息");
+            return CommonMethod.getReturnMessageError("学号不存在,无法添加学生消费信息");
         }
 
 
@@ -81,18 +80,19 @@ public class ActivityService {
 
 
 
-    private Map<String, Object> getMapFromActivity(Activity a) {
+    private Map<String, Object> getMapFromExpense(Expense a) {
         Map<String, Object> m = new HashMap<>();
         Person p = a.getPerson();
         if (a != null) {
-            m.put("activityId", a.getActivityId());
+            m.put("expenseId", a.getExpenseId());
             /*m.put("name", i.getName());
             m.put("num", i.getNum());*/
-            m.put("activityName", a.getActivityName());
-            m.put("activityType", a.getActivityType());
-            m.put("activityContent", a.getActivityContent());
-            m.put("activityDate", a.getActivityDate());
-           // m.put("teamName", i.getTeamName());
+
+            m.put("expenseType", a.getExpenseType());
+            m.put("expenseContent", a.getExpenseContent());
+            m.put("expenseDate", a.getExpenseDate());
+            m.put("expenseNum", a.getExpenseNum());
+            // m.put("teamName", i.getTeamName());
             /*m.put("motherName", f.getMotherName());
             m.put("motherOccupation", f.getMotherOccupation());
             m.put("motherAge", f.getMotherAge());
@@ -107,22 +107,22 @@ public class ActivityService {
     }
 
 
-    public List<ActivityRequest> getActivityListByFilterAndNumName(ActivityRequest filterCriteria, String numName){
-        Activity filterCriteriaActivity = new Activity(filterCriteria);
-        List<Activity> matchedActivity =  activityRepository.findByExample(filterCriteriaActivity, numName);
-        List<ActivityRequest> matchedActivityRequest = new ArrayList<>(){};
-        for (Activity activity:
-                matchedActivity) {
-            matchedActivityRequest.add(new ActivityRequest(activity));
+    public List<ExpenseRequest> getExpenseListByFilterAndNumName(ExpenseRequest filterCriteria, String numName){
+        Expense filterCriteriaExpense = new Expense(filterCriteria);
+        List<Expense> matchedExpense =  expenseRepository.findByExample(filterCriteriaExpense, numName);
+        List<ExpenseRequest> matchedExpenseRequest = new ArrayList<>(){};
+        for (Expense expense:
+                matchedExpense) {
+            matchedExpenseRequest.add(new ExpenseRequest(expense));
         }
-        return matchedActivityRequest;
+        return matchedExpenseRequest;
     }
 
-    public ResponseEntity<StreamingResponseBody> getSelectedActivityListExcl(List<ActivityRequest> list){
+    public ResponseEntity<StreamingResponseBody> getSelectedExpenseListExcl(List<ExpenseRequest> list){
         Integer widths[] = {8,20, 10, 25, 25, 25, 25}; //ToDo:change.
         int i, j, k;
-        String titles[] = {"序号","学号", "姓名", "活动名称","活动类型","活动内容","活动日期"};
-        String outPutSheetName = "activity.xlsx";
+        String titles[] = {"序号","学号", "姓名", "消费类型","消费内容","消费日期","消费金额"};
+        String outPutSheetName = "expense.xlsx";
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFCellStyle styleTitle = CommonMethod.createCellStyle(wb, 20);
         XSSFSheet sheet = wb.createSheet(outPutSheetName);
@@ -140,7 +140,7 @@ public class ActivityService {
             cell[j].setCellValue(titles[j]);
             cell[j].getCellStyle();
         }
-        ActivityRequest activityRequest;
+        ExpenseRequest expenseRequest;
         if (list != null && list.size() > 0) {
             for (i = 0; i < list.size(); i++) {
                 row = sheet.createRow(i + 1);
@@ -148,14 +148,14 @@ public class ActivityService {
                     cell[j] = row.createCell(j);
                     cell[j].setCellStyle(style);
                 }
-                activityRequest = list.get(i);
+                expenseRequest = list.get(i);
                 cell[0].setCellValue((i + 1) + "");
-                cell[1].setCellValue(activityRequest.getNum());
-                cell[2].setCellValue(activityRequest.getName());
-                cell[3].setCellValue(activityRequest.getActivityName());
-                cell[4].setCellValue(activityRequest.getActivityTypeName());
-                cell[5].setCellValue(activityRequest.getActivityContent());
-                cell[6].setCellValue(activityRequest.getActivityDate());
+                cell[1].setCellValue(expenseRequest.getNum());
+                cell[2].setCellValue(expenseRequest.getName());
+                cell[3].setCellValue(expenseRequest.getExpenseTypeName());
+                cell[4].setCellValue(expenseRequest.getExpenseContent());
+                cell[5].setCellValue(expenseRequest.getExpenseDate());
+                cell[6].setCellValue(expenseRequest.getExpenseNum());
                 //cell[7].setCellValue(innovationRequest.getTeamName());
                 /*cell[8].setCellValue(innovationRequest.getBirthday());
                 cell[9].setCellValue(innovationRequest.getEmail());

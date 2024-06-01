@@ -3,6 +3,8 @@ package com.teach.javafxclient.controller.base;
 import com.teach.javafxclient.request.DataRequest;
 import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
+import io.github.palexdev.materialfx.controls.MFXPasswordField;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -13,11 +15,11 @@ import javafx.scene.control.TextField;
  */
 public class PasswordController {
     @FXML
-    private TextField oldPasswordField;
+    private MFXPasswordField oldPasswordField;
     @FXML
-    private TextField newPasswordField;
+    private MFXPasswordField newPasswordField;
     @FXML
-    private TextField confirmPasswordField;
+    private MFXPasswordField confirmPasswordField;
 
     /**
      * 点击 确认按钮 执行 onSubmitButtonClick方法，请求后台修改密码
@@ -39,7 +41,7 @@ public class PasswordController {
         request.put("oldPassword", oldPassword);
         request.put("newPassword", newPassword);
         request.put("confirmPassword", confirmPassword);
-        DataResponse res = HttpRequestUtil.request("",request);
+        DataResponse res = HttpRequestUtil.request("/api/base/updatePassword",request);
         if(res.getCode() == 0) {
             MessageDialog.showDialog("修改成功！");
         }else {

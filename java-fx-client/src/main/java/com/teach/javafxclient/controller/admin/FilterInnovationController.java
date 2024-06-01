@@ -48,6 +48,11 @@ public class FilterInnovationController {
 
     }
 
+    public void Age(String num,String name) {
+        numField.setText(num);
+        nameField.setText(name);
+    }
+
     /**
      * 初始化筛选界面
      * @param stage 本界面对象

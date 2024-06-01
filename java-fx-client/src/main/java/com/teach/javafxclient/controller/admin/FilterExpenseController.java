@@ -1,6 +1,7 @@
 package com.teach.javafxclient.controller.admin;
 
 import com.teach.javafxclient.model.ActivityEntity;
+import com.teach.javafxclient.model.ExpenseEntity;
 import com.teach.javafxclient.model.InnovationEntity;
 import com.teach.javafxclient.model.StudentEntity;
 import com.teach.javafxclient.request.HttpRequestUtil;
@@ -17,20 +18,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class FilterActivityController {
+public class FilterExpenseController {
     public MFXTextField numField;
     public MFXTextField nameField;
-    public MFXTextField activityNameField;
-    public MFXComboBox activityTypeComboBox;
+    public MFXComboBox expenseTypeComboBox;
 
-    public MFXTextField activityContentField;
-    public MFXDatePicker activityDatePick;
+    public MFXTextField expenseContentField;
+    public MFXDatePicker expenseDatePick;
+    public MFXTextField expenseNumField;
 
 
 
     DialogUtil dialogUtil = new DialogUtil();
 
-    private List<OptionItem> activityTypeList;   //性别选择列表数据
+    private List<OptionItem> expenseTypeList;   //性别选择列表数据
 
 
     private Stage stage;//本界面的对象
@@ -39,13 +40,13 @@ public class FilterActivityController {
 
 
     //存储筛选的条件
-    private ActivityEntity filerCriteria ;
+    private ExpenseEntity filerCriteria ;
 
     @FXML
     public void initialize(){
         //初始化各列表
-        activityTypeList = HttpRequestUtil.getDictionaryOptionItemList("ACT");
-        activityTypeComboBox.getItems().addAll(activityTypeList);
+        expenseTypeList = HttpRequestUtil.getDictionaryOptionItemList("EXP");
+        expenseTypeComboBox.getItems().addAll(expenseTypeList);
 
     }
     public void Age(String num,String name) {
@@ -59,7 +60,7 @@ public class FilterActivityController {
      * @param filerCriteria 筛选条件，与主界面共享
      * @param refreshMethod 刷新主界面方法
      */
-    public void init(Stage stage, ActivityEntity filerCriteria, Runnable refreshMethod) {
+    public void init(Stage stage, ExpenseEntity filerCriteria, Runnable refreshMethod) {
         this.stage = stage;
         this.filerCriteria = filerCriteria;
         this.refreshMethod = refreshMethod;
@@ -82,25 +83,25 @@ public class FilterActivityController {
             filerCriteria.setName(nameField.getText());
         }
 
-        if (activityNameField.getText() != null && !activityNameField.getText().isEmpty()) {
-            filerCriteria.setActivityName(activityNameField.getText());
-        }
-        if (activityTypeComboBox.getValue() != null) {
-            OptionItem selectedActivityType = (OptionItem) activityTypeComboBox.getSelectionModel().getSelectedItem();
-            filerCriteria.setActivityType(selectedActivityType.getValue());
-            filerCriteria.setActivityTypeName(selectedActivityType.getLabel());
+
+        if (expenseTypeComboBox.getValue() != null) {
+            OptionItem selectedExpenseType = (OptionItem) expenseTypeComboBox.getSelectionModel().getSelectedItem();
+            filerCriteria.setExpenseType(selectedExpenseType.getValue());
+            filerCriteria.setExpenseTypeName(selectedExpenseType.getLabel());
         }
 
-        if (activityContentField.getText() != null && !activityContentField.getText().isEmpty()) {
-            filerCriteria.setActivityContent(activityContentField.getText());
+        if (expenseContentField.getText() != null && !expenseContentField.getText().isEmpty()) {
+            filerCriteria.setExpenseContent(expenseContentField.getText());
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate activityDate = activityDatePick.getValue();
-        if (activityDate != null) {
-            String formattedActivityDate = activityDate.format(formatter);
-            filerCriteria.setActivityDate(formattedActivityDate);
+        LocalDate expenseDate = expenseDatePick.getValue();
+        if (expenseDate != null) {
+            String formattedExpenseDate = expenseDate.format(formatter);
+            filerCriteria.setExpenseDate(formattedExpenseDate);
         }
-
+        if (expenseNumField.getText() != null && !expenseNumField.getText().isEmpty()) {
+            filerCriteria.setExpenseNum(expenseNumField.getText());
+        }
         //刷新主界面
         refreshMethod.run();
         //关闭筛选窗口
@@ -109,37 +110,37 @@ public class FilterActivityController {
 
     /**
      * 初始化筛选窗口的各各输入框元素，因为需要与主界面的筛选条件一致
-     * @param activity
+     * @param expense
      */
-    public void fillForm(ActivityEntity activity) {
-        if (activity != null) {
-            if (activity.getNum() != null) {
-                numField.setText(activity.getNum());
+    public void fillForm(ExpenseEntity expense) {
+        if (expense != null) {
+            if (expense.getNum() != null) {
+                numField.setText(expense.getNum());
             }
-            if (activity.getName() != null) {
-                nameField.setText(activity.getName());
+            if (expense.getName() != null) {
+                nameField.setText(expense.getName());
             }
 
-            if (activity.getActivityType() != null) {
+            if (expense.getExpenseType() != null) {
                 for (OptionItem optionItem:
-                        activityTypeList) {
-                    if (optionItem.getValue()==activity.getActivityType()){
-                        activityTypeComboBox.setValue(optionItem.getLabel());
+                        expenseTypeList) {
+                    if (optionItem.getValue()==expense.getExpenseType()){
+                        expenseTypeComboBox.setValue(optionItem.getLabel());
                     }
                 }
 
             }
 
-            if (activity.getActivityName() != null) {
-                activityNameField.setText(activity.getActivityName());
-            }
-            if (activity.getActivityContent() != null) {
-                activityContentField.setText(activity.getActivityContent());
-            }
-            if (activity.getActivityDate() != null) {
-                activityDatePick.setValue(LocalDate.parse(activity.getActivityDate()));
-            }
 
+            if (expense.getExpenseContent() != null) {
+                expenseContentField.setText(expense.getExpenseContent());
+            }
+            if (expense.getExpenseDate() != null) {
+                expenseDatePick.setValue(LocalDate.parse(expense.getExpenseDate()));
+            }
+            if (expense.getExpenseNum() != null) {
+                expenseNumField.setText(expense.getExpenseNum());
+            }
         }
     }
 }

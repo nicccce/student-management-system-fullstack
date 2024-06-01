@@ -2,13 +2,13 @@ package com.teach.javafxclient.controller;
 
 import atlantafx.base.theme.Styles;
 import com.teach.javafxclient.MainApplication;
-import com.teach.javafxclient.controller.admin.AddFamilyController;
-import com.teach.javafxclient.controller.admin.AddTeacherController;
-import com.teach.javafxclient.controller.admin.FilterTeacherController;
+import com.teach.javafxclient.controller.admin.*;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
 import com.teach.javafxclient.controller.base.MessageDialog;
 import com.teach.javafxclient.controller.base.ToolController;
+import com.teach.javafxclient.model.ActivityEntity;
 import com.teach.javafxclient.model.FamilyEntity;
+import com.teach.javafxclient.model.InnovationEntity;
 import com.teach.javafxclient.model.TeacherEntity;
 import com.teach.javafxclient.request.DataRequest;
 import com.teach.javafxclient.request.DataResponse;
@@ -42,7 +42,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FamilyController extends ToolController {
+public class ActivityController extends ToolController {
     public FlowPane filterPane;
     public MFXButton addFilterButton;
     public MFXButton changeFilterButton;
@@ -51,74 +51,73 @@ public class FamilyController extends ToolController {
     public MFXButton deleteButton;
     public Label filterLabel;
     @FXML
-    private TableView<FamilyEntity> dataTableView;  //教师信息表
+    private TableView<ActivityEntity> dataTableView;  //教师信息表
     @FXML
-    public TableColumn<FamilyEntity,Boolean> checkColumn;
+    public TableColumn<ActivityEntity,Boolean> checkColumn;
     @FXML
-    private TableColumn<FamilyEntity,String> numColumn;   //教师信息表 编号列
+    private TableColumn<ActivityEntity,String> numColumn;   //教师信息表 编号列
     @FXML
-    private TableColumn<FamilyEntity,String> nameColumn; //教师信息表 名称列
+    private TableColumn<ActivityEntity,String> nameColumn; //教师信息表 名称列
     //@FXML
-   // private TableColumn<FamilyEntity,String> addressColumn;  //教师信息表 院系列
+    // private TableColumn<FamilyEntity,String> addressColumn;  //教师信息表 院系列
     @FXML
-    private TableColumn<FamilyEntity,String> familySizeColumn; //教师信息表 职位列
+    private TableColumn<ActivityEntity,String> activityNameColumn; //教师信息表 职位列
     @FXML
-    private TableColumn<FamilyEntity,String> fatherNameColumn; //教师信息表 学历列
+    private TableColumn<ActivityEntity,String> activityTypeColumn; //教师信息表 学历列
     @FXML
-    private TableColumn<FamilyEntity,String> fatherOccupationColumn; //教师信息表 证件号码列
+    private TableColumn<ActivityEntity,String> activityContentColumn; //教师信息表 证件号码列
     @FXML
-    private TableColumn<FamilyEntity,String> fatherAgeColumn; //教师信息表 性别列
-    @FXML
-    private TableColumn<FamilyEntity,String> fatherContactColumn; //教师信息表 出生日期列
-    @FXML
+    private TableColumn<ActivityEntity,String> activityDateColumn; //教师信息表 性别列
+    //@FXML
+    //private TableColumn<InnovationEntity,String> teamNameColumn; //教师信息表 出生日期列
+    /*@FXML
     private TableColumn<FamilyEntity,String> motherNameColumn; //教师信息表 邮箱列
     @FXML
     private TableColumn<FamilyEntity,String> motherOccupationColumn; //教师信息表 电话列
     @FXML
     private TableColumn<FamilyEntity,String> motherAgeColumn;//教师信息表 地址列
     @FXML
-    private TableColumn<FamilyEntity,String> motherContactColumn;//教师信息表 地址列
+    private TableColumn<FamilyEntity,String> motherContactColumn;//教师信息表 地址列*/
 
     @FXML
     private TextField numField; //教师信息  学号输入域
     @FXML
-    private TextField familySizeField; //教师信息  院系输入域
+    private TextField activityNameField; //教师信息  院系输入域
     @FXML
-    private TextField fatherNameField; //教师信息  职位输入域
+    private ComboBox<OptionItem> activityTypeComboBox;
     @FXML
-    private TextField fatherOccupationField; //教师信息  学历输入域
+    private TextField activityContentField; //教师信息  学历输入域
     @FXML
-    private TextField fatherAgeField; //教师信息  证件号码输入域
-
-    @FXML
-    private TextField fatherContactField;  //教师信息  邮箱输入域
-    @FXML
+    private DatePicker activityDatePick; //教师信息  证件号码输入域
+    //@FXML
+    //private TextField teamNameField;  //教师信息  邮箱输入域
+    /*@FXML
     private TextField motherNameField;   //教师信息  电话输入域
     @FXML
     private TextField motherOccupationField;  //教师信息  地址输入域
     @FXML
     private TextField motherAgeField;  //教师信息  地址输入域
-     @FXML
-    private TextField motherContactField;  //教师信息  地址输入域
+    @FXML
+    private TextField motherContactField;  //教师信息  地址输入域*/
     //@FXML
-   // private TextField addressField;  //教师信息  地址输入域
+    // private TextField addressField;  //教师信息  地址输入域
 
     @FXML
     private TextField numNameTextField;  //查询 姓名学号输入域
 
-    private Integer familyId = null;  //当前编辑修改的学生的主键
+    private Integer activityId = null;  //当前编辑修改的学生的主键
+    private ArrayList<ActivityEntity> activityList = new ArrayList<ActivityEntity>();  // 学生信息列表数据
+    private List<OptionItem> activityTypeList;
+    private ObservableList<ActivityEntity> observableList = FXCollections.observableArrayList();  // TableView渲染列表
 
-    private ArrayList<FamilyEntity> familyList = new ArrayList<FamilyEntity>();  // 学生信息列表数据
-    private ObservableList<FamilyEntity> observableList = FXCollections.observableArrayList();  // TableView渲染列表
+    private List<ActivityEntity> selectedItemList = null;
 
-    private List<FamilyEntity> selectedItemList = null;
-
-    private HttpRequestUtil<FamilyEntity> httpRequestUtil = new HttpRequestUtil<>(FamilyEntity.class);
+    private HttpRequestUtil<ActivityEntity> httpRequestUtil = new HttpRequestUtil<>(ActivityEntity.class);
 
     private final DialogUtil dialogUtil = new DialogUtil();
 
     //存储筛选的条件
-    private FamilyEntity filterCriteria = new FamilyEntity();
+    private ActivityEntity filterCriteria = new ActivityEntity();
 
     /**
      * 页面加载对象创建完成初始化方法，页面中控件属性的设置，初始数据显示等初始操作都在这里完成，其他代码都事件处理方法里
@@ -126,16 +125,19 @@ public class FamilyController extends ToolController {
 
     @FXML
     public void initialize() throws InvocationTargetException, IllegalAccessException {
-        DataResponse<ArrayList<FamilyEntity>> res;
+        DataResponse<ArrayList<ActivityEntity>> res;
         DataRequest req =new DataRequest();
         req.put("numName","");
-        res = httpRequestUtil.requestArrayList("/api/family/getFamilyList",req); //从后台获取所有学生信息列表集合
+        res = httpRequestUtil.requestArrayList("/api/activity/getActivityList",req); //从后台获取所有学生信息列表集合
         if(res != null && res.getCode()== 0) {
-            familyList = res.getData();
+            activityList = res.getData();
         }
 
         setupTable();
-
+        activityTypeList = HttpRequestUtil.getDictionaryOptionItemList("ACT");
+        activityTypeComboBox.getItems().addAll(activityTypeList);
+        activityDatePick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));
+        resetFilter();
     }
 
     /**
@@ -143,7 +145,7 @@ public class FamilyController extends ToolController {
      */
     private void setTableViewData() {
         observableList.clear();
-        observableList.addAll(FXCollections.<FamilyEntity>observableArrayList(familyList));
+        observableList.addAll(FXCollections.<ActivityEntity>observableArrayList(activityList));
         dataTableView.setItems(observableList);
     }
 
@@ -169,17 +171,18 @@ public class FamilyController extends ToolController {
         checkColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkColumn));
         checkColumn.setEditable(true);
 
-        numColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("num"));  //设置列值工程属性
-        nameColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("name"));
-        familySizeColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("familySize"));
-        fatherNameColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("fatherName"));
-        fatherOccupationColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("fatherOccupation"));
-        fatherAgeColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("fatherAge"));
-        fatherContactColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("fatherContact"));
-        motherNameColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("motherName"));
+        numColumn.setCellValueFactory(new PropertyValueFactory<ActivityEntity,String>("num"));  //设置列值工程属性
+        nameColumn.setCellValueFactory(new PropertyValueFactory<ActivityEntity,String>("name"));
+        activityNameColumn.setCellValueFactory(new PropertyValueFactory<ActivityEntity,String>("activityName"));
+        //这这这这这这这这这
+        activityTypeColumn.setCellValueFactory(new PropertyValueFactory<ActivityEntity,String>("activityTypeName"));
+        activityContentColumn.setCellValueFactory(new PropertyValueFactory<ActivityEntity,String>("activityContent"));
+        activityDateColumn.setCellValueFactory(new PropertyValueFactory<ActivityEntity,String>("activityDate"));
+        //teamNameColumn.setCellValueFactory(new PropertyValueFactory<InnovationEntity,String>("teamName"));
+        /*motherNameColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("motherName"));
         motherOccupationColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("motherOccupation"));
         motherAgeColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity,String>("motherAge"));
-        motherContactColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity, String>("motherContact"));
+        motherContactColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity, String>("motherContact"));*/
         //addressColumn.setCellValueFactory(new PropertyValueFactory<FamilyEntity, String>("address"));
 
         dataTableView.getSelectionModel().selectFirst();
@@ -192,7 +195,7 @@ public class FamilyController extends ToolController {
 
         dataTableView.getSelectionModel().selectFirst();
 
-        TableView.TableViewSelectionModel<FamilyEntity> tsm = dataTableView.getSelectionModel();
+        TableView.TableViewSelectionModel<ActivityEntity> tsm = dataTableView.getSelectionModel();
         ObservableList<Integer> list = tsm.getSelectedIndices();
         list.addListener(this::onTableRowSelect);
         setTableViewData();
@@ -203,7 +206,7 @@ public class FamilyController extends ToolController {
                 // 检查点击的节点是否在 TableView 的行上
                 if (isRowOrCell(source)) {
                     // 处理点击行的事件
-                    FamilyEntity form = dataTableView.getSelectionModel().getSelectedItem();
+                    ActivityEntity form = dataTableView.getSelectionModel().getSelectedItem();
                     if(form != null) {
                         form.setSelect(!form.isSelect());
                     }
@@ -235,30 +238,30 @@ public class FamilyController extends ToolController {
      * 清除学生表单中输入信息
      */
     public void clearPanel(){
-        familyId = null;
+        activityId = null;
         numField.setText("");
-        familySizeField.setText("");
-        fatherNameField.setText("");
-        fatherOccupationField.setText("");
-        fatherAgeField.setText("");
-        fatherContactField.setText("");
-        motherNameField.setText("");
+        activityNameField.setText("");
+        activityTypeComboBox.getSelectionModel().select(-1);
+        activityContentField.setText("");
+        activityDatePick.getEditor().setText("");
+        //teamNameField.setText("");
+        /*motherNameField.setText("");
         motherOccupationField.setText("");
         motherAgeField.setText("");
-        motherAgeField.setText("");
-       // addressField.setText("");
+        motherAgeField.setText("");*/
+        // addressField.setText("");
     }
 
-    protected void changeFamilyInfo() {
-        FamilyEntity form = dataTableView.getSelectionModel().getSelectedItem();
+    protected void changeActivityInfo() {
+        ActivityEntity form = dataTableView.getSelectionModel().getSelectedItem();
         if(form == null) {
             clearPanel();
             return;
         }
-        familyId = form.getFamilyId();
+        activityId = form.getActivityId();
         DataRequest req = new DataRequest();
-        req.put("familyId",familyId);
-        DataResponse<FamilyEntity> res = httpRequestUtil.requestObject("/api/family/getFamilyInfo",req);
+        req.put("activityId",activityId);
+        DataResponse<ActivityEntity> res = httpRequestUtil.requestObject("/api/activity/getActivityInfo",req);
         System.out.println(res.getData());
         if(res.getCode() != 0){
             MessageDialog.showDialog(res.getMsg());
@@ -267,17 +270,17 @@ public class FamilyController extends ToolController {
         form = res.getData();
 
         numField.setText(form.getNum());
-        familySizeField.setText(form.getFamilySize());
-        fatherNameField.setText(form.getFatherName());
-        fatherOccupationField.setText(form.getFatherOccupation());
-        fatherAgeField.setText(form.getFatherAge());
-        fatherContactField.setText(form.getFatherContact());
+        activityNameField.setText(form.getActivityName());
+        activityTypeComboBox.getSelectionModel().select(CommonMethod.getOptionItemIndexByValue(activityTypeList, form.getActivityType()));
+        activityContentField.setText(form.getActivityContent());
+        activityDatePick.getEditor().setText(form.getActivityDate());
+        //teamNameField.setText(form.getTeamName());
         //genderComboBox.getSelectionModel().select(CommonMethod.getOptionItemIndexByValue(genderList, form.getGender()));
         //birthdayPick.getEditor().setText(form.getBirthday());
-        motherNameField.setText(form.getMotherName());
+        /*motherNameField.setText(form.getMotherName());
         motherOccupationField.setText(form.getMotherOccupation());
         motherAgeField.setText(form.getMotherAge());
-        motherContactField.setText(form.getMotherContact());
+        motherContactField.setText(form.getMotherContact());*/
         //addressField.setText("");
     }
     private void setTextField(TextField textField, String value) {
@@ -292,7 +295,7 @@ public class FamilyController extends ToolController {
      */
 
     public void onTableRowSelect(ListChangeListener.Change<? extends Integer> change){
-        changeFamilyInfo();
+        changeActivityInfo();
     }
 
     /**
@@ -302,22 +305,22 @@ public class FamilyController extends ToolController {
     protected void onQueryButtonClick() {
         String numName = numNameTextField.getText();
         DataRequest req = new DataRequest();
-        DataResponse<ArrayList<FamilyEntity>> res;
+        DataResponse<ArrayList<ActivityEntity>> res;
         //没有筛选值调用原来的接口，有筛选值调用新接口
         if (!filterCriteria.isEmpty()){
             //将筛选对象包装进请求
             req.putObject("filterCriteria",filterCriteria);
-            res = httpRequestUtil.requestArrayList("/api/family/getFamilyListByFilter/" + numName,req);
+            res = httpRequestUtil.requestArrayList("/api/activity/getActivityListByFilter/" + numName,req);
 
             //因为有筛选条件，修改一下筛选按钮
-
+            hasFilter();
         }else {
             req.put("numName",numName);
-            res = httpRequestUtil.requestArrayList("/api/family/getFamilyList",req);
-
+            res = httpRequestUtil.requestArrayList("/api/activity/getActivityList",req);
+            resetFilter();
         }
         if(res != null && res.getCode()== 0) {
-            familyList = res.getData();
+            activityList = res.getData();
             setTableViewData();
         }
     }
@@ -327,10 +330,10 @@ public class FamilyController extends ToolController {
      */
     @FXML
     protected void onAddButtonClick() {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-family.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("add-activity.fxml"));
         try {
             Parent root = fxmlLoader.load();
-            AddFamilyController controller = fxmlLoader.getController(); // 获取控制器对象
+            AddActivityController controller = fxmlLoader.getController(); // 获取控制器对象
 
             // 创建一个新的 Stage 对象
             Stage addStage = new Stage();
@@ -365,7 +368,7 @@ public class FamilyController extends ToolController {
             dialogUtil.openError("删除失败", "当前未选择任何元素，无法删除！");
             return;
         }
-        dialogUtil.openWarning("警告", "将永久删除框选的 "+selectedItemList.size()+" 个学生的家庭信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
+        dialogUtil.openWarning("警告", "将永久删除框选的 "+selectedItemList.size()+" 个学生的日常活动信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
         /*StudentTableEntity form = dataTableView.getSelectionModel().getSelectedItem();
         if(form == null) {
             MessageDialog.showDialog("没有选择，不能删除");
@@ -389,14 +392,14 @@ public class FamilyController extends ToolController {
     }
 
     public void deleteSelectedItems(){
-        ArrayList<Integer> familyIdList = new ArrayList<Integer>();
-        for (FamilyEntity item:
+        ArrayList<Integer> activityIdList = new ArrayList<Integer>();
+        for (ActivityEntity item:
                 selectedItemList) {
-            familyIdList.add(item.getFamilyId());
+            activityIdList.add(item.getActivityId());
         }
         DataRequest req = new DataRequest();
-        req.put("familyId", familyIdList);
-        DataResponse res = HttpRequestUtil.deleteRequest("/api/family/familyDeleteAll",req);
+        req.put("activityId", activityIdList);
+        DataResponse res = HttpRequestUtil.deleteRequest("/api/activity/activityDeleteAll",req);
         if (res != null){
             if (res.getCode() == 0) {
                 dialogUtil.openGeneric("删除成功", "删除成功！");
@@ -419,17 +422,19 @@ public class FamilyController extends ToolController {
             dialogUtil.openError("修改失败", "学号为空，不能修改！");
             return;
         }
-        FamilyEntity familyEntity =new FamilyEntity();
-        familyEntity.setNum(numField.getText());
-        familyEntity.setFamilySize(familySizeField.getText());
-        familyEntity.setFatherName(fatherNameField.getText());
-        familyEntity.setFatherOccupation(fatherOccupationField.getText());
-        familyEntity.setFatherAge(fatherAgeField.getText());
-        familyEntity.setFatherContact(fatherContactField.getText());
-        familyEntity.setMotherName(motherNameField.getText());
+        ActivityEntity activityEntity =new ActivityEntity();
+        activityEntity.setNum(numField.getText());
+        activityEntity.setActivityName(activityNameField.getText());
+        if (activityTypeComboBox.getSelectionModel() != null && activityTypeComboBox.getSelectionModel().getSelectedItem() != null) {
+            activityEntity.setActivityType(activityTypeComboBox.getSelectionModel().getSelectedItem().getValue());
+        }
+        activityEntity.setActivityContent(activityContentField.getText());
+        activityEntity.setActivityDate(activityDatePick.getEditor().getText());
+        //innovationEntity.setTeamName(teamNameField.getText());
+        /*familyEntity.setMotherName(motherNameField.getText());
         familyEntity.setMotherOccupation(motherOccupationField.getText());
         familyEntity.setMotherAge(motherAgeField.getText());
-        familyEntity.setMotherContact(motherContactField.getText());
+        familyEntity.setMotherContact(motherContactField.getText());*/
         //familyEntity.setAddress(addressField.getText());
 
 /*        Map form = studentEntity.toMap();
@@ -448,11 +453,11 @@ public class FamilyController extends ToolController {
         form.put("phone",phoneField.getText());
         form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
-        req.put("familyId", familyId);
-        req.putObject("form", familyEntity);
-        DataResponse res = HttpRequestUtil.request("/api/family/familyEditSave",req);
+        req.put("activityId", activityId);
+        req.putObject("form", activityEntity);
+        DataResponse res = HttpRequestUtil.request("/api/activity/activityEditSave",req);
         if(res.getCode() == 0) {
-            familyId = CommonMethod.getIntegerFromObject(res.getData());
+            activityId = CommonMethod.getIntegerFromObject(res.getData());
             dialogUtil.openGeneric("提交成功","提交成功！",null);
             onQueryButtonClick();
             // MessageDialog.showDialog("提交成功！");
@@ -482,7 +487,7 @@ public class FamilyController extends ToolController {
         String numName = numNameTextField.getText();
         DataRequest req = new DataRequest();
         req.put("numName",numName);
-        byte[] bytes = HttpRequestUtil.requestByteData("/api/family/getFamilyListExcl", req);
+        byte[] bytes = HttpRequestUtil.requestByteData("/api/activity/getActivityListExcl", req);
         if (bytes != null) {
             try {
                 FileChooser fileDialog = new FileChooser();
@@ -503,9 +508,9 @@ public class FamilyController extends ToolController {
 
     }
 
-    private List<FamilyEntity> getSelectedItem(){
-        List<FamilyEntity> selectedItems = new ArrayList<FamilyEntity>();
-        for (FamilyEntity items :
+    private List<ActivityEntity> getSelectedItem(){
+        List<ActivityEntity> selectedItems = new ArrayList<ActivityEntity>();
+        for (ActivityEntity items :
                 observableList) {
             if (items.isSelect()){
                 if (selectedItems != null) {
@@ -517,7 +522,7 @@ public class FamilyController extends ToolController {
         return  selectedItems;
     }
 
-    /*private void resetFilter() {
+    private void resetFilter() {
         addFilterButton.setVisible(true);
         addFilterButton.setManaged(true);
         changeFilterButton.setManaged(false);
@@ -537,12 +542,12 @@ public class FamilyController extends ToolController {
         resetFilterButton.setManaged(true); // 隐藏按钮并且不占用空间
         filterLabel.setText("筛选：当前已设置筛选条件");
     }
-*/
-/*    private void setFilter(){
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("filter-family.fxml"));
+
+    private void setFilter(){
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("filter-activity.fxml"));
         try {
             Parent root = fxmlLoader.load();
-            FilterTeacherController controller = fxmlLoader.getController(); // 获取控制器对象
+            FilterActivityController controller = fxmlLoader.getController(); // 获取控制器对象
 
             // 创建一个新的 Stage 对象
             Stage filterStage = new Stage();
@@ -558,33 +563,42 @@ public class FamilyController extends ToolController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }*/
-
-/*    public void onAddFilterButtonClicked(ActionEvent actionEvent) {
+    }
+    /**
+     * 点击添加筛选按钮
+     * @param actionEvent .
+     */
+    public void onAddFilterButtonClicked(ActionEvent actionEvent) {
         setFilter();
     }
-
+    /**
+     * 点击修改筛选按钮
+     * @param actionEvent .
+     */
     public void onChangeFilterButtonClicked(ActionEvent actionEvent) {
         setFilter();
     }
-
+    /**
+     * 点击清除筛选按钮
+     * @param actionEvent .
+     */
     public void onResetFilterButtonClicked(ActionEvent actionEvent) {
         resetFilter();
         onQueryButtonClick();
-    }*/
+    }
 
     public void onGetExcelButtonClicked(ActionEvent actionEvent) {
         Integer selectedNumber = getSelectedItem().size();
         if (selectedNumber == 0){
-            dialogUtil.openError("导出失败", "未选中任何教师信息");
+            dialogUtil.openError("导出失败", "未选中任何日常活动信息");
         }else {
-            dialogUtil.openInfo("导出教师信息", "点击确认导出选中的 "+selectedNumber+" 条教师信息。", this::getExcel);
+            dialogUtil.openInfo("导出日常活动信息", "点击确认导出选中的 "+selectedNumber+" 条日常活动信息。", this::getExcel);
         }
     }
     public void getExcel(){
         DataRequest req = new DataRequest();
-        req.putObjectList("selectedTeacher",getSelectedItem());
-        byte[] bytes = HttpRequestUtil.requestByteData("/api/teacher/getSelectedTeacherListExcl", req);
+        req.putObjectList("selectedActivity",getSelectedItem());
+        byte[] bytes = HttpRequestUtil.requestByteData("/api/activity/getSelectedActivityListExcl", req);
         if (bytes != null) {
             try {
                 FileChooser fileDialog = new FileChooser();
@@ -592,7 +606,7 @@ public class FamilyController extends ToolController {
                 fileDialog.setInitialDirectory(new File("C:/"));
                 fileDialog.getExtensionFilters().addAll(
                         new FileChooser.ExtensionFilter("XLSX 文件", "*.xlsx"));
-                fileDialog.setInitialFileName("teacher.xlsx");
+                fileDialog.setInitialFileName("activity.xlsx");
                 File file = fileDialog.showSaveDialog(null);
                 if(file != null) {
                     FileOutputStream out = new FileOutputStream(file);

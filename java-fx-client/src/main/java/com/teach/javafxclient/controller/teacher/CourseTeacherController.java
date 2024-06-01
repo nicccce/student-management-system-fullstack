@@ -1,4 +1,4 @@
-package com.teach.javafxclient.controller;
+package com.teach.javafxclient.controller.teacher;
 
 import atlantafx.base.theme.Styles;
 import com.teach.javafxclient.MainApplication;
@@ -34,7 +34,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,13 +41,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * CourseController 登录交互控制类 对应 course-panel.fxml
- *  @FXML  属性 对应fxml文件中的
- *  @FXML 方法 对应于fxml文件中的 on***Click的属性
- */
-public class CourseController {
+public class CourseTeacherController {
 
     public MFXProgressBar determinateBar;
     public Label progressLable;
@@ -171,7 +164,7 @@ public class CourseController {
         DataResponse<ArrayList<CourseEntity>> res;
         DataRequest req =new DataRequest();
         req.putObject("filterCriteria",filterCriteria);
-        res = httpRequestUtil.requestArrayList("/api/course/getCourseListByFilter/?filterStudent="+filterStudent+"&filterTeacher="+filterTeacher,req); //从后台获取所有课程信息列表集合
+        res = httpRequestUtil.requestArrayList("/api/course/getTeacherCourseListByFilter/?filterStudent="+filterStudent+"&filterTeacher="+filterTeacher,req); //从后台获取所有课程信息列表集合
         if(res != null && res.getCode()== 0) {
             courseList = res.getData();
         }
@@ -434,7 +427,7 @@ public class CourseController {
         DataResponse<ArrayList<CourseEntity>> res;
         //将筛选对象包装进请求
         req.putObject("filterCriteria",filterCriteria);
-        res = httpRequestUtil.requestArrayList("/api/course/getCourseListByFilter/" + numName+"?filterStudent="+filterStudent+"&filterTeacher="+filterTeacher,req);
+        res = httpRequestUtil.requestArrayList("/api/course/getTeacherCourseListByFilter/" + numName+"?filterStudent="+filterStudent+"&filterTeacher="+filterTeacher,req);
         //没有筛选值调用原来的接口，有筛选值调用新接口
         if (!filterCriteria.isEmpty()||!filterStudent.isEmpty()||filterTeacher.isEmpty()){
             //因为有筛选条件，修改一下筛选按钮
@@ -963,7 +956,7 @@ public class CourseController {
             if (!scheduleString.isEmpty()) {
                 dialogUtil.openInfo("检查课程时间", "您选中的 " + selectedNumber + " 条课程信息在" + scheduleString + "发生了时间冲突！");
             }else {
-                dialogUtil.openInfo("检查课程时间", "您选中的 " + selectedNumber + " 条课程信息没有时间冲突。");
+                dialogUtil.openInfo("检查课程时间", "您确认选中的 " + selectedNumber + " 条课程信息没有时间冲突。");
             }
         }
     }

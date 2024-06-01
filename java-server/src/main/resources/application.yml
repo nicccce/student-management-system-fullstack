@@ -1,5 +1,5 @@
 attach:
-    folder: /teach/java2/
+    folder: ../file/
 bezkoder:
     app:
         jwtExpirationMs: 86400000

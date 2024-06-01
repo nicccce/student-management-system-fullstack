@@ -3,15 +3,18 @@ package org.fatmansoft.teach.controllers;
 import org.fatmansoft.teach.data.dto.CourseRequest;
 import org.fatmansoft.teach.data.dto.DataRequest;
 import org.fatmansoft.teach.data.dto.Request;
+import org.fatmansoft.teach.data.dto.StudentRequest;
 import org.fatmansoft.teach.data.po.Course;
 import org.fatmansoft.teach.data.vo.DataResponse;
 import org.fatmansoft.teach.service.CourseService;
 import org.fatmansoft.teach.util.CommonMethod;
+import org.fatmansoft.teach.util.MultipartFileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.validation.Valid;
@@ -23,6 +26,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/course")
 public class CourseController {
+    @Autowired
+    CourseService courseService;
     /**
      * 根据前端的筛选数据获取课程列表
      * @param dataRequest 前端请求参数，包含筛选数据
@@ -31,16 +36,15 @@ public class CourseController {
      */
     @PostMapping("/getCourseListByFilter/{numName}")
     @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse getCourseListByFilterAndNumName(@Valid @RequestBody Request<Map<String, CourseRequest>> dataRequest, @PathVariable String numName) {
+    public DataResponse getCourseListByFilterAndNumName(@Valid @RequestBody Request<Map<String, CourseRequest>> dataRequest, @PathVariable String numName, @RequestParam String filterStudent, @RequestParam String filterTeacher) {
         if (numName == null) {
             numName = "";
         }
         CourseRequest filterCriteria = dataRequest.getData().get("filterCriteria");
-        List<CourseRequest> dataList = courseService.getCourseListByFilterAndNumName(filterCriteria, numName);
+        List<CourseRequest> dataList = courseService.getCourseListByFilterAndNumName(filterCriteria, numName, filterStudent, filterTeacher);
         return CommonMethod.getReturnData(dataList);  // 按照测试框架规范返回 Map 的列表
     }
-    @Autowired
-    CourseService courseService;
+
     /**
      * 根据前端的筛选数据获取课程列表
      * @param dataRequest 前端请求参数，包含需要查询的课程编号或者名称
@@ -48,10 +52,10 @@ public class CourseController {
      */
     @PostMapping("/getCourseListByFilter/")
     @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse getCourseListByFilter(@Valid @RequestBody Request<Map<String, CourseRequest>> dataRequest) {
+    public DataResponse getCourseListByFilter(@Valid @RequestBody Request<Map<String, CourseRequest>> dataRequest, @RequestParam String filterStudent, @RequestParam String filterTeacher) {
         String numName = "";
         CourseRequest filterCriteria = dataRequest.getData().get("filterCriteria");
-        List<CourseRequest> dataList = courseService.getCourseListByFilterAndNumName(filterCriteria, numName);
+        List<CourseRequest> dataList = courseService.getCourseListByFilterAndNumName(filterCriteria, numName, filterStudent, filterTeacher);
         return CommonMethod.getReturnData(dataList);  // 按照测试框架规范返回 Map 的列表
     }
 
@@ -84,17 +88,16 @@ public class CourseController {
                 return CommonMethod.getReturnMessageError("修改内容无效，请重试！");
             }
             Course course = new Course(courseRequest);
-        System.out.println(course);
             return courseService.courseEditSave(course);
     }
 
-    @GetMapping("/getStudent/{courseId}")
+    @PostMapping("/getStudent/{courseId}")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getCourseStudent(@PathVariable Integer courseId){
         return courseService.getCourseStudent(courseId);
     }
 
-    @GetMapping("/getTeacher/{courseId}")
+    @PostMapping("/getTeacher/{courseId}")
     @PreAuthorize("hasRole('ADMIN')")
     public DataResponse getCourseTeacher(@PathVariable Integer courseId) {
         return courseService.getCourseTeacher(courseId);
@@ -150,4 +153,33 @@ public class CourseController {
         Integer courseId = dataRequest.getInteger("courseId");
         return CommonMethod.getReturnData(courseService.getCourseInfo(courseId)); // 这里返回包含课程信息的 CourseResponse 对象
     }
+
+    @PostMapping(path = "/importStudentByExcel")
+    public DataResponse importStudentByExcel(@RequestBody byte[] barr,
+                                      @RequestParam(name = "uploader") String uploader,
+                                      @RequestParam(name = "fileName") String fileName,
+                                      @RequestParam(name = "courseId") Integer courseId) {
+        try {
+            MultipartFile studentExcel = MultipartFileUtils.convertToMultipartFile(barr,fileName);
+            return courseService.importStudentByExcel(studentExcel,courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonMethod.getReturnMessageError("上传错误！");
+        }
+    }
+
+    @PostMapping(path = "/importTeacherByExcel")
+    public DataResponse importTeacherByExcel(@RequestBody byte[] barr,
+                                      @RequestParam(name = "uploader") String uploader,
+                                      @RequestParam(name = "fileName") String fileName,
+                                      @RequestParam(name = "courseId") Integer courseId) {
+        try {
+            MultipartFile teacherExcel = MultipartFileUtils.convertToMultipartFile(barr,fileName);
+            return courseService.importTeacherByExcel(teacherExcel,courseId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonMethod.getReturnMessageError("上传错误！");
+        }
+    }
+
 }

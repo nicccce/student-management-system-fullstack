@@ -4,10 +4,7 @@ import org.fatmansoft.teach.data.dto.*;
 import org.fatmansoft.teach.data.po.*;
 import org.fatmansoft.teach.data.vo.DataResponse;
 import org.fatmansoft.teach.repository.*;
-import org.fatmansoft.teach.service.BaseService;
-import org.fatmansoft.teach.service.FamilyService;
-import org.fatmansoft.teach.service.InnovationService;
-import org.fatmansoft.teach.service.TeacherService;
+import org.fatmansoft.teach.service.*;
 import org.fatmansoft.teach.util.ComDataUtil;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +18,10 @@ import javax.validation.Valid;
 import java.util.*;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/innovation")
-public class InnovationController {
+@RequestMapping("/api/expense")
+public class ExpenseController {
     @Autowired
-    InnovationService innovationService;
+    ExpenseService expenseService;
     @Autowired
     private PersonRepository personRepository;  //人员数据操作自动注入
     @Autowired
@@ -40,7 +37,7 @@ public class InnovationController {
     @Autowired
     private BaseService baseService;   //基本数据处理数据操作自动注入
     @Autowired
-    private InnovationRepository innovationRepository;
+    private ExpenseRepository expenseRepository;
 
 
     /**
@@ -72,8 +69,8 @@ public class InnovationController {
      *  获取 teacher 表的新的Id StringBoot 对SqLite 主键自增支持不好  插入记录是需要设置主键ID，编写方法获取新的 teacher_id
      * @return id
      */
-    public synchronized Integer getNewInnovationId(){
-        Integer  id = innovationRepository.getMaxId();  // 查询最大的id
+    public synchronized Integer getNewExpenseId(){
+        Integer  id = expenseRepository.getMaxId();  // 查询最大的id
         if(id == null)
             id = 1;
         else
@@ -87,7 +84,7 @@ public class InnovationController {
      * @param
      * @return
      */
-    public Map getMapFromInnovation(Innovation s) {
+    public Map getMapFromExpense(Expense s) {
         Map m = new HashMap();
         Person p;
         if(s == null)
@@ -97,21 +94,21 @@ public class InnovationController {
         p = s.getPerson();
         if(p == null)
             return m;
-        m.put("innovationId", s.getInnovationId());
+        m.put("expenseId", s.getExpenseId());
         m.put("personId", p.getPersonId());
         m.put("num",p.getNum());
         m.put("name",p.getName());
 
-        String innovationType = s.getInnovationType();
-        m.put("innovationType",innovationType);
-        m.put("innovationTypeName", ComDataUtil.getInstance().getDictionaryLabelByValue("INO", innovationType)); //性别类型的值转换成数据类型名
+        String expenseType = s.getExpenseType();
+        m.put("expenseType",expenseType);
+        m.put("expenseTypeName", ComDataUtil.getInstance().getDictionaryLabelByValue("EXP", expenseType)); //性别类型的值转换成数据类型名
        /* m.put("name", p.getName());
         m.put("num",p.getNum());*/
-        m.put("innovationName",s.getInnovationName());
+        m.put("expenseContent",s.getExpenseContent());
         //m.put("innovationType",s.getInnovationType());
-        m.put("instructor",s.getInstructor());
-        m.put("teamPosition",s.getTeamPosition());
-        m.put("teamName",s.getTeamName());
+        m.put("expenseDate",s.getExpenseDate());
+        m.put("expenseNum",s.getExpenseNum());
+        //m.put("teamName",s.getTeamName());
         /*m.put("motherName",s.getMotherName());
         m.put("motherOccupation",s.getMotherOccupation());
         m.put("address",s.getAddress());
@@ -125,23 +122,23 @@ public class InnovationController {
      * @param numName 输入参数
      * @return  Map List 集合
      */
-    public List getInnovationMapList(String numName) {
+    public List getExpenseMapList(String numName) {
         List dataList = new ArrayList();
-        List<Innovation> sList = innovationRepository.findInnovationListByNumName(numName);  //数据库查询操作
+        List<Expense> sList = expenseRepository.findExpenseListByNumName(numName);  //数据库查询操作
         if(sList == null || sList.size() == 0)
             return dataList;
         for(int i = 0; i < sList.size();i++) {
-            dataList.add(getMapFromInnovation(sList.get(i)));
+            dataList.add(getMapFromExpense(sList.get(i)));
         }
         return dataList;
     }
 
 
-    @PostMapping("/getInnovationList")
+    @PostMapping("/getExpenseList")
     @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse getInnovationList(@Valid @RequestBody DataRequest dataRequest) {
+    public DataResponse getExpenseList(@Valid @RequestBody DataRequest dataRequest) {
         String numName= dataRequest.getString("numName");
-        List dataList = getInnovationMapList(numName);
+        List dataList = getExpenseMapList(numName);
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
 
@@ -153,19 +150,19 @@ public class InnovationController {
      * @return  根据teacherId从数据库中查出数据，存在Map对象里，并返回前端
      */
 
-    @PostMapping("/getInnovationInfo")
+    @PostMapping("/getExpenseInfo")
     @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse getInnovationInfo(@Valid @RequestBody DataRequest dataRequest) {
-        Integer innovationId = dataRequest.getInteger("innovationId");
-        Innovation s= null;
-        Optional<Innovation> op;
-        if(innovationId != null) {
-            op= innovationRepository.findById(innovationId); //根据教师主键从数据库查询教师的信息
+    public DataResponse getExpenseInfo(@Valid @RequestBody DataRequest dataRequest) {
+        Integer expenseId = dataRequest.getInteger("expenseId");
+        Expense s= null;
+        Optional<Expense> op;
+        if(expenseId != null) {
+            op= expenseRepository.findById(expenseId); //根据教师主键从数据库查询教师的信息
             if(op.isPresent()) {
                 s = op.get();
             }
         }
-        return CommonMethod.getReturnData(getMapFromInnovation(s)); //这里回传包含教师信息的Map对象
+        return CommonMethod.getReturnData(getMapFromExpense(s)); //这里回传包含教师信息的Map对象
     }
 
     /**
@@ -175,20 +172,20 @@ public class InnovationController {
      * teacherId不为空。则查询出实体对象，复制相关属性，保存后修改数据库信息，永久修改
      * @return  新建修改教师的主键 teacher_id 返回前端
      */
-    @PostMapping("/innovationEditSave")
+    @PostMapping("/expenseEditSave")
     @PreAuthorize(" hasRole('ADMIN')")
-    public DataResponse innovationEditSave(@Valid @RequestBody DataRequest dataRequest) {
+    public DataResponse expenseEditSave(@Valid @RequestBody DataRequest dataRequest) {
         System.out.println(dataRequest.getData());
-        Integer innovationId = dataRequest.getInteger("innovationId");
+        Integer expenseId = dataRequest.getInteger("expenseId");
         Map form = dataRequest.getMap("form"); //参数获取Map对象
         String num = CommonMethod.getString(form,"num");  //Map 获取属性的值
-        Innovation s= null;
+        Expense s= null;
         Person p;
         User u;
-        Optional<Innovation> op;
+        Optional<Expense> op;
         Integer personId;
-        if(innovationId != null) {
-            op= innovationRepository.findById(innovationId);  //查询对应数据库中主键为id的值的实体对象
+        if(expenseId != null) {
+            op= expenseRepository.findById(expenseId);  //查询对应数据库中主键为id的值的实体对象
             if(op.isPresent()) {
                 s = op.get();
             }
@@ -205,17 +202,18 @@ public class InnovationController {
 
         /*s.setName(CommonMethod.getString(form,"name"));
         s.setNum(CommonMethod.getString(form,"num"));*/
-        s.setInnovationName(CommonMethod.getString(form,"innovationName"));
-        s.setInnovationType(CommonMethod.getString(form,"innovationType"));
-        s.setInstructor(CommonMethod.getString(form,"instructor"));
-        s.setTeamPosition(CommonMethod.getString(form,"teamPosition"));
-        s.setTeamName(CommonMethod.getString(form,"teamName"));
+
+        s.setExpenseType(CommonMethod.getString(form,"expenseType"));
+        s.setExpenseContent(CommonMethod.getString(form,"expenseContent"));
+        s.setExpenseDate(CommonMethod.getString(form,"expenseDate"));
+        s.setExpenseNum(CommonMethod.getString(form,"expenseNum"));
+        //.setActivity(CommonMethod.getString(form,"teamName"));
         /*s.setMotherName(CommonMethod.getString(form,"motherName"));
         s.setMotherOccupation(CommonMethod.getString(form,"motherOccupation"));
         s.setMotherAge(CommonMethod.getString(form,"motherAge"));
         s.setMotherContact(CommonMethod.getString(form,"motherContact"));*/
-        innovationRepository.save(s);  //修改保存教师信息
-        return CommonMethod.getReturnData(s.getInnovationId());  // 将teacherId返回前端
+        expenseRepository.save(s);  //修改保存教师信息
+        return CommonMethod.getReturnData(s.getExpenseId());  // 将teacherId返回前端
     }
 
 
@@ -225,10 +223,10 @@ public class InnovationController {
      * @param dataRequest  前端teacherId 药删除的教师的主键 teacher_id
      * @return  正常操作
      */
-    @DeleteMapping("/innovationDeleteAll")
+    @DeleteMapping("/expenseDeleteAll")
     @PreAuthorize(" hasRole('ADMIN')")
-    public DataResponse innovationDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
-        return innovationService.innovationDeleteAll(dataRequest);
+    public DataResponse expenseDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
+        return expenseService.expenseDeleteAll(dataRequest);
     }
 
     /**
@@ -237,10 +235,10 @@ public class InnovationController {
      * @param dataRequest  前端教师实体信息
      * @return  正常操作
      */
-    @PostMapping ("/innovationInsert")
+    @PostMapping ("/expenseInsert")
     @PreAuthorize(" hasRole('ADMIN')")
-    public DataResponse innovationInsert (@Valid @RequestBody Request<Map<String, InnovationRequest>> dataRequest) {
-        return innovationService.innovationInsert(dataRequest);
+    public DataResponse expenseInsert (@Valid @RequestBody Request<Map<String, ExpenseRequest>> dataRequest) {
+        return expenseService.expenseInsert(dataRequest);
     }
     /**
      * 根据前端的筛选数据获取学生列表
@@ -248,14 +246,14 @@ public class InnovationController {
      * @param numName 前端的查询框数据
      * @return 查询到的学生信息
      */
-    @PostMapping("/getInnovationListByFilter/{numName}")
+    @PostMapping("/getExpenseListByFilter/{numName}")
     @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse getInnovationListByFilterAndNumName(@Valid @RequestBody Request<Map<String,InnovationRequest>> dataRequest,@PathVariable String numName) {
+    public DataResponse getExpenseListByFilterAndNumName(@Valid @RequestBody Request<Map<String,ExpenseRequest>> dataRequest,@PathVariable String numName) {
         if (numName == null){
             numName="";
         }
-        InnovationRequest filterCriteria = dataRequest.getData().get("filterCriteria");
-        List dataList = innovationService.getInnovationListByFilterAndNumName(filterCriteria,numName);
+        ExpenseRequest filterCriteria = dataRequest.getData().get("filterCriteria");
+        List dataList = expenseService.getExpenseListByFilterAndNumName(filterCriteria,numName);
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
 
@@ -264,12 +262,12 @@ public class InnovationController {
      * @param dataRequest 前端请求参数，包含需要查询的学生学号或者姓名
      * @return 查询到的学生信息
      */
-    @PostMapping("/getInnovationListByFilter/")
+    @PostMapping("/getExpenseListByFilter/")
     @PreAuthorize("hasRole('ADMIN')")
-    public DataResponse getInnovationListByFilter(@Valid @RequestBody Request<Map<String,InnovationRequest>> dataRequest) {
+    public DataResponse getExpenseListByFilter(@Valid @RequestBody Request<Map<String,ExpenseRequest>> dataRequest) {
         String numName = "";
-        InnovationRequest filterCriteria = dataRequest.getData().get("filterCriteria");
-        List dataList = innovationService.getInnovationListByFilterAndNumName(filterCriteria,numName);
+        ExpenseRequest filterCriteria = dataRequest.getData().get("filterCriteria");
+        List dataList = expenseService.getExpenseListByFilterAndNumName(filterCriteria,numName);
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
 
@@ -278,11 +276,11 @@ public class InnovationController {
      * @param dataRequest 前端传入需要生成的学生信息列表
      * @return 生成的Excel文件流
      */
-    @PostMapping("/getSelectedInnovationListExcl")
+    @PostMapping("/getSelectedExpenseListExcl")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<StreamingResponseBody> getSelectedInnovationListExcl(@Valid @RequestBody Request<Map<String,List<InnovationRequest>>> dataRequest) {
-        List<InnovationRequest> selectedList =dataRequest.getData().get("selectedInnovation");
-        return innovationService.getSelectedInnovationListExcl(selectedList);
+    public ResponseEntity<StreamingResponseBody> getSelectedExpenseListExcl(@Valid @RequestBody Request<Map<String,List<ExpenseRequest>>> dataRequest) {
+        List<ExpenseRequest> selectedList =dataRequest.getData().get("selectedExpense");
+        return expenseService.getSelectedExpenseListExcl(selectedList);
     }
 
 

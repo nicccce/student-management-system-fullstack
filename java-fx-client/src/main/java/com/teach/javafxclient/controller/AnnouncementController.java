@@ -274,7 +274,7 @@ public class AnnouncementController {
             hasFilter();
         }else {
             req.put("numName",numName);
-            res = httpRequestUtil.requestArrayList("/api/announcement/getAnnouncementListByUserId",req);
+            res = httpRequestUtil.requestArrayList("/api/announcement/getAnnouncementList",req);
             resetFilter();
         }
         if(res != null && res.getCode()== 0) {

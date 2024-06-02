@@ -79,8 +79,8 @@ public class AnnouncementController {
     }
 
 
-    @PostMapping("/getActivityList")
-    public DataResponse getActivityList(@Valid @RequestBody DataRequest dataRequest) {
+    @PostMapping("/getAnnouncementList")
+    public DataResponse getAnnouncementList(@Valid @RequestBody DataRequest dataRequest) {
         String numName= dataRequest.getString("numName");
         List dataList = getAnnouncementMapList(numName);
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list

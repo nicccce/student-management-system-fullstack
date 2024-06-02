@@ -1,5 +1,6 @@
 package org.fatmansoft.teach.repository;
 
+import org.fatmansoft.teach.data.po.Activity;
 import org.fatmansoft.teach.data.po.Course;
 import org.fatmansoft.teach.data.po.Student;
 import org.fatmansoft.teach.data.po.Teacher;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -68,6 +70,8 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
 
 
     Optional<Course> findByNum(String num);
+    Optional<Course> findByName(String name);
+
 
     List<Course> findByStudents(Student student);
 

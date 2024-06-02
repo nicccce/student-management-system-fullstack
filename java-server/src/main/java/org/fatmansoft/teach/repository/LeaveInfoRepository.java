@@ -42,7 +42,7 @@ public interface LeaveInfoRepository extends JpaRepository<LeaveInfo,Integer> {
 //    }
 
     Optional<LeaveInfo> findLeaveInfoByStudentStudentId(Integer studentId);
-    @Query(value = "from LeaveInfo where ?1=''")
-    List<LeaveInfo> findLeaveInfoListByStudentId(String StudentId);
+  @Query(value = "from LeaveInfo where ?1=''")
+  List<LeaveInfo> findLeaveInfoListByStudentId(String StudentId);
 
 }

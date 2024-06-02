@@ -158,19 +158,4 @@ public class LeaveInfoEntity {
         this.back = back;
     }
 
-    @Override
-    public String toString() {
-        return "LeaveInfoEntity{" +
-                "select=" + select +
-                ", leaveInfoId=" + leaveInfoId +
-                ", num='" + num + '\'' +
-                ", name='" + name + '\'' +
-                ", reason='" + reason + '\'' +
-                ", opinion='" + opinion + '\'' +
-                ", destination='" + destination + '\'' +
-                ", phone='" + phone + '\'' +
-                ", backTime='" + backTime + '\'' +
-                ", back='" + back + '\'' +
-                '}';
-    }
 }

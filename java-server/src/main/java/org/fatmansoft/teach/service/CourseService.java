@@ -7,6 +7,7 @@ import org.fatmansoft.teach.data.vo.DataResponse;
 import org.fatmansoft.teach.repository.CourseRepository;
 import org.fatmansoft.teach.repository.StudentRepository;
 import org.fatmansoft.teach.repository.TeacherRepository;
+import org.fatmansoft.teach.repository.UserRepository;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.fatmansoft.teach.util.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class CourseService {
 
     @Autowired
     TeacherService teacherService;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<CourseRequest> getCourseListByFilterAndNumName(CourseRequest filterCriteria, String numName, String filterStudent, String filterTeacher){
         Course filterCriteriaCourse = new Course(filterCriteria);
@@ -52,6 +55,42 @@ public class CourseService {
             matchedCourseRequest.add(new CourseRequest(course));
         }
         return matchedCourseRequest;
+    }
+
+    public List<CourseRequest> getCourseListByFilterAndNumNameAndTeacher(CourseRequest filterCriteria, String numName, String filterStudent, String filterTeacher, Integer userId){
+        Course filterCriteriaCourse = new Course(filterCriteria);
+        if (filterStudent!=null && !filterStudent.isEmpty()){
+            filterCriteriaCourse.setStudents(studentRepository.findStudentListByNumName(filterStudent));
+        }
+        if (filterTeacher!= null && !filterTeacher.isEmpty()){
+            filterCriteriaCourse.setTeachers(teacherRepository.findTeacherListByNumName(filterTeacher));
+        }
+        List<Course> matchedCourse =  courseRepository.findByExample(filterCriteriaCourse, numName);
+        List<Course> courseList = new ArrayList<>(){};
+        List<CourseRequest> courseRequestList = new ArrayList<>(){};
+        Person person;
+        Teacher teacher;
+        Optional<User> user= userRepository.findByUserId(userId);
+        if (user.isPresent()){
+            person = user.get().getPerson();
+            if (person != null){
+                Optional<Teacher> optionalTeacher = teacherRepository.findByPersonPersonId(person.getPersonId());
+                if (optionalTeacher.isPresent()){
+                    teacher = optionalTeacher.get();
+                    for (Course course :
+                            matchedCourse) {
+                        if (course.getTeachers()!=null&&course.getTeachers().contains(teacher)){
+                            courseList.add(course);
+                        }
+                    }
+                }
+            }
+        }
+        for (Course course :
+                courseList) {
+            courseRequestList.add(new CourseRequest(course));
+            }
+        return courseRequestList;
     }
 
     public DataResponse getCourseStudent(Integer courseId){
@@ -336,6 +375,33 @@ public class CourseService {
             }
         }
         return null;
+    }
 
+    public List<CourseRequest> getStudentCourseByUserId(Integer userId){
+        List<CourseRequest> courseRequestList = new ArrayList<>(){};
+        List<Course> courseList;
+        Person person;
+        Student student;
+        Optional<User> user= userRepository.findByUserId(userId);
+        if (user.isPresent()){
+            person = user.get().getPerson();
+            if (person != null){
+                Optional<Student> optionalStudent = studentRepository.findByPersonPersonId(person.getPersonId());
+                if (optionalStudent.isPresent()){
+                    student = optionalStudent.get();
+                    courseList = courseRepository.findByStudents(student);
+                    for (Course course :
+                            courseList) {
+                        courseRequestList.add(new CourseRequest(course));
+                    }
+                }
+            }
+        }
+    return courseRequestList;
+    }
+
+    public CourseRequest getCourseByNum(String num){
+        Optional<Course> courseOptional = courseRepository.findByNum(num);
+        return courseOptional.map(CourseRequest::new).orElse(null);
     }
 }

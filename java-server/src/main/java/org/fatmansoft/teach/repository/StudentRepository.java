@@ -1,5 +1,6 @@
 package org.fatmansoft.teach.repository;
 
+import org.fatmansoft.teach.data.po.Person;
 import org.fatmansoft.teach.data.po.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -66,4 +67,5 @@ public interface StudentRepository extends JpaRepository<Student,Integer> , Quer
 
         return matchedStudent;
     }
+
 }

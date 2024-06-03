@@ -65,16 +65,7 @@ public class ExpenseController extends ToolController {
     private TableColumn<ExpenseEntity,String> expenseDateColumn; //教师信息表 性别列
     @FXML
     private TableColumn<ExpenseEntity,String> expenseNumColumn; //教师信息表 职位列
-    //@FXML
-    //private TableColumn<InnovationEntity,String> teamNameColumn; //教师信息表 出生日期列
-    /*@FXML
-    private TableColumn<FamilyEntity,String> motherNameColumn; //教师信息表 邮箱列
-    @FXML
-    private TableColumn<FamilyEntity,String> motherOccupationColumn; //教师信息表 电话列
-    @FXML
-    private TableColumn<FamilyEntity,String> motherAgeColumn;//教师信息表 地址列
-    @FXML
-    private TableColumn<FamilyEntity,String> motherContactColumn;//教师信息表 地址列*/
+
 
     @FXML
     private TextField numField; //教师信息  学号输入域
@@ -86,18 +77,7 @@ public class ExpenseController extends ToolController {
     private DatePicker expenseDatePick; //教师信息  证件号码输入域
     @FXML
     private TextField expenseNumField; //教师信息  院系输入域
-    //@FXML
-    //private TextField teamNameField;  //教师信息  邮箱输入域
-    /*@FXML
-    private TextField motherNameField;   //教师信息  电话输入域
-    @FXML
-    private TextField motherOccupationField;  //教师信息  地址输入域
-    @FXML
-    private TextField motherAgeField;  //教师信息  地址输入域
-    @FXML
-    private TextField motherContactField;  //教师信息  地址输入域*/
-    //@FXML
-    // private TextField addressField;  //教师信息  地址输入域
+
 
     @FXML
     private TextField numNameTextField;  //查询 姓名学号输入域
@@ -419,6 +399,10 @@ public class ExpenseController extends ToolController {
             dialogUtil.openError("修改失败", "学号为空，不能修改！");
             return;
         }
+        if( !expenseNumField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "消费金额格式不正确，不能添加！");
+            return;
+        }
         ExpenseEntity expenseEntity =new ExpenseEntity();
         expenseEntity.setNum(numField.getText());
 
@@ -428,28 +412,7 @@ public class ExpenseController extends ToolController {
         expenseEntity.setExpenseContent(expenseContentField.getText());
         expenseEntity.setExpenseDate(expenseDatePick.getEditor().getText());
         expenseEntity.setExpenseNum(expenseNumField.getText());
-        //innovationEntity.setTeamName(teamNameField.getText());
-        /*familyEntity.setMotherName(motherNameField.getText());
-        familyEntity.setMotherOccupation(motherOccupationField.getText());
-        familyEntity.setMotherAge(motherAgeField.getText());
-        familyEntity.setMotherContact(motherContactField.getText());*/
-        //familyEntity.setAddress(addressField.getText());
 
-/*        Map form = studentEntity.toMap();
-        System.out.println(form);*/
-/*        Map form = new HashMap();
-        form.put("num",numField.getText());
-        form.put("name",nameField.getText());
-        form.put("dept",deptField.getText());
-        form.put("major",majorField.getText());
-        form.put("className",classNameField.getText());
-        form.put("card",cardField.getText());
-        if(genderComboBox.getSelectionModel() != null && genderComboBox.getSelectionModel().getSelectedItem() != null)
-            form.put("gender",genderComboBox.getSelectionModel().getSelectedItem().getValue());
-        form.put("birthday",birthdayPick.getEditor().getText());
-        form.put("email",emailField.getText());
-        form.put("phone",phoneField.getText());
-        form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
         req.put("expenseId", expenseId);
         req.putObject("form", expenseEntity);

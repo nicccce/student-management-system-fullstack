@@ -23,12 +23,6 @@ public class AddStudentExpenseController {
     public MFXTextField expenseContentField;
     public MFXDatePicker expenseDatePick;
     public MFXTextField expenseNumField;
-    //public MFXTextField teamNameField;
-    /*public MFXTextField motherNameField;
-    public MFXTextField motherOccupationField;
-    public MFXTextField motherAgeField;
-    public MFXTextField motherContactField;
-    public MFXTextField addressField;*/
 
     DialogUtil dialogUtil = new DialogUtil();
 
@@ -60,8 +54,12 @@ public class AddStudentExpenseController {
             dialogUtil.openError("添加失败", "学号为空，不能添加！");
             return;
         }
+        if( !expenseNumField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "消费金额格式不正确，不能添加！");
+            return;
+        }
 /*        //检查数字格式等
-        if( !innovationNameField.getText().matches("\\d+")) {
+        if( !innovationNameField.getText().matches("^(\\d+)?$")) {
             dialogUtil.openError("添加失败", "项目名称格式不正确，不能添加！");
             return;
         }

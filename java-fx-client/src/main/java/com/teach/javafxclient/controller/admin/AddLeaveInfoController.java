@@ -45,6 +45,7 @@ public class AddLeaveInfoController {
         backComboBox.getItems().addAll(backList);
     }
 
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -57,6 +58,10 @@ public class AddLeaveInfoController {
         //弹窗错误
         if( studentNumField.getText().equals("")) {
             dialogUtil.openError("添加失败", "学号为空，不能添加！");
+            return;
+        }
+        if( !phoneField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "电话格式不正确，不能添加！");
             return;
         }
 /*        //检查数字格式等

@@ -356,7 +356,7 @@ public class TeacherController extends ToolController {
             dialogUtil.openError("删除失败", "当前未选择任何元素，无法删除！");
             return;
         }
-        dialogUtil.openWarning("警告", "将永久删除框选的 "+selectedItemList.size()+" 个学生的所有信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
+        dialogUtil.openWarning("警告", "将永久删除框选的 "+selectedItemList.size()+" 个教师的所有信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
         /*StudentTableEntity form = dataTableView.getSelectionModel().getSelectedItem();
         if(form == null) {
             MessageDialog.showDialog("没有选择，不能删除");
@@ -408,6 +408,10 @@ public class TeacherController extends ToolController {
         //弹窗错误
         if( numField.getText().equals("")) {
             dialogUtil.openError("修改失败", "教师编号为空，不能修改！");
+            return;
+        }
+        if( !phoneField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "电话格式不正确，不能添加！");
             return;
         }
         TeacherEntity teacherEntity =new TeacherEntity();

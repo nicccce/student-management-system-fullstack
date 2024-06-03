@@ -58,23 +58,23 @@ public class AddFamilyController {
             return;
         }
         //检查数字格式等
-        if( !fatherAgeField.getText().matches("\\d+")) {
+        if( !fatherAgeField.getText().matches("^(\\d+)?$")) {
             dialogUtil.openError("添加失败", "父亲年龄格式不正确，不能添加！");
             return;
         }
-        if( !familySizeField.getText().matches("\\d+")) {
+        if( !familySizeField.getText().matches("^(\\d+)?$")) {
             dialogUtil.openError("添加失败", "家庭人口格式不正确，不能添加！");
             return;
         }
-        if( !fatherContactField.getText().matches("\\d+")) {
+        if( !fatherContactField.getText().matches("^(\\d+)?$")) {
             dialogUtil.openError("添加失败", "父亲联系方式格式不正确，不能添加！");
             return;
         }
-        if( !motherAgeField.getText().matches("\\d+")) {
+        if( !motherAgeField.getText().matches("^(\\d+)?$")) {
             dialogUtil.openError("添加失败", "母亲年龄格式不正确，不能添加！");
             return;
         }
-        if( !motherContactField.getText().matches("\\d+")) {
+        if( !motherContactField.getText().matches("^(\\d+)?$")) {
             dialogUtil.openError("添加失败", "母亲联系方式格式不正确，不能添加！");
             return;
         }

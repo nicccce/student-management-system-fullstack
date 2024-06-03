@@ -57,6 +57,10 @@ public class AddExpenseController {
             dialogUtil.openError("添加失败", "学号为空，不能添加！");
             return;
         }
+        if( !expenseNumField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "消费金额格式不正确，不能添加！");
+            return;
+        }
 /*        //检查数字格式等
         if( !innovationNameField.getText().matches("\\d+")) {
             dialogUtil.openError("添加失败", "项目名称格式不正确，不能添加！");

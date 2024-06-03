@@ -41,6 +41,18 @@ public class StudentService {
     private UserTypeRepository userTypeRepository; //用户类型数据操作自动注入
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private  FamilyRepository familyRepository;
+    @Autowired
+    private InnovationRepository innovationRepository;
+    @Autowired
+    private ExpenseRepository expenseRepository;
+    @Autowired
+    private ActivityRepository activityRepository;
+    @Autowired
+    private HonorRepository honorRepository;
+    @Autowired
+    private LeaveInfoRepository leaveInfoRepository;
 
     public DataResponse studentDeleteAll(DataRequest dataRequest) {
         List<Integer> allStudentIds = dataRequest.getList("studentId");  // 获取studentId值
@@ -63,6 +75,25 @@ public class StudentService {
                     course.getStudents().remove(s);
                 }
                 Person p = s.getPerson();
+                //删除家庭信息
+                Optional<Family> uFp = familyRepository.findByPersonNum(p.getNum());
+                if (uFp.isPresent()) {
+                    familyRepository.delete(uFp.get());
+                }
+
+                //删除创新实践信息
+                List<Innovation> innovationList = innovationRepository.findInnovationListByNumName(p.getNum());
+                innovationRepository.deleteAll(innovationList);
+
+                //删除日常活动
+                List<Activity> activityList = activityRepository.findActivityListByNumName(p.getNum());
+                activityRepository.deleteAll(activityList);
+
+                //删除消费信息
+                List<Expense> expenseList = expenseRepository.findExpenseListByNumName(p.getNum());
+                expenseRepository.deleteAll(expenseList);
+
+
                 studentRepository.delete(s);    // 首先数据库永久删除学生信息
                 //personRepository.delete(p);     // 然后数据库永久删除人员信息(不需要加，因为数据库中设计过了)
             } else {

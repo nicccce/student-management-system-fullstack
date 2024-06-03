@@ -18,7 +18,7 @@ public class Honor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer honor_Id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     private Student student;
     @Size(max = 20)

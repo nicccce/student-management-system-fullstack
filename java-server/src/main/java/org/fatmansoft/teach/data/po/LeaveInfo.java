@@ -18,7 +18,7 @@ public class LeaveInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer LeaveInfoId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="student_id")
     private Student student;
     //请假理由

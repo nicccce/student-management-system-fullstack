@@ -1,15 +1,12 @@
 package org.fatmansoft.teach.controllers;
 
-import org.fatmansoft.teach.data.dto.ActivityRequest;
-import org.fatmansoft.teach.data.dto.AnnouncementRequest;
+import org.fatmansoft.teach.data.dto.AssignmentRequest;
 import org.fatmansoft.teach.data.dto.DataRequest;
 import org.fatmansoft.teach.data.dto.Request;
 import org.fatmansoft.teach.data.po.*;
 import org.fatmansoft.teach.data.vo.DataResponse;
-import org.fatmansoft.teach.data.vo.OptionItem;
 import org.fatmansoft.teach.repository.*;
-import org.fatmansoft.teach.service.AnnouncementService;
-import org.fatmansoft.teach.util.ComDataUtil;
+import org.fatmansoft.teach.service.AssignmentService;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +18,10 @@ import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/announcement")
-public class AnnouncementController {
+@RequestMapping("/api/assignment")
+public class AssignmentController {
     @Autowired
-    AnnouncementRepository announcementRepository;
+    AssignmentRepository assignmentRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -34,7 +31,7 @@ public class AnnouncementController {
     @Autowired
     CourseRepository courseRepository;
     @Autowired
-    AnnouncementService announcementService;
+    AssignmentService assignmentService;
     @Autowired
     private StudentRepository studentRepository;
 
@@ -43,7 +40,7 @@ public class AnnouncementController {
      * @param
      * @return
      */
-    public Map getMapFromAnnouncement(Announcement s) {
+    public Map getMapFromAssignment(Assignment s) {
         Map m = new HashMap();
         Course p;
         if(s == null)
@@ -51,11 +48,12 @@ public class AnnouncementController {
         p = s.getCourse();
         if(p == null)
             return m;
-        m.put("announcementId", s.getAnnouncementId());
+        m.put("assignmentId", s.getAssignmentId());
         m.put("courseId", p.getCourseId());
         m.put("num",p.getNum()); //课程编号
         m.put("name",p.getName()); //课程名称
-        m.put("announcementContent",s.getAnnouncementContent());
+        m.put("assignmentContent",s.getAssignmentContent());
+        m.put("submissionMethod",s.getSubmissionMethod());
         m.put("beginTime",s.getBeginTime());
         m.put("endTime",s.getEndTime());
         return m;
@@ -66,25 +64,25 @@ public class AnnouncementController {
      * @param numName 输入参数
      * @return  Map List 集合
      */
-    public List getAnnouncementMapList(String numName) {
+    public List getAssignmentMapList(String numName) {
         List dataList = new ArrayList();
         List<Course> list = courseRepository.findCourseListByNumName(numName);
         for (Course c: list) {
-            List<Announcement> sList = announcementRepository.findAllByCourse(c);
+            List<Assignment> sList = assignmentRepository.findAllByCourse(c);
             if(sList == null || sList.size() == 0)
                 continue;
             for(int i = 0; i < sList.size();i++) {
-                dataList.add(getMapFromAnnouncement(sList.get(i)));
+                dataList.add(getMapFromAssignment(sList.get(i)));
             }
         }
         return dataList;
     }
 
 
-    @PostMapping("/getAnnouncementList")
-    public DataResponse getAnnouncementList(@Valid @RequestBody DataRequest dataRequest) {
+    @PostMapping("/getAssignmentList")
+    public DataResponse getAssignmentList(@Valid @RequestBody DataRequest dataRequest) {
         String numName= dataRequest.getString("numName");
-        List dataList = getAnnouncementMapList(numName);
+        List dataList = getAssignmentMapList(numName);
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
 
@@ -93,8 +91,8 @@ public class AnnouncementController {
      * @param dataRequest
      * @return
      */
-    @PostMapping("/getAnnouncementListByUserId")
-    public DataResponse getAnnouncementListByUserId(@Valid @RequestBody DataRequest dataRequest) {
+    @PostMapping("/getAssignmentListByUserId")
+    public DataResponse getAssignmentListByUserId(@Valid @RequestBody DataRequest dataRequest) {
         String numName= dataRequest.getString("userId");
         Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
         User u = op.get();
@@ -105,24 +103,19 @@ public class AnnouncementController {
 
         List dataList = new ArrayList();
         for (Course c: courses) {
-            List<Announcement> sList = announcementRepository.findAllByCourse(c);
+            List<Assignment> sList = assignmentRepository.findAllByCourse(c);
             if(sList == null || sList.size() == 0)
                 continue;
             for(int i = 0; i < sList.size();i++) {
-                dataList.add(getMapFromAnnouncement(sList.get(i)));
+                dataList.add(getMapFromAssignment(sList.get(i)));
             }
         }
 
         return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
     }
-
-    /**
-     * 教师端初始化查询所需方法
-     * @param dataRequest
-     * @return
-     */
-    @PostMapping("/getStudentAnnouncementList")
-    public DataResponse getStudentAnnouncementList(@Valid @RequestBody DataRequest dataRequest) {
+    @PostMapping("/getAssignmentListByStudentUserId")
+    public DataResponse getAssignmentListByStudentUserId(@Valid @RequestBody DataRequest dataRequest) {
+        String numName= dataRequest.getString("userId");
         Optional<User> op = userRepository.findByUserId(CommonMethod.getUserId());
         User u = op.get();
         String s = u.getPerson().getNum();
@@ -132,11 +125,11 @@ public class AnnouncementController {
 
         List dataList = new ArrayList();
         for (Course c: courses) {
-            List<Announcement> sList = announcementRepository.findAllByCourse(c);
+            List<Assignment> sList = assignmentRepository.findAllByCourse(c);
             if(sList == null || sList.size() == 0)
                 continue;
             for(int i = 0; i < sList.size();i++) {
-                dataList.add(getMapFromAnnouncement(sList.get(i)));
+                dataList.add(getMapFromAssignment(sList.get(i)));
             }
         }
 
@@ -149,18 +142,18 @@ public class AnnouncementController {
      * @return  根据teacherId从数据库中查出数据，存在Map对象里，并返回前端
      */
 
-    @PostMapping("/getAnnouncementInfo")
-    public DataResponse getAnnouncementInfo(@Valid @RequestBody DataRequest dataRequest) {
-        Integer announcementId = dataRequest.getInteger("announcementId");
-        Announcement s= null;
-        Optional<Announcement> op;
-        if(announcementId != null) {
-            op= announcementRepository.findById(announcementId);
+    @PostMapping("/getAssignmentInfo")
+    public DataResponse getAssignmentInfo(@Valid @RequestBody DataRequest dataRequest) {
+        Integer assignmentId = dataRequest.getInteger("assignmentId");
+        Assignment s= null;
+        Optional<Assignment> op;
+        if(assignmentId != null) {
+            op= assignmentRepository.findById(assignmentId);
             if(op.isPresent()) {
                 s = op.get();
             }
         }
-        return CommonMethod.getReturnData(getMapFromAnnouncement(s)); //这里回传包含教师信息的Map对象
+        return CommonMethod.getReturnData(getMapFromAssignment(s)); //这里回传包含教师信息的Map对象
     }
 
     /**
@@ -170,19 +163,19 @@ public class AnnouncementController {
      * teacherId不为空。则查询出实体对象，复制相关属性，保存后修改数据库信息，永久修改
      * @return  新建修改教师的主键 teacher_id 返回前端
      */
-    @PostMapping("/announcementEditSave")
-    public DataResponse announcementEditSave(@Valid @RequestBody DataRequest dataRequest) {
+    @PostMapping("/assignmentEditSave")
+    public DataResponse assignmentEditSave(@Valid @RequestBody DataRequest dataRequest) {
         System.out.println(dataRequest.getData());
-        Integer announcementId = dataRequest.getInteger("announcementId");
+        Integer assignmentId = dataRequest.getInteger("assignmentId");
         Map form = dataRequest.getMap("form"); //参数获取Map对象
         String num = CommonMethod.getString(form,"num");  //Map 获取课程编号的值
-        Announcement s= null;
+        Assignment s= null;
         Person p;
         User u;
-        Optional<Announcement> op;
+        Optional<Assignment> op;
         Integer personId;
-        if(announcementId != null) {
-            op= announcementRepository.findById(announcementId);  //查询对应数据库中主键为id的值的实体对象
+        if(assignmentId != null) {
+            op= assignmentRepository.findById(assignmentId);  //查询对应数据库中主键为id的值的实体对象
             if(op.isPresent()) {
                 s = op.get();
             }
@@ -194,11 +187,12 @@ public class AnnouncementController {
             }
         }
 
-        s.setAnnouncementContent(CommonMethod.getString(form,"announcementContent"));
+        s.setAssignmentContent(CommonMethod.getString(form,"assignmentContent"));
+        s.setSubmissionMethod(CommonMethod.getString(form,"submissionMethod"));
         s.setEndTime(CommonMethod.getString(form,"endTime"));
         s.setBeginTime(CommonMethod.getString(form,"beginTime"));
-        announcementRepository.save(s);  //修改保存教师信息
-        return CommonMethod.getReturnData(s.getAnnouncementId());  // 将teacherId返回前端
+        assignmentRepository.save(s);  //修改保存教师信息
+        return CommonMethod.getReturnData(s.getAssignmentId());  // 将teacherId返回前端
     }
 
 
@@ -208,9 +202,9 @@ public class AnnouncementController {
      * @param dataRequest  前端teacherId 药删除的教师的主键 teacher_id
      * @return  正常操作
      */
-    @DeleteMapping("/announcementDeleteAll")
-    public DataResponse announcementDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
-        return announcementService.announcementDeleteAll(dataRequest);
+    @DeleteMapping("/assignmentDeleteAll")
+    public DataResponse assignmentDeleteAll (@Valid @RequestBody DataRequest dataRequest) {
+        return assignmentService.assignmentDeleteAll(dataRequest);
     }
 
     /**
@@ -219,9 +213,9 @@ public class AnnouncementController {
      * @param dataRequest  前端教师实体信息
      * @return  正常操作
      */
-    @PostMapping ("/announcementInsert")
-    public DataResponse announcementInsert (@Valid @RequestBody Request<Map<String, AnnouncementRequest>> dataRequest) {
-        return announcementService.announcementInsert(dataRequest);
+    @PostMapping ("/assignmentInsert")
+    public DataResponse assignmentInsert (@Valid @RequestBody Request<Map<String, AssignmentRequest>> dataRequest) {
+        return assignmentService.assignmentInsert(dataRequest);
     }
 
     /**
@@ -229,10 +223,10 @@ public class AnnouncementController {
      * @param dataRequest 前端传入需要生成的学生信息列表
      * @return 生成的Excel文件流
      */
-    @PostMapping("/getSelectedAnnouncementListExcl")
-    public ResponseEntity<StreamingResponseBody> getSelectedAnnouncementListExcl(@Valid @RequestBody Request<Map<String,List<AnnouncementRequest>>> dataRequest) {
-        List<AnnouncementRequest> selectedList =dataRequest.getData().get("selectedAnnouncement");
-        return announcementService.getSelectedAnnouncementListExcl(selectedList);
+    @PostMapping("/getSelectedAssignmentListExcl")
+    public ResponseEntity<StreamingResponseBody> getSelectedAssignmentListExcl(@Valid @RequestBody Request<Map<String,List<AssignmentRequest>>> dataRequest) {
+        List<AssignmentRequest> selectedList =dataRequest.getData().get("selectedAssignment");
+        return assignmentService.getSelectedAssignmentListExcl(selectedList);
     }
 
     @PostMapping("/getBee")

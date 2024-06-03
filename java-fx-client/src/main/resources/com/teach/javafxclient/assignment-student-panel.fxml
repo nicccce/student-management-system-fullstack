@@ -9,7 +9,7 @@
 <!--  教师管理 FXML 配置文件 对应的页面交互控制类 com.teach.javafxclient.controller.StudentController 如果是切换成本地开发模式 界面配置不变，将页面交互控制类 切换为 com.teach.javafxclient.controller.StudentControllerLocal-->
 
 <?import javafx.scene.text.Font?>
-<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.AnnouncementController">
+<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.student.AssignmentController">
     <top>
         <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="1920.0" spacing="5.0">
             <children>
@@ -19,17 +19,13 @@
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
-                            <graphic>
-                                <MFXFontIcon description="mfx-plus" size="16" />
-                            </graphic>
+
                         </MFXButton>
                         <MFXButton fx:id="deleteButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除" GridPane.rowIndex="4">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
-                            <graphic>
-                                <MFXFontIcon description="mfx-minus" size="16" />
-                            </graphic>
+
                         </MFXButton>
                     </children>
                 </FlowPane>
@@ -48,7 +44,6 @@
                 <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
                 <FlowPane fx:id="filterPane" alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="474.0" BorderPane.alignment="CENTER">
                     <children>
-                        <MFXFontIcon description="mfx-filter" size="20" />
                         <Label fx:id="filterLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" text="筛选：当前无筛选条件">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -58,25 +53,16 @@
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
-                            <graphic>
-                                <MFXFontIcon description="mfx-filter-alt" size="20" />
-                            </graphic>
                         </MFXButton>
                         <MFXButton fx:id="resetFilterButton" minHeight="27.0" minWidth="70.0" onAction="#onResetFilterButtonClicked" styleClass="link-button" text="重置">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
-                            <graphic>
-                                <MFXFontIcon description="mfx-filter-alt-clear" size="20" />
-                            </graphic>
                         </MFXButton>
                         <MFXButton fx:id="addFilterButton" minHeight="27.0" minWidth="70.0" onAction="#onAddFilterButtonClicked" styleClass="link-button" text="添加筛选条件">
                             <FlowPane.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </FlowPane.margin>
-                            <graphic>
-                                <MFXFontIcon description="mfx-filter-alt" size="20" />
-                            </graphic>
                         </MFXButton>
                     </children>
                 </FlowPane>
@@ -110,8 +96,9 @@
                     <columns>
                         <TableColumn fx:id="checkColumn" prefWidth="35.0" />
                         <TableColumn fx:id="numColumn" prefWidth="149.19999313354492" text="课程编号" />
-                        <TableColumn fx:id="nameColumn" prefWidth="71.59999084472656" text="公告名称" />
-                        <TableColumn fx:id="announcementContentColumn" prefWidth="80.39999389648438" text="公告内容" />
+                        <TableColumn fx:id="nameColumn" prefWidth="71.59999084472656" text="课程名称" />
+                        <TableColumn fx:id="assignmentContentColumn" prefWidth="80.39999389648438" text="作业内容" />
+                        <TableColumn fx:id="submissionMethodContentColumn" prefWidth="80.39999389648438" text="提交方式" />
                         <TableColumn fx:id="beginTimeColumn" prefWidth="60.199981689453125" text="开始时间" />
                         <TableColumn fx:id="endTimeColumn" prefWidth="115.20004272460938" text="截止时间" />
 
@@ -137,22 +124,20 @@
                         </rowConstraints>
                         <children>
                             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="91.0" text="开始时间" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                            <DatePicker fx:id="beginTimePick" prefHeight="66.0" prefWidth="201.0" promptText="开始时间" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                            <DatePicker disable="true" fx:id="beginTimePick" prefHeight="66.0" prefWidth="201.0" promptText="开始时间" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                             <Label alignment="CENTER" prefHeight="32.0" prefWidth="93.0" text="结束时间" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                            <DatePicker fx:id="endTimePick" prefHeight="66.0" prefWidth="201.0" promptText="结束时间" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                            <DatePicker disable="true" fx:id="endTimePick" prefHeight="66.0" prefWidth="201.0" promptText="结束时间" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         </children>
                     </GridPane>
 
 
                     <!--<MFXTextField fx:id="innovationTypeField" floatMode="BORDER" floatingText="项目种类" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />-->
-                    <MFXTextField fx:id="announcementContentField" floatMode="BORDER" floatingText="公告内容" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <MFXTextField disable="true" fx:id="assignmentContentField" floatMode="BORDER" floatingText="作业内容" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <MFXTextField disable="true" fx:id="submissionMethodField" floatMode="BORDER" floatingText="提交方式" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                     <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
-                        <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="保存">
-                            <graphic>
-                                <MFXFontIcon description="mfx-variant9-mark" size="16" />
-                            </graphic>
+                        <MFXButton fx:id="saveButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="保存">
                         </MFXButton>
                     </FlowPane>
                 </VBox>

@@ -7,6 +7,7 @@ import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -74,6 +75,10 @@ public class AddAnnouncementController {
         if (endDate != null) {
             String formattedEndDateDate = endDate.format(formatter);
             announcementEntity.setEndTime(formattedEndDateDate);
+        }
+        if (announcementEntity.getBeginTime()!=null&&announcementEntity.getEndTime()!=null&&!LocalDateUtil.isLaterDate(announcementEntity.getBeginTime(),announcementEntity.getEndTime())){
+            dialogUtil.openError("修改失败", "截止时间早于开始时间！");
+            return;
         }
         //innovationEntity.setTeamName(teamNameField.getText());
         /*familyEntity.setMotherName(motherNameField.getText());

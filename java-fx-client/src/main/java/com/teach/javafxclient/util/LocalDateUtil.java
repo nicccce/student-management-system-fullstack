@@ -34,4 +34,29 @@ public class LocalDateUtil {
         // 判断后一个日期是否比前一个日期大
         return secondDate.isAfter(firstDate);
     }
+
+    public static boolean isBeforeToday(String dateString) {
+        // 解析日期字符串
+        LocalDate date = LocalDate.parse(dateString);
+
+        // 获取今天的日期
+        LocalDate today = LocalDate.now();
+
+        // 判断给定日期是否在今天之前
+        return date.isBefore(today);
+    }
+
+    public static boolean isTodayInRange(String startDateString, String endDateString) {
+        // 解析起始日期字符串
+        LocalDate startDate = LocalDate.parse(startDateString);
+
+        // 解析结束日期字符串
+        LocalDate endDate = LocalDate.parse(endDateString);
+
+        // 获取今天的日期
+        LocalDate today = LocalDate.now();
+
+        // 判断今天是否在日期范围内
+        return !today.isBefore(startDate) && !today.isAfter(endDate);
+    }
 }

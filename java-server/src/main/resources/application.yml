@@ -25,7 +25,7 @@ spring:
         hibernate:
             ddl-auto: update
         #上线后删除该配置
-        show-sql: true
+        show-sql: false
     servlet:
         multipart:
             max-file-size: 50MB

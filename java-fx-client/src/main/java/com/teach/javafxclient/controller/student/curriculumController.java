@@ -1,6 +1,7 @@
 package com.teach.javafxclient.controller.student;
 
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
+import com.teach.javafxclient.model.AnnouncementEntity;
 import com.teach.javafxclient.model.CourseEntity;
 import com.teach.javafxclient.model.TeacherEntity;
 import com.teach.javafxclient.request.DataRequest;
@@ -175,8 +176,23 @@ public class curriculumController {
         endTimePick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));
 
         setUpCurriculum();
+        addAnnouncement();
         setUpAnnouncement();
     }
+
+
+    private void addAnnouncement(){
+        HttpRequestUtil<AnnouncementEntity> announcementEntityHttpRequestUtil = new HttpRequestUtil<>(AnnouncementEntity.class);
+        DataRequest req = new DataRequest();
+        DataResponse<ArrayList<AnnouncementEntity>> res = announcementEntityHttpRequestUtil.requestArrayList("/api/announcement/getStudentAnnouncementList",req);
+        for (AnnouncementEntity announcement :
+                res.getData()) {
+            if (LocalDateUtil.isTodayInRange(announcement.getBeginTime(),announcement.getEndTime())) {
+                announcementList.add("【公告】" + "<a href=\"#\">" + announcement.getNum() + " " + announcement.getName() + "</a> " + "：" + announcement.getAnnouncementContent());
+            }
+        }
+    }
+
 
     public void onQueryButtonClick(ActionEvent actionEvent) {
         DataResponse<ArrayList<CourseEntity>> res;
@@ -193,6 +209,7 @@ public class curriculumController {
         }
         reSetCurriculum();
         setUpCurriculum();
+        addAnnouncement();
         setUpAnnouncement();
     }
 
@@ -222,7 +239,6 @@ public class curriculumController {
                                 if (Objects.equals(button.getId(), "unselected-custom")) {
                                     setButton(i, j, course);
                                 } else {
-                                    System.out.println(extractNum(button.getText()));
                                     addAnnouncement(course,
                                             getCourseByNum(extractNum(button.getText())), i, j);
                                 }

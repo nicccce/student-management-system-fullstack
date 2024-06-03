@@ -9,7 +9,7 @@
 <!--  教师管理 FXML 配置文件 对应的页面交互控制类 com.teach.javafxclient.controller.StudentController 如果是切换成本地开发模式 界面配置不变，将页面交互控制类 切换为 com.teach.javafxclient.controller.StudentControllerLocal-->
 
 <?import javafx.scene.text.Font?>
-<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.AnnouncementController">
+<BorderPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.teacher.AssignmentController">
     <top>
         <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="1920.0" spacing="5.0">
             <children>
@@ -110,8 +110,9 @@
                     <columns>
                         <TableColumn fx:id="checkColumn" prefWidth="35.0" />
                         <TableColumn fx:id="numColumn" prefWidth="149.19999313354492" text="课程编号" />
-                        <TableColumn fx:id="nameColumn" prefWidth="71.59999084472656" text="公告名称" />
-                        <TableColumn fx:id="announcementContentColumn" prefWidth="80.39999389648438" text="公告内容" />
+                        <TableColumn fx:id="nameColumn" prefWidth="71.59999084472656" text="课程名称" />
+                        <TableColumn fx:id="assignmentContentColumn" prefWidth="80.39999389648438" text="作业内容" />
+                        <TableColumn fx:id="submissionMethodColumn" prefWidth="80.39999389648438" text="提交方式" />
                         <TableColumn fx:id="beginTimeColumn" prefWidth="60.199981689453125" text="开始时间" />
                         <TableColumn fx:id="endTimeColumn" prefWidth="115.20004272460938" text="截止时间" />
 
@@ -146,7 +147,8 @@
 
 
                     <!--<MFXTextField fx:id="innovationTypeField" floatMode="BORDER" floatingText="项目种类" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />-->
-                    <MFXTextField fx:id="announcementContentField" floatMode="BORDER" floatingText="公告内容" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <MFXTextField fx:id="assignmentContentField" floatMode="BORDER" floatingText="作业内容" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <MFXTextField fx:id="submissionMethodField" floatMode="BORDER" floatingText="提交方式" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                     <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
                         <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="保存">

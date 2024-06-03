@@ -41,45 +41,6 @@ public class ActivityController {
 
 
     /**
-     *  获取 person 表的新的Id StringBoot 对SqLite 主键自增支持不好  插入记录是需要设置主键ID，编写方法获取新的 person_id
-     * @return
-     */
-    public synchronized Integer getNewPersonId(){  //synchronized 同步方法
-        Integer  id = personRepository.getMaxId();  // 查询最大的id
-        if(id == null)
-            id = 1;
-        else
-            id = id+1;
-        return id;
-    };
-
-    /**
-     *  获取 user 表的新的Id StringBoot 对SqLite 主键自增支持不好  插入记录是需要设置主键ID，编写方法获取新的 user_id
-     * @return
-     */
-    public synchronized Integer getNewUserId(){
-        Integer  id = userRepository.getMaxId();  // 查询最大的id
-        if(id == null)
-            id = 1;
-        else
-            id = id+1;
-        return id;
-    };
-    /**
-     *  获取 teacher 表的新的Id StringBoot 对SqLite 主键自增支持不好  插入记录是需要设置主键ID，编写方法获取新的 teacher_id
-     * @return id
-     */
-    public synchronized Integer getNewActivityId(){
-        Integer  id = activityRepository.getMaxId();  // 查询最大的id
-        if(id == null)
-            id = 1;
-        else
-            id = id+1;
-        return id;
-    };
-
-
-    /**
      * getMapFromStudent 将教师表属性数据转换复制MAp集合里
      * @param
      * @return

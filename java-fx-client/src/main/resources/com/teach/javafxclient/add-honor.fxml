@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import io.github.palexdev.materialfx.font.MFXFontIcon?>
+<GridPane alignment="CENTER" prefHeight="500" prefWidth="809" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.AddHonorController">
+    <columnConstraints>
+        <ColumnConstraints prefWidth="100" />
+        <ColumnConstraints prefWidth="221.0" />
+        <ColumnConstraints prefWidth="167" />
+        <ColumnConstraints prefWidth="221.0" />
+        <ColumnConstraints prefWidth="100" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="25.0" minHeight="8.0" prefHeight="8.0" />
+        <RowConstraints maxHeight="65.0" minHeight="48.0" prefHeight="65.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints maxHeight="66.0" minHeight="43.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="33.0" minHeight="11.0" prefHeight="11.0" />
+    </rowConstraints>
+    <MFXTextField fx:id="studentNumField" floatMode="BORDER" floatingText="学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <MFXTextField fx:id="honorNameField" floatMode="BORDER" floatingText="获奖名称" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <MFXComboBox fx:id="levelComboBox" floatMode="BORDER" floatingText="获奖级别" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+    <MFXTextField fx:id="honorTypeField" floatMode="BORDER" floatingText="获奖类型" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+    <DatePicker fx:id="honorTimePicker" prefHeight="38.0" prefWidth="221.0" promptText="获奖时间" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <MFXTextField fx:id="hostField" floatMode="BORDER" floatingText="颁奖机构" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+    <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0" />
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
+        <children>
+
+            <MFXButton buttonType="RAISED" layoutX="42.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="38.0" prefWidth="83.0" text="添加">
+                <graphic>
+                    <MFXFontIcon description="mfx-plus" size="16" />
+                </graphic>
+            </MFXButton>
+        </children>
+    </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <children>
+            <Label layoutX="12.0" layoutY="14.0" text="新增学生荣誉信息" style="-fx-font-size: 24px;">
+            </Label>
+        </children>
+    </AnchorPane>
+
+</GridPane>

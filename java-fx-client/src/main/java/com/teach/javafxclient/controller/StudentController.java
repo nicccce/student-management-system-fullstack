@@ -433,6 +433,10 @@ public class StudentController extends ToolController {
             dialogUtil.openError("修改失败", "学号为空，不能修改！");
             return;
         }
+        if( !phoneField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "电话格式不正确，不能添加！");
+            return;
+        }
         //将右边栏的输入内容包装为学生信息对象
         StudentEntity studentEntity =new StudentEntity();
         studentEntity.setNum(numField.getText());

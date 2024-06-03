@@ -67,6 +67,10 @@ public class AddStudentController {
             dialogUtil.openError("添加失败", "学号为空，不能添加！");
             return;
         }
+        if( !phoneField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "电话格式不正确，不能添加！");
+            return;
+        }
 
         //将需要的学生信息包装为实体类
         StudentEntity studentEntity = new StudentEntity();

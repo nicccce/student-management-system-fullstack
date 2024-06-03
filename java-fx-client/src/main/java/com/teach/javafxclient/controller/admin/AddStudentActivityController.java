@@ -23,12 +23,6 @@ public class AddStudentActivityController {
     public MFXComboBox activityTypeComboBox;
     public MFXTextField activityContentField;
     public MFXDatePicker activityDatePick;
-    //public MFXTextField teamNameField;
-    /*public MFXTextField motherNameField;
-    public MFXTextField motherOccupationField;
-    public MFXTextField motherAgeField;
-    public MFXTextField motherContactField;
-    public MFXTextField addressField;*/
 
     DialogUtil dialogUtil = new DialogUtil();
 

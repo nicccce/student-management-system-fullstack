@@ -104,7 +104,7 @@
                     </padding>
                     <MFXTextField fx:id="numField" floatMode="BORDER" floatingText="学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <MFXTextField fx:id="familySizeField" floatMode="BORDER" floatingText="家庭人数" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <MFXTextField fx:id="fatherNameField" floatMode="BORDER" floatingText="父亲性别" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <MFXTextField fx:id="fatherNameField" floatMode="BORDER" floatingText="父亲性名" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <MFXTextField fx:id="fatherOccupationField" floatMode="BORDER" floatingText="父亲职业" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <MFXTextField fx:id="fatherAgeField" floatMode="BORDER" floatingText="父亲年龄" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <MFXTextField fx:id="fatherContactField" floatMode="BORDER" floatingText="父亲联系方式" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />

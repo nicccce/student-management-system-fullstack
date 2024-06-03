@@ -59,6 +59,11 @@ public class AddTeacherController {
             dialogUtil.openError("添加失败", "教师编号为空，不能添加！");
             return;
         }
+        if( !phoneField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "电话格式不正确，不能添加！");
+            return;
+        }
+
         TeacherEntity teacherEntity = new TeacherEntity();
         teacherEntity.setNum(numField.getText());
         teacherEntity.setName(nameField.getText());

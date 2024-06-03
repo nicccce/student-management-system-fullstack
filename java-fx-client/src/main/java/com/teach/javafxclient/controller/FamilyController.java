@@ -245,7 +245,7 @@ public class FamilyController extends ToolController {
         motherNameField.setText("");
         motherOccupationField.setText("");
         motherAgeField.setText("");
-        motherAgeField.setText("");
+        motherContactField.setText("");
        // addressField.setText("");
     }
 
@@ -366,26 +366,7 @@ public class FamilyController extends ToolController {
             return;
         }
         dialogUtil.openWarning("警告", "将永久删除框选的 "+selectedItemList.size()+" 个学生的家庭信息，并且无法还原，确认要删除吗?", this::deleteSelectedItems);
-        /*StudentTableEntity form = dataTableView.getSelectionModel().getSelectedItem();
-        if(form == null) {
-            MessageDialog.showDialog("没有选择，不能删除");
-            return;
-        }
-        int ret = MessageDialog.choiceDialog("确认要删除吗?");
-        if(ret != MessageDialog.CHOICE_YES) {
-            return;
-        }
-        studentId = form.getStudentId();
-        DataRequest req = new DataRequest();
-        req.put("studentId", studentId);
-        DataResponse res = HttpRequestUtil.request("/api/student/studentDelete",req);
-        if(res.getCode() == 0) {
-            MessageDialog.showDialog("删除成功！");
-            onQueryButtonClick();
-        }
-        else {
-            MessageDialog.showDialog(res.getMsg());
-        }*/
+
     }
 
     public void deleteSelectedItems(){
@@ -419,6 +400,26 @@ public class FamilyController extends ToolController {
             dialogUtil.openError("修改失败", "学号为空，不能修改！");
             return;
         }
+        if( !fatherAgeField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "父亲年龄格式不正确，不能添加！");
+            return;
+        }
+        if( !familySizeField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "家庭人口格式不正确，不能添加！");
+            return;
+        }
+        if( !fatherContactField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "父亲联系方式格式不正确，不能添加！");
+            return;
+        }
+        if( !motherAgeField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "母亲年龄格式不正确，不能添加！");
+            return;
+        }
+        if( !motherContactField.getText().matches("^(\\d+)?$")) {
+            dialogUtil.openError("添加失败", "母亲联系方式格式不正确，不能添加！");
+            return;
+        }
         FamilyEntity familyEntity =new FamilyEntity();
         familyEntity.setNum(numField.getText());
         familyEntity.setFamilySize(familySizeField.getText());
@@ -430,23 +431,7 @@ public class FamilyController extends ToolController {
         familyEntity.setMotherOccupation(motherOccupationField.getText());
         familyEntity.setMotherAge(motherAgeField.getText());
         familyEntity.setMotherContact(motherContactField.getText());
-        //familyEntity.setAddress(addressField.getText());
 
-/*        Map form = studentEntity.toMap();
-        System.out.println(form);*/
-/*        Map form = new HashMap();
-        form.put("num",numField.getText());
-        form.put("name",nameField.getText());
-        form.put("dept",deptField.getText());
-        form.put("major",majorField.getText());
-        form.put("className",classNameField.getText());
-        form.put("card",cardField.getText());
-        if(genderComboBox.getSelectionModel() != null && genderComboBox.getSelectionModel().getSelectedItem() != null)
-            form.put("gender",genderComboBox.getSelectionModel().getSelectedItem().getValue());
-        form.put("birthday",birthdayPick.getEditor().getText());
-        form.put("email",emailField.getText());
-        form.put("phone",phoneField.getText());
-        form.put("address",addressField.getText());*/
         DataRequest req = new DataRequest();
         req.put("familyId", familyId);
         req.putObject("form", familyEntity);

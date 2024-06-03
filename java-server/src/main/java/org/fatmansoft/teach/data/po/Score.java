@@ -1,6 +1,7 @@
 package org.fatmansoft.teach.data.po;
 
 import javax.persistence.*;
+
 /**
  * Score 成绩表实体类  保存成绩的的基本信息信息，
  * Integer scoreId 人员表 score 主键 score_id
@@ -29,7 +30,7 @@ public class Score {
     private Integer mark;
     private Integer ranking;
 
-    private @Version Long version;
+
     public Integer getScoreId() {
         return scoreId;
     }

@@ -625,6 +625,7 @@ public class StudentController extends ToolController {
             dialogUtil.openInfo("导出学生信息", "点击确认导出选中的 "+selectedNumber+" 条学生信息。", this::getExcel);
         }
     }
+
     public void getExcel(){
         DataRequest req = new DataRequest();
         req.putObjectList("selectedStudent",getSelectedItem());

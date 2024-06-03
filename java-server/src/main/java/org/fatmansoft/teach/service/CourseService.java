@@ -4,6 +4,7 @@ import org.apache.poi.xssf.usermodel.*;
 import org.fatmansoft.teach.data.dto.*;
 import org.fatmansoft.teach.data.po.*;
 import org.fatmansoft.teach.data.vo.DataResponse;
+import org.fatmansoft.teach.data.vo.OptionItem;
 import org.fatmansoft.teach.repository.CourseRepository;
 import org.fatmansoft.teach.repository.StudentRepository;
 import org.fatmansoft.teach.repository.TeacherRepository;
@@ -403,5 +404,30 @@ public class CourseService {
     public CourseRequest getCourseByNum(String num){
         Optional<Course> courseOptional = courseRepository.findByNum(num);
         return courseOptional.map(CourseRequest::new).orElse(null);
+    }
+
+    public List<OptionItem> getOptionItemByTeacher(Integer userId){
+        List<Course> courseList = null;
+        List<OptionItem> optionItemList = new ArrayList<>(){};
+        Person person;
+        Teacher teacher;
+        Optional<User> user= userRepository.findByUserId(userId);
+        if (user.isPresent()) {
+            person = user.get().getPerson();
+            if (person != null) {
+                Optional<Teacher> optionalTeacher = teacherRepository.findByPersonPersonId(person.getPersonId());
+                if (optionalTeacher.isPresent()) {
+                    teacher = optionalTeacher.get();
+                    courseList = courseRepository.findByTeachers(teacher);
+                }
+            }
+        }
+        if (courseList==null){
+            return optionItemList;
+        }
+        for (int i = 0; i < courseList.size(); i++) {
+            optionItemList.add(new OptionItem(i, courseList.get(i).getNum(),courseList.get(i).getName()));
+        }
+        return optionItemList;
     }
 }

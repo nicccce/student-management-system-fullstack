@@ -447,6 +447,57 @@ public class HttpRequestUtil<T> {
         return null;
     }
 
+    /**
+     *  byte[] requestByteData(String url, DataRequest request) 获取byte[] 对象 下载数据文件等
+     * @param url  Web请求的Url 对用后的 RequestMapping
+     * @return List<OptionItem> 返回后台返回数据
+     */
+    public static byte[] getByteData(String url, String pathVariable, Map<String,Object> requestParam){
+        if (!isLocal) {
+            String fullUrl;
+            if (pathVariable != null) {
+                // 添加路径参数到 URL
+                fullUrl = serverUrl + url + "/" + pathVariable;
+            } else {
+                fullUrl = serverUrl + url;
+            }
+
+            // 将请求参数添加到 URL 中
+            if (requestParam != null && !requestParam.isEmpty()) {
+                StringBuilder queryBuilder = new StringBuilder();
+                for (Map.Entry<String, Object> entry : requestParam.entrySet()) {
+                    String key = entry.getKey();
+                    Object value = entry.getValue();
+                    queryBuilder.append(URLEncoder.encode(key, StandardCharsets.UTF_8));
+                    queryBuilder.append("=");
+                    queryBuilder.append(URLEncoder.encode(value.toString(), StandardCharsets.UTF_8));
+                    queryBuilder.append("&");
+                }
+                // 去除末尾的"&"
+                if (queryBuilder.length() > 0) {
+                    queryBuilder.setLength(queryBuilder.length() - 1);
+                }
+                fullUrl += "?" + queryBuilder.toString();
+            }
+
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .uri(URI.create(fullUrl))
+                    .GET()
+                    .headers("Content-Type", "application/json")
+                    .header("Authorization", "Bearer " + AppStore.getJwt().getAccessToken())
+                    .build();
+            HttpClient client = HttpClient.newHttpClient();
+            try {
+                HttpResponse<byte[]> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofByteArray());
+                if (response.statusCode() == 200) {
+                    return response.body();
+                }
+            } catch (IOException | InterruptedException e) {
+                logger.error(e);
+            }
+        }
+        return null;
+    }
 
 
 }

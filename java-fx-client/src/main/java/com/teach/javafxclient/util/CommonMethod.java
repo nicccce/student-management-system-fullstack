@@ -191,4 +191,13 @@ public class CommonMethod {
         return str;
     }
 
+    public static int getOptionItemIndexById(List<OptionItem>itemList, Integer id){
+        if(id == null)
+            return -1;
+        for(int i = 0; i < itemList.size();i++) {
+            if(itemList.get(i).getId().equals(id))
+                return i;
+        }
+        return -1;
+    }
 }

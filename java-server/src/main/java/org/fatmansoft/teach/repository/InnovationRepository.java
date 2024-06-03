@@ -39,10 +39,13 @@ public interface InnovationRepository extends JpaRepository<Innovation, Integer>
 
     List<Innovation> findByPersonName(String name);
 
+
     @Query(value = "from Innovation where ?1='' or person.num like %?1% or person.name like %?1% ")
     List<Innovation> findInnovationListByNumName(String numName);
 
     List<Innovation> findAll();
+
+
 
 
     /**

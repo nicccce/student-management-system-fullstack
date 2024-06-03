@@ -1,16 +1,14 @@
-package com.teach.javafxclient.controller.teacher;
+package com.teach.javafxclient.controller.student;
 
 import atlantafx.base.theme.Styles;
-import com.teach.javafxclient.MainApplication;
+import com.teach.javafxclient.controller.AnnouncementController;
 import com.teach.javafxclient.controller.base.LocalDateStringConverter;
-import com.teach.javafxclient.controller.base.MessageDialog;
-import com.teach.javafxclient.model.CourseEntity;
+import com.teach.javafxclient.model.AnnouncementEntity;
 import com.teach.javafxclient.model.CoursewareEntity;
 import com.teach.javafxclient.request.DataRequest;
 import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
-import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
@@ -20,7 +18,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -33,13 +30,12 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class CoursewareTeacherController {
+public class CoursewareStudentController {
     public FlowPane filterPane;
     public MFXButton addFilterButton;
     public MFXButton changeFilterButton;
@@ -59,6 +55,8 @@ public class CoursewareTeacherController {
     public MFXTextField numNameTextField;
     public Label fileTypeLabel;
     public MFXButton DownloadButton;
+    public MFXButton deleteAllButton;
+    public MFXButton saveButton;
     @FXML
     private TableView<CoursewareEntity> dataTableView;  //课件信息表
     @FXML
@@ -101,12 +99,19 @@ public class CoursewareTeacherController {
         importTimePick.setConverter(new LocalDateStringConverter("yyyy-MM-dd"));
         importTimePick.setDisable(true);
 
+        addButton.setManaged(false);
+        deleteButton.setManaged(false);
+        deleteAllButton.setManaged(false);
+        saveButton.setManaged(false);
+        fileNameField.setDisable(true);
+
     }
 
     private void setupCourseComboBox(){
         HttpRequestUtil<OptionItem> optionItemHttpRequestUtil = new HttpRequestUtil<>(OptionItem.class);
         DataRequest req = new DataRequest();
-        DataResponse<ArrayList<OptionItem>> res = optionItemHttpRequestUtil.requestArrayList("/api/course/getTeacherOptionItem",req);
+        req.put("coursewareId",coursewareId);
+        DataResponse<ArrayList<OptionItem>> res = optionItemHttpRequestUtil.requestArrayList("/api/course/getStudentOptionItem",req);
         if (res!=null) {
             courseComboBox.getItems().addAll(res.getData());
         }else {
@@ -271,7 +276,7 @@ public class CoursewareTeacherController {
             return;
         }
         changeCoursewareList();
-            setTableViewData();
+        setTableViewData();
 
     }
 
@@ -522,3 +527,4 @@ public class CoursewareTeacherController {
         return false;
     }
 }
+

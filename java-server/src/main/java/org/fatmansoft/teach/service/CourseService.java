@@ -430,4 +430,29 @@ public class CourseService {
         }
         return optionItemList;
     }
+
+    public List<OptionItem> getOptionItemByStudent(Integer userId) {
+        List<Course> courseList = null;
+        List<OptionItem> optionItemList = new ArrayList<>();
+        Person person;
+        Student student;
+        Optional<User> user = userRepository.findByUserId(userId);
+        if (user.isPresent()) {
+            person = user.get().getPerson();
+            if (person != null) {
+                Optional<Student> optionalStudent = studentRepository.findByPersonPersonId(person.getPersonId());
+                if (optionalStudent.isPresent()) {
+                    student = optionalStudent.get();
+                    courseList = courseRepository.findByStudents(student);
+                }
+            }
+        }
+        if (courseList == null) {
+            return optionItemList;
+        }
+        for (int i = 0; i < courseList.size(); i++) {
+            optionItemList.add(new OptionItem(i, courseList.get(i).getNum(), courseList.get(i).getName()));
+        }
+        return optionItemList;
+    }
 }

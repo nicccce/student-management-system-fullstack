@@ -211,5 +211,10 @@ public class CourseController {
     public DataResponse getOptionItemByTeacher(){
         return CommonMethod.getReturnData(courseService.getOptionItemByTeacher(CommonMethod.getUserId()));
     }
+
+    @PostMapping("getStudentOptionItem")
+    public DataResponse getOptionItemByStudent() {
+        return CommonMethod.getReturnData(courseService.getOptionItemByStudent(CommonMethod.getUserId()));
+    }
 }
 

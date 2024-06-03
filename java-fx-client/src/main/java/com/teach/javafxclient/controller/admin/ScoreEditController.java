@@ -78,4 +78,7 @@ public class ScoreEditController {
             markField.setText(CommonMethod.getString(data, "mark"));
         }
     }
+
+    public void setScoreTableController(com.teach.javafxclient.controller.student.ScoreTableController scoreTableController) {
+    }
 }

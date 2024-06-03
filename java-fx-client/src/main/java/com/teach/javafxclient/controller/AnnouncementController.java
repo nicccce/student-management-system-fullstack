@@ -15,6 +15,7 @@ import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -367,6 +368,10 @@ public class AnnouncementController {
         announcementEntity.setNum(numField.getText());
         announcementEntity.setName(nameField.getText());
         announcementEntity.setAnnouncementContent(announcementContentField.getText());
+        if (!LocalDateUtil.isLaterDate(beginTimePick.getEditor().getText(),endTimePick.getEditor().getText())){
+            dialogUtil.openError("修改失败", "截止时间早于开始时间！");
+            return;
+        }
         announcementEntity.setBeginTime(beginTimePick.getEditor().getText());
         announcementEntity.setEndTime(endTimePick.getEditor().getText());
 

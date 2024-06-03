@@ -13,23 +13,23 @@
 <?import javafx.scene.layout.HBox?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<BorderPane xmlns="http://javafx.com/javafx/19" stylesheets="@css/styles.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.ScoreTableController">
+<BorderPane xmlns="http://javafx.com/javafx/19" stylesheets="@css/styles.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.student.ScoreTableController">
    <top>
        <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
            <children>
                <FlowPane alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="288.0" BorderPane.alignment="CENTER">
                    <children>
-                       <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onAddButtonClick"  text="添加">
+                       <MFXButton fx:id="addButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onAddButtonClick"  text="添加">
                            <FlowPane.margin>
                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </FlowPane.margin>
                        </MFXButton>
-                       <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onEditButtonClick"  text="修改">
+                       <MFXButton fx:id="editButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onEditButtonClick"  text="修改">
                            <FlowPane.margin>
                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </FlowPane.margin>
                        </MFXButton>
-                       <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除">
+                       <MFXButton fx:id="deleteButton" buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="删除">
                            <FlowPane.margin>
                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </FlowPane.margin>
@@ -43,7 +43,7 @@
                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </FlowPane.margin>
                        </MFXButton>
-                       <Label text="学生" >
+                       <Label fx:id="studentLabel" text="学生" >
                            <FlowPane.margin>
                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </FlowPane.margin>

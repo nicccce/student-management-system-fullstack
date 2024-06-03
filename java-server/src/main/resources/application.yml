@@ -1,5 +1,5 @@
 attach:
-    folder: ../file/
+    folder: ./file/
 bezkoder:
     app:
         jwtExpirationMs: 86400000

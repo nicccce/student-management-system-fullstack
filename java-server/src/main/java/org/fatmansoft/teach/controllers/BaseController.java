@@ -32,6 +32,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 
@@ -351,15 +354,24 @@ public class BaseController {
      */
     @PostMapping(path = "/uploadFile")
     public DataResponse uploadFile(@RequestBody byte[] barr,
-                          @RequestParam(name = "uploader") String uploader,
-                           @RequestParam(name = "remoteFile") String remoteFile,
-                         @RequestParam(name = "fileName") String fileName)  {
+                                   @RequestParam(name = "uploader") String uploader,
+                                   @RequestParam(name = "remoteFile") String remoteFile,
+                                   @RequestParam(name = "fileName") String fileName) {
         try {
-            OutputStream os = new FileOutputStream(new File(attachFolder + remoteFile));
+            String filePath = attachFolder + remoteFile;
+
+            // 获取文件的父目录
+            Path parentDirectory = Paths.get(filePath).getParent();
+            if (parentDirectory != null) {
+                // 创建父目录（包括子目录），如果目录不存在
+                Files.createDirectories(parentDirectory);
+            }
+            OutputStream os = new FileOutputStream(new File(filePath));
             os.write(barr);
             os.close();
             return CommonMethod.getReturnMessageOK();
-        }catch(Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
             return CommonMethod.getReturnMessageError("上传错误");
         }
     }

@@ -206,4 +206,10 @@ public class CourseController {
             return CommonMethod.getReturnData(course);
         }return CommonMethod.getReturnMessageError("课程数据获取失败！");
     }
+
+    @PostMapping("getTeacherOptionItem")
+    public DataResponse getOptionItemByTeacher(){
+        return CommonMethod.getReturnData(courseService.getOptionItemByTeacher(CommonMethod.getUserId()));
+    }
 }
+

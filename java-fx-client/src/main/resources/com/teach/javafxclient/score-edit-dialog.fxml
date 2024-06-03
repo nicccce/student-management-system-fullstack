@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="800.0" spacing="20.0" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.ScoreEditController">
+   <padding>
+      <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+   </padding>
+   <GridPane vgap="5.0">
+      <columnConstraints>
+         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="60.0" minWidth="0.0" prefWidth="60.0" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="141.0" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.5" minWidth="10.0" prefWidth="140.5" />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+         <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+         <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+         <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+         <RowConstraints maxHeight="55.0" minHeight="8.0" prefHeight="55.0" vgrow="SOMETIMES" />
+         <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+         <RowConstraints maxHeight="1000.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+      <children>
+         <Label text="学生" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane.margin>
+               <Insets right="5.0" />
+            </GridPane.margin>
+         </Label>
+         <ComboBox fx:id="studentComboBox" prefHeight="23.0" prefWidth="181.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+         <Label text="课程" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <GridPane.margin>
+               <Insets right="5.0" />
+            </GridPane.margin>
+         </Label>
+         <ComboBox fx:id="courseComboBox" prefHeight="23.0" prefWidth="144.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+         <Label text="成绩" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <GridPane.margin>
+               <Insets right="5.0" />
+            </GridPane.margin>
+         </Label>
+         <MFXTextField fx:id="markField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      </children>
+   </GridPane>
+   <FlowPane alignment="CENTER" prefHeight="40.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+      <children>
+         <MFXButton mnemonicParsing="false" onAction="#okButtonClick" text="确认">
+            <FlowPane.margin>
+               <Insets right="10.0" />
+            </FlowPane.margin>
+         </MFXButton>
+         <MFXButton mnemonicParsing="false" onAction="#cancelButtonClick" text="取消">
+            <FlowPane.margin>
+               <Insets left="10.0" />
+            </FlowPane.margin>
+         </MFXButton>
+      </children>
+   </FlowPane>
+</VBox>

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.image.Image;
 import atlantafx.base.theme.*;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -28,6 +29,11 @@ public class MainApplication extends Application {
      */
     public static Stage mainStage;
     public static Image icon = new Image(MainApplication.class.getResourceAsStream("/com/teach/javafxclient/picture/icon.png"));
+
+    private static boolean canClose=true;
+    public static Window getMainStage() {
+        return mainStage;
+    }
 
 
     /**
@@ -128,5 +134,9 @@ public class MainApplication extends Application {
      */
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void setCanClose(boolean canClose) {
+        MainApplication.canClose = canClose;
     }
 }

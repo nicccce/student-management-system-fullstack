@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import io.github.palexdev.materialfx.font.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="CENTER" prefHeight="500" prefWidth="809" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.admin.FilterLeaveInfoController">
+    <columnConstraints>
+        <ColumnConstraints prefWidth="120" />
+        <ColumnConstraints prefWidth="221.0" />
+        <ColumnConstraints prefWidth="127" />
+        <ColumnConstraints prefWidth="221.0" />
+        <ColumnConstraints prefWidth="120" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="25.0" minHeight="8.0" prefHeight="8.0" />
+        <RowConstraints maxHeight="65.0" minHeight="48.0" prefHeight="65.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints prefHeight="38.0" />
+        <RowConstraints prefHeight="20.0" />
+        <RowConstraints maxHeight="66.0" minHeight="43.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="33.0" minHeight="11.0" prefHeight="11.0" />
+    </rowConstraints>
+    <MFXTextField fx:id="numField" floatMode="BORDER" floatingText="学号" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <MFXTextField fx:id="nameField" floatMode="BORDER" floatingText="姓名" prefHeight="38.0" prefWidth="221.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+    <DatePicker fx:id="backTimePick" prefHeight="38.0" prefWidth="221.0" promptText="返校时间" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+
+
+
+    <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0" />
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="14">
+        <children>
+
+            <MFXButton buttonType="RAISED" layoutX="22.0" layoutY="3.0" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onFilterButtonClick" prefHeight="38.0" prefWidth="83.0" text="确定">
+                <graphic>
+                    <MFXFontIcon description="mfx-variant9-mark" size="16" />
+                </graphic>
+            </MFXButton>
+        </children>
+    </AnchorPane>
+    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <children>
+            <Label layoutX="18.0" layoutY="17.0" style="-fx-font-size: 24px;" text="筛选条件">
+            </Label>
+        </children>
+    </AnchorPane>
+   <ComboBox fx:id="backComboBox" prefWidth="150.0" promptText="是否销假" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
+
+</GridPane>

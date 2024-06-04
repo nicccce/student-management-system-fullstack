@@ -10,6 +10,7 @@ import com.teach.javafxclient.request.*;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.controller.base.MessageDialog;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.font.FontResources;
 import io.github.palexdev.materialfx.font.MFXFontIcon;
@@ -449,6 +450,10 @@ public class StudentController extends ToolController {
             studentEntity.setGender(genderComboBox.getSelectionModel().getSelectedItem().getValue());
         }
         studentEntity.setBirthday(birthdayPick.getEditor().getText());
+        if (!LocalDateUtil.isBeforeToday(studentEntity.getBirthday())){
+            dialogUtil.openError("保存失败","出生日期无效！");
+            return;
+        }
         studentEntity.setEmail(emailField.getText());
         studentEntity.setPhone(phoneField.getText());
         studentEntity.setAddress(addressField.getText());

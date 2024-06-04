@@ -42,7 +42,7 @@ public class HonorService {
         String studentNum = request.getData().get("newHonor").getNum();
         Student student;
         Optional<Student> nOp = studentRepository.findByPersonNum(studentNum);
-        student = nOp.get();
+        student = nOp.  get();
         Optional<Honor> nFp = honorRepository.findHonorByStudentStudentId(student.getStudentId());
         if (nOp.isPresent() || studentNum == null || studentNum.isEmpty()) {
 //            if (nFp.isPresent()) {

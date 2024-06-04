@@ -40,14 +40,8 @@ public class HonorService {
         //try {
         Honor honor = new Honor(request.getData().get("newHonor"));
         String studentNum = request.getData().get("newHonor").getNum();
-        Student student;
         Optional<Student> nOp = studentRepository.findByPersonNum(studentNum);
-        student = nOp.get();
-        Optional<Honor> nFp = honorRepository.findHonorByStudentStudentId(student.getStudentId());
         if (nOp.isPresent() || studentNum == null || studentNum.isEmpty()) {
-//            if (nFp.isPresent()) {
-//                return CommonMethod.getReturnMessageError("学生请假信息已存在,无法添加,请转到修改页面修改");
-//            } //ToDo：疑似不满足多对一关系，如果有时间可以修改
             honor.setStudent(nOp.get());
             honorRepository.save(honor);
             return CommonMethod.getReturnMessageOK("学生荣誉信息保存成功");

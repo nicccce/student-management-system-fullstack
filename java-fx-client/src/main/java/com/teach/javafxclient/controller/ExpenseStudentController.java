@@ -14,6 +14,7 @@ import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -454,6 +455,10 @@ public class ExpenseStudentController {
         }
         expenseEntity.setExpenseContent(expenseContentField.getText());
         expenseEntity.setExpenseDate(expenseDatePick.getEditor().getText());
+        if (!LocalDateUtil.isBeforeToday(expenseEntity.getExpenseDate())){
+            dialogUtil.openError("保存失败","消费日期无效！");
+            return;
+        }
         expenseEntity.setExpenseNum(expenseNumField.getText());
         //innovationEntity.setTeamName(teamNameField.getText());
         /*familyEntity.setMotherName(motherNameField.getText());

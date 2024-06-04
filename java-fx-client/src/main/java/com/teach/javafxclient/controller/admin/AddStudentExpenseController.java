@@ -6,6 +6,7 @@ import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -58,31 +59,7 @@ public class AddStudentExpenseController {
             dialogUtil.openError("添加失败", "消费金额格式不正确，不能添加！");
             return;
         }
-/*        //检查数字格式等
-        if( !innovationNameField.getText().matches("^(\\d+)?$")) {
-            dialogUtil.openError("添加失败", "项目名称格式不正确，不能添加！");
-            return;
-        }
-        if( !innovationTypeField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "项目类型格式不正确，不能添加！");
-            return;
-        }
-        if( !instructorField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "指导老师名称格式不正确，不能添加！");
-            return;
-        }
-        if( !teamPositionField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "队伍名次格式不正确，不能添加！");
-            return;
-        }
-        if( !teamNameField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "队伍名称格式不正确，不能添加！");
-            return;
-        }*/
-       /* if( !motherContactField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "母亲联系方式格式不正确，不能添加！");
-            return;
-        }*/
+
         ExpenseEntity expenseEntity = new ExpenseEntity();
         expenseEntity.setNum(numField.getText());
 
@@ -98,6 +75,10 @@ public class AddStudentExpenseController {
         if (expenseDate != null) {
             String formattedExpenseDate = expenseDate.format(formatter);
             expenseEntity.setExpenseDate(formattedExpenseDate);
+        }
+        if (!LocalDateUtil.isBeforeToday(expenseEntity.getExpenseDate())){
+            dialogUtil.openError("保存失败","消费日期无效！");
+            return;
         }
 
         expenseEntity.setExpenseNum(expenseNumField.getText());

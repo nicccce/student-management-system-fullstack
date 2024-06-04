@@ -9,6 +9,7 @@ import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -71,6 +72,10 @@ public class AddActivityController {
         if (activityDate != null) {
             String formattedActivityDate = activityDate.format(formatter);
             activityEntity.setActivityDate(formattedActivityDate);
+        }
+        if (!LocalDateUtil.isBeforeToday(activityEntity.getActivityDate())){
+            dialogUtil.openError("保存失败","活动日期无效！");
+            return;
         }
 
 

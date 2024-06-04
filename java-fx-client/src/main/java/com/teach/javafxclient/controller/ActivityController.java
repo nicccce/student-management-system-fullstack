@@ -16,6 +16,7 @@ import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -430,28 +431,10 @@ public class ActivityController extends ToolController {
         }
         activityEntity.setActivityContent(activityContentField.getText());
         activityEntity.setActivityDate(activityDatePick.getEditor().getText());
-        //innovationEntity.setTeamName(teamNameField.getText());
-        /*familyEntity.setMotherName(motherNameField.getText());
-        familyEntity.setMotherOccupation(motherOccupationField.getText());
-        familyEntity.setMotherAge(motherAgeField.getText());
-        familyEntity.setMotherContact(motherContactField.getText());*/
-        //familyEntity.setAddress(addressField.getText());
-
-/*        Map form = studentEntity.toMap();
-        System.out.println(form);*/
-/*        Map form = new HashMap();
-        form.put("num",numField.getText());
-        form.put("name",nameField.getText());
-        form.put("dept",deptField.getText());
-        form.put("major",majorField.getText());
-        form.put("className",classNameField.getText());
-        form.put("card",cardField.getText());
-        if(genderComboBox.getSelectionModel() != null && genderComboBox.getSelectionModel().getSelectedItem() != null)
-            form.put("gender",genderComboBox.getSelectionModel().getSelectedItem().getValue());
-        form.put("birthday",birthdayPick.getEditor().getText());
-        form.put("email",emailField.getText());
-        form.put("phone",phoneField.getText());
-        form.put("address",addressField.getText());*/
+        if (!LocalDateUtil.isBeforeToday(activityEntity.getActivityDate())){
+            dialogUtil.openError("保存失败","活动日期无效！");
+            return;
+        }
         DataRequest req = new DataRequest();
         req.put("activityId", activityId);
         req.putObject("form", activityEntity);

@@ -14,6 +14,7 @@ import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -454,6 +455,11 @@ public class ActivityStudentController {
         }
         activityEntity.setActivityContent(activityContentField.getText());
         activityEntity.setActivityDate(activityDatePick.getEditor().getText());
+
+        if (!LocalDateUtil.isBeforeToday(activityEntity.getActivityDate())){
+            dialogUtil.openError("保存失败","活动日期无效！");
+            return;
+        }
         //innovationEntity.setTeamName(teamNameField.getText());
         /*familyEntity.setMotherName(motherNameField.getText());
         familyEntity.setMotherOccupation(motherOccupationField.getText());

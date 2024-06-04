@@ -14,6 +14,7 @@ import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -155,15 +156,7 @@ public class LeaveInfoController extends ToolController {
             checkColumn.setSortable(false);//复选框列不可点击列顶排序
             //设置列元素为学生对象的checkColumn成员
             checkColumn.setCellValueFactory(c -> c.getValue().selectProperty());
-/*        checkColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<StudentTableEntity, Boolean>, ObservableValue<Boolean>>() {
-            @Override
-            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<StudentTableEntity, Boolean> param) {
-                StudentTableEntity studentTableEntity = param.getValue();
-                Boolean value = studentTableEntity.getSelect();
-                SimpleBooleanProperty observableValue = new SimpleBooleanProperty(value);
-                return observableValue;
-            }
-        });*/
+
             checkColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkColumn));
             checkColumn.setEditable(true);
 
@@ -421,6 +414,7 @@ public class LeaveInfoController extends ToolController {
                 leaveInfoEntity.setBack(backComboBox.getSelectionModel().getSelectedItem().getValue());
             }
             leaveInfoEntity.setBackTime(backTimePick.getEditor().getText());
+
 
             DataRequest req = new DataRequest();
             //将学生id单独包装方便后端

@@ -16,6 +16,7 @@ import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.CommonMethod;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -389,6 +390,10 @@ public class HonorController extends ToolController {
             honorEntity.setLevelName(levelComboBox.getSelectionModel().getSelectedItem().getValue());
         }
         honorEntity.setHonorTime(honorTimePick.getEditor().getText());
+        if (!LocalDateUtil.isBeforeToday(honorEntity.getHonorTime())){
+            dialogUtil.openError("保存失败","荣誉日期无效！");
+            return;
+        }
 
         DataRequest req = new DataRequest();
         //将学生id单独包装方便后端

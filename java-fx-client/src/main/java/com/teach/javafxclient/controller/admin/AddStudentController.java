@@ -6,6 +6,7 @@ import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -93,7 +94,10 @@ public class AddStudentController {
             String formattedBirthday = birthday.format(formatter);
             studentEntity.setBirthday(formattedBirthday);
         }
-
+        if (!LocalDateUtil.isBeforeToday(studentEntity.getBirthday())){
+            dialogUtil.openError("保存失败","出生日期无效！");
+            return;
+        }
         studentEntity.setEmail(emailField.getText());
         studentEntity.setPhone(phoneField.getText());
         studentEntity.setAddress(addressField.getText());

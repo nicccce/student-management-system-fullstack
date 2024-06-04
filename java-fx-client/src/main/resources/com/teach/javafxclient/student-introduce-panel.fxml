@@ -4,14 +4,15 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.web.*?>
 
 <!-- 学生个人简历界面 FXML配置文件 对应页面交互控制类 com.teach.javafxclient.controller.StudentIntroduceController -->
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" stylesheets="@css/person-style-class.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentIntroduceController">
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1920.0" stylesheets="@css/person-style-class.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teach.javafxclient.controller.StudentIntroduceController">
     <content>
-        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0">
+        <Pane prefWidth="100" />
+        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
@@ -84,16 +85,21 @@
                 </padding>
             </HBox>
             <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="36.0">
-                <Button onAction="#onIntroduceDownloadClick" text="PDF查看">
+                <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false" onAction="#onIntroduceClick" text="个人简历查看">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </FlowPane.margin></Button>
-                <Button onAction="#onSubmitButtonClick" prefHeight="23.0" prefWidth="64.0" text="提交">
+               </FlowPane.margin></MFXButton>
+                <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false"  onAction="#onSubmitButtonClick" prefHeight="23.0" prefWidth="64.0" text="提交">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </FlowPane.margin></Button>
+               </FlowPane.margin>
+                </MFXButton>
+                <MFXButton buttonType="RAISED" minHeight="40.0" minWidth="80.0" mnemonicParsing="false"  onAction="#onIntroduceDownloadClick" prefHeight="23.0" prefWidth="64.0" text="个人简历下载">
+                    <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </FlowPane.margin>
+                </MFXButton>
             </FlowPane>
-         <Arc fill="DODGERBLUE" length="270.0" radiusX="100.0" radiusY="100.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
         </VBox>
     </content>
 </ScrollPane>

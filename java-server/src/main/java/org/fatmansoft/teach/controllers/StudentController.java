@@ -17,6 +17,10 @@ import org.fatmansoft.teach.util.ComDataUtil;
 import org.fatmansoft.teach.util.CommonMethod;
 import org.fatmansoft.teach.util.MultipartFileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +41,6 @@ import java.util.*;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/student")
-
 public class StudentController {
     //Java 对象的注入 我们定义的这下Java的操作对象都不能自己管理是由有Spring框架来管理的， StudentController 中要使用StudentRepository接口的实现类对象，
     // 需要下列方式注入，否则无法使用， studentRepository 相当于StudentRepository接口实现对象的一个引用，由框架完成对这个引用的赋值，
@@ -597,6 +600,39 @@ public class StudentController {
         content = CommonMethod.removeErrorString(content,"&nbsp;","style=\"font-family: &quot;&quot;;\""); //删除无法转化不合法的HTML标签
         content= CommonMethod.replaceNameValue(content,info); //将HTML中标记串${name}等替换成学生实际的信息
         return baseService.getPdfDataFromHtml(content); //生成学生简历PDF二进制数据
+    }
+    @Value("${attach.folder}")    //环境配置变量获取
+    private String attachFolder;  //服务器端数据存储
+    @PostMapping("/getStudentPdf")
+    public ResponseEntity<StreamingResponseBody> getStudentPdf(@Valid @RequestBody DataRequest dataRequest) {
+        Integer studentId = dataRequest.getInteger("studentId");
+        String filePath = attachFolder + "pdf/" + studentId +".pdf";
+        File file = new File(filePath);
+
+        if (file.exists() && file.isFile()) {
+            try {
+                InputStream inputStream = new FileInputStream(file);
+
+                StreamingResponseBody responseBody = outputStream -> {
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+                    inputStream.close();
+                };
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+                headers.setContentDispositionFormData("attachment", "个人简历");
+
+                return new ResponseEntity<>(responseBody, headers, HttpStatus.OK);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**

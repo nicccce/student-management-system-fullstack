@@ -8,6 +8,7 @@ import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.util.CommonMethod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
@@ -19,6 +20,7 @@ import javafx.stage.FileChooser;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 /**
@@ -169,10 +171,21 @@ public class StudentIntroduceController extends ToolController {
     public void onIntroduceDownloadClick(){
         DataRequest req = new DataRequest();
         req.put("studentId",studentId);
-        byte[] bytes = HttpRequestUtil.requestByteData("/api/student/getStudentIntroducePdf", req);
+        byte[] bytes = HttpRequestUtil.requestByteData("/api/student/getStudentPdf", req);
         if (bytes != null) {
             try {
-                MessageDialog.pdfViewerDialog(bytes);
+                FileChooser fileDialog = new FileChooser();
+                fileDialog.setTitle("请选择保存的文件");
+                fileDialog.setInitialDirectory(new File("C:/"));
+                fileDialog.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("PDF 文件", "*.pdf"));
+                fileDialog.setInitialFileName("个人简历.pdf");
+                File file = fileDialog.showSaveDialog(null);
+                if(file != null) {
+                    FileOutputStream out = new FileOutputStream(file);
+                    out.write(bytes);
+                    out.close();
+                }
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -236,4 +249,16 @@ public class StudentIntroduceController extends ToolController {
         }
     }
 
+    public void onIntroduceClick(ActionEvent actionEvent) {
+        DataRequest req = new DataRequest();
+        req.put("studentId",studentId);
+        byte[] bytes = HttpRequestUtil.requestByteData("/api/student/getStudentPdf", req);
+        if (bytes != null) {
+            try {
+                MessageDialog.pdfViewerDialog(bytes);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 }

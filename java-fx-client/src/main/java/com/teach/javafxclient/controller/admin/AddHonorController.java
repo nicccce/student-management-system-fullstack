@@ -7,6 +7,7 @@ import com.teach.javafxclient.request.DataResponse;
 import com.teach.javafxclient.request.HttpRequestUtil;
 import com.teach.javafxclient.request.OptionItem;
 import com.teach.javafxclient.util.DialogUtil;
+import com.teach.javafxclient.util.LocalDateUtil;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
@@ -76,7 +77,10 @@ public class AddHonorController {
             String formattedHonorTime = honorTime.format(formatter);
             honorEntity.setHonorTime(formattedHonorTime);
         }
-
+        if (!LocalDateUtil.isBeforeToday(honorEntity.getHonorTime())){
+            dialogUtil.openError("保存失败","荣誉日期无效！");
+            return;
+        }
 
 
         DataRequest req = new DataRequest();

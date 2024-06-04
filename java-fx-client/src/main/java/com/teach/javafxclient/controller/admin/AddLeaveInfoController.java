@@ -64,31 +64,7 @@ public class AddLeaveInfoController {
             dialogUtil.openError("添加失败", "电话格式不正确，不能添加！");
             return;
         }
-/*        //检查数字格式等
-        if( !innovationNameField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "项目名称格式不正确，不能添加！");
-            return;
-        }
-        if( !innovationTypeField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "项目类型格式不正确，不能添加！");
-            return;
-        }
-        if( !instructorField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "指导老师名称格式不正确，不能添加！");
-            return;
-        }
-        if( !teamPositionField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "队伍名次格式不正确，不能添加！");
-            return;
-        }
-        if( !teamNameField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "队伍名称格式不正确，不能添加！");
-            return;
-        }*/
-       /* if( !motherContactField.getText().matches("\\d+")) {
-            dialogUtil.openError("添加失败", "母亲联系方式格式不正确，不能添加！");
-            return;
-        }*/
+
         LeaveInfoEntity leaveInfoEntity = new LeaveInfoEntity();
         leaveInfoEntity.setNum(studentNumField.getText());
         leaveInfoEntity.setName(studentNameField.getText());
@@ -106,6 +82,7 @@ public class AddLeaveInfoController {
             String formattedBackTime = backTime.format(formatter);
             leaveInfoEntity.setBackTime(formattedBackTime);
         }
+
         /*familyEntity.setMotherName(motherNameField.getText());
         familyEntity.setMotherOccupation(motherOccupationField.getText());
         familyEntity.setMotherAge(motherAgeField.getText());

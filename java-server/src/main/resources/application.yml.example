@@ -1,0 +1,32 @@
+attach:
+    folder: ./file/
+bezkoder:
+    app:
+        jwtExpirationMs: 86400000
+        jwtSecret: bezKoderSecretKey
+server:
+    port: 9090
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://mysql.sqlpub.com:3306/edumanage?useUnicode=true&characterEncoding=utf-8&useSSL=true&jdbcCompliantTruncation=false&useSSL=false
+        username: dbmanager
+        password: yH70sT6P6J2CiyHY
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+    jmx:
+        enabled: false
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+        #上线后删除该配置
+        show-sql: false
+    servlet:
+        multipart:
+            max-file-size: 50MB
+            max-request-size: 50MB

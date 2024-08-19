@@ -7,3 +7,8 @@ College of Software, Shandong University freshman java course project 山东大�
 
 > 高质量神金勾八男寝
 
+## 部署
+
+环境：java17+,javafx17+
+
+复制`application.yml.example`为`application.yml`，根据实际情况修改。
